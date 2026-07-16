@@ -1,0 +1,11 @@
+# vendor 运行时生成物(setup.sh 现场生成,不入库)
+vendor/cannbot-insight/node_modules/
+vendor/cannbot-insight/.next/
+vendor/cannbot-insight/prisma/dev.db*
+
+# 通用
+.DS_Store
+*.log
+
+# SDD 执行台账(会话脚手架,不入库)
+.superpowers/
