@@ -25,6 +25,13 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 自己装好 **Node.js 20 LTS**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node)。
 注意必须是 20.x、不是越新越好:观测器的原生依赖 better-sqlite3 只对 node 20/22 提供
 Windows 预编译包,装 24/25 会在本机触发 C++ 编译(需要 VS Build Tools)然后失败。
+
+常见报错:
+- `EINTEGRITY`(npm ci 校验和不匹配):先 `npm cache clean --force` 重试;仍失败则
+  `npm config get registry` 看源——lockfile 钉的是官方源,公司内部源重新打包过的
+  tarball 校验和对不上。能直连就 `npm ci --registry=https://registry.npmjs.org`;
+  只能走内部源就删掉 `node_modules` 和 `package-lock.json` 后 `npm install` 重新生成。
+- better-sqlite3 编译报错:node 版本不是 20.x,见上一条。
 bun 由 setup.sh 走 PowerShell 自动安装;sqlite3 不需要装(观测脚本会用 vendor
 里的 better-sqlite3 兜底)。或者直接用 WSL2,和 macOS/Linux 完全同一套流程。
 
