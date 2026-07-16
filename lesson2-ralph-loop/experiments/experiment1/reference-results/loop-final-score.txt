@@ -1,0 +1,2 @@
+QA SCORE: 816/816
+per-func: dedent:9/9  fill:14/14  indent:5/5  shorten:8/8  wrap:780/780

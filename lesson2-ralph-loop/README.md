@@ -93,10 +93,23 @@ worker(`ralph`)和 reviewer(`ralph-reviewer`)各是独立的 root 会话,靠
 
 ## 进阶(可选)
 
-`ralph.sh` 还带 `swebench prepare` / `swebench export` 子命令,可以把 SWE-bench Lite
-实例转成不泄漏 oracle 的盲测目标、跑完导出官方格式的 prediction,用来做
-「单次执行 vs ralph loop」的 A/B 对比。本课不展开,用法见 `./ralph.sh`(不带参数)的帮助,
-行为细节有 `test/swebench-cli.test.ts` 全套用例背书。
+**课程实验:单次 Agent vs. Ralph Loop 的 A/B 对比** ——
+完整实验包在 [`experiments/experiment1/`](./experiments/experiment1/README.md):
+盲验收下同一模型「一次生成」对比「reviewer 反馈循环」(rustwrap 案例,Python→Rust 移植),
+含一键驱动脚本、偷看审计工具、以及一次真实实测的参考结果
+(once 795/816 自认完成 vs loop 816/816 验收 DONE):
+
+```bash
+cd experiments/experiment1
+./run_experiment.sh all      # 或 prepare / once / loop / report 分步跑
+```
+
+前置比主线多两样:Rust 工具链(`cargo`)和 python3;目前仅适配 macOS/Linux
+(Windows 建议 WSL2)。脚本开头会自检并明确报缺什么。
+
+另外 `ralph.sh` 还带 `swebench prepare` / `swebench export` 子命令,可以把 SWE-bench Lite
+实例转成不泄漏 oracle 的盲测目标、跑完导出官方格式的 prediction。本课不展开,
+用法见 `./ralph.sh`(不带参数)的帮助,行为细节有 `test/swebench-cli.test.ts` 全套用例背书。
 
 ## 测试
 

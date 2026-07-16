@@ -1,0 +1,67 @@
+QA SCORE: 795/816
+per-func: dedent:9/9  fill:13/14  indent:5/5  shorten:8/8  wrap:760/780
+
+FAILING SAMPLES (showing 21/21):
+  [469] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [470] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "})
+      expected: ["* short", "  and-", "  then-a-", "  very-", "  long-hyp", "  henated-", "  compound", "  -word", "  here"]
+      got:      ["* short", "  and-", "  then-", "  a-very-", "  long-hyp", "  henated-", "  compound", "  -word", "  here"]
+  [471] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "expand_tabs": false})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [472] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "tabsize": 4})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [473] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "replace_whitespace": false})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [474] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "fix_sentence_endings": true})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [475] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "break_long_words": false})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated-", "compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-", "hyphenated-", "compound-", "word here"]
+  [476] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "drop_whitespace": false})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [481] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 10, "drop_whitespace": false, "replace_whitespace": false})
+      expected: ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]
+      got:      ["short and-", "then-", "a-very-", "long-hyphe", "nated-", "compound-", "word here"]
+  [482] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [483] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "})
+      expected: ["* short and-then-a-", "  very-long-", "  hyphenated-", "  compound-word here"]
+      got:      ["* short and-then-", "  a-very-long-", "  hyphenated-", "  compound-word here"]
+  [484] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "expand_tabs": false})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [485] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "tabsize": 4})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [486] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "replace_whitespace": false})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [487] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "fix_sentence_endings": true})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [488] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "break_long_words": false})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [489] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "drop_whitespace": false})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [491] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "max_lines": 2})
+      expected: ["short and-then-a-", "very-long- [...]"]
+      got:      ["short and-then-", "a-very-long- [...]"]
+  [492] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "max_lines": 1, "placeholder": " …"})
+      expected: ["short and-then-a- …"]
+      got:      ["short and-then- …"]
+  [494] wrap("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20, "drop_whitespace": false, "replace_whitespace": false})
+      expected: ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]
+      got:      ["short and-then-", "a-very-long-", "hyphenated-compound-", "word here"]
+  [789] fill("short and-then-a-very-long-hyphenated-compound-word here", {"width": 20})
+      expected: "short and-then-a-\nvery-long-\nhyphenated-compound-\nword here"
+      got:      "short and-then-\na-very-long-\nhyphenated-compound-\nword here"

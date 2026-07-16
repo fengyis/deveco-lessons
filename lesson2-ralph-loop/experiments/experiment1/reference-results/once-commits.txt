@@ -1,0 +1,3 @@
+985cc1a Port CPython textwrap to Rust (dedent/indent/wrap/fill/shorten)
+d8768be ralph: seed (failing baseline)
+10609fb ralph: initial
