@@ -49,9 +49,16 @@ _cannbot_ensure_server() {
   (
     cd "$CANNBOT_INSIGHT_DIR" || exit 1
     export DATABASE_URL="file:$CANNBOT_INSIGHT_DIR/prisma/dev.db"
-    # 开高级标签页(subagents / interactions / AI workflow),看子代理轨迹要靠它
+    # 开高级标签页(subagents / interactions / AI workflow),看子代理轨迹要靠它。
+    # 生产模式下这个开关在 setup.sh 的 next build 时已烙进产物,这里只对 dev 兜底生效。
     export NEXT_PUBLIC_SHOW_ADVANCED_TABS=true
-    nohup npx next dev --port "$CANNBOT_INSIGHT_PORT" >/tmp/cannbot-insight.log 2>&1 &
+    if [ -f "$CANNBOT_INSIGHT_DIR/.next/BUILD_ID" ]; then
+      # 生产模式:页面预编译,秒开
+      nohup npx next start --port "$CANNBOT_INSIGHT_PORT" >/tmp/cannbot-insight.log 2>&1 &
+    else
+      # 没构建过就退回 dev 模式(能用,但每页首开要现场编译,很慢;跑一次 setup.sh 会补上构建)
+      nohup npx next dev --port "$CANNBOT_INSIGHT_PORT" >/tmp/cannbot-insight.log 2>&1 &
+    fi
   )
   for _ in $(seq 1 40); do
     curl -s "$base/api/observe/data?pageSize=1" >/dev/null 2>&1 && return 0

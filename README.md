@@ -44,7 +44,7 @@ cd <本仓库>
 ```bash
 cd lesson2-ralph-loop
 ./ralph.sh init   ~/ralph-smoke
-./ralph.sh sample smoke ~/ralph-smoke   # 观测演示案例:规划→写码→subagent→skill,约 3-5 分钟
+./ralph.sh sample smoke ~/ralph-smoke   # 观测演示案例:规划→写码→subagent→skill,约 2 分钟
 ./ralph.sh run    ~/ralph-smoke         # worker→reviewer 循环到验收;收工自动跑 lesson1 的观测
 ```
 

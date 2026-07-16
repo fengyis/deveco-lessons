@@ -379,6 +379,7 @@ EOF
 
 # 案例目录约定（examples/<名字>/）：
 #   GOAL.md           必需，装进 <项目>/.ralph/GOAL.md
+#   ralph-worker.md   可选，装进 <项目>/.deveco/agent/（案例专用的执行者提示词）
 #   ralph-reviewer.md 可选，装进 <项目>/.deveco/agent/（案例专用的裁判提示词）
 #   verify.test.ts.template  可选，装进 <项目>/.ralph/verify.test.ts（不是 test/！见下）
 cmd_sample() {
@@ -407,6 +408,11 @@ cmd_sample() {
 
   cp "$src/GOAL.md" "$target/.ralph/GOAL.md"
   say "→ 目标 .ralph/GOAL.md"
+
+  if [ -f "$src/ralph-worker.md" ]; then
+    cp "$src/ralph-worker.md" "$target/.deveco/agent/ralph-worker.md"
+    say "→ 案例专用 worker .deveco/agent/ralph-worker.md"
+  fi
 
   if [ -f "$src/ralph-reviewer.md" ]; then
     cp "$src/ralph-reviewer.md" "$target/.deveco/agent/ralph-reviewer.md"

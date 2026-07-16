@@ -59,7 +59,18 @@ else
   npx prisma migrate deploy
 fi
 
-# ---- 6. 自检收尾 -----------------------------------------------------------
+# ---- 6. 生产构建 ------------------------------------------------------------
+# next dev 每个页面首次访问都现场编译,冷缓存下点一页等十几秒;build 一次,
+# 以后 observe 用 next start 秒开。NEXT_PUBLIC_* 是构建期烙进产物的,
+# 高级标签页(subagents/interactions)的开关必须在这里带上。
+if [ -f .next/BUILD_ID ]; then
+  ok "cannbot 生产构建已存在(跳过 next build)"
+else
+  say "→ next build(一次性,约 1-3 分钟)..."
+  NEXT_PUBLIC_SHOW_ADVANCED_TABS=true npx next build
+fi
+
+# ---- 7. 自检收尾 -----------------------------------------------------------
 echo
 say "环境自检:"
 ok "deveco:$(deveco --version 2>/dev/null | head -1)"
@@ -68,6 +79,7 @@ node -e "require('better-sqlite3')" >/dev/null 2>&1 \
   || die "better-sqlite3 加载失败——确认在 node 20 下重跑一次 ./setup.sh"
 ok "bun:$(bun --version)"
 [ -f "$VENDOR/prisma/dev.db" ] && ok "cannbot 数据库就绪" || die "prisma/dev.db 没生成"
+[ -f "$VENDOR/.next/BUILD_ID" ] && ok "cannbot 生产构建就绪" || die ".next/BUILD_ID 没生成"
 echo
 say "✅ 环境就绪。还差一步(需要你自己登录):deveco auth login"
 say "   然后从 lesson1-insight/README.md 开始第一课。"
