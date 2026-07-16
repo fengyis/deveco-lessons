@@ -22,7 +22,9 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 `setup.sh` 就地装好,不需要手工配置。
 
 **Windows 用户(Git Bash)**:三个脚本都适配了 Git Bash,额外前置只有一条——
-自己装好 **Node.js 20+**(https://nodejs.org ,setup.sh 在 Windows 上不代装 node)。
+自己装好 **Node.js 20 LTS**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node)。
+注意必须是 20.x、不是越新越好:观测器的原生依赖 better-sqlite3 只对 node 20/22 提供
+Windows 预编译包,装 24/25 会在本机触发 C++ 编译(需要 VS Build Tools)然后失败。
 bun 由 setup.sh 走 PowerShell 自动安装;sqlite3 不需要装(观测脚本会用 vendor
 里的 better-sqlite3 兜底)。或者直接用 WSL2,和 macOS/Linux 完全同一套流程。
 

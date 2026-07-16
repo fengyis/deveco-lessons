@@ -24,10 +24,14 @@ case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;; esac
 # cannbot 的原生依赖 better-sqlite3 需要 node 20(macOS 上 node 26 编不过 V8,
 # homebrew 的 node@22 还有 dylib 问题)。
 if [ "$IS_WINDOWS" = "1" ]; then
-  # Windows(Git Bash):nvm 不可用,node 由用户自装,这里只检测版本
-  command -v node >/dev/null 2>&1 || die "没找到 node。请先安装 Node.js 20:https://nodejs.org"
+  # Windows(Git Bash):nvm 不可用,node 由用户自装,这里只检测版本。
+  # 必须是 20.x:better-sqlite3(11.10.0)只对 node 20/22 提供 Windows 预编译包,
+  # 更新的 node(24/25)会回退源码编译,而那需要 VS Build Tools,学员机器一般没有。
+  command -v node >/dev/null 2>&1 || die "没找到 node。请先安装 Node.js 20 LTS:https://nodejs.org"
   NODE_MAJOR="$(node -e "console.log(process.versions.node.split('.')[0])" 2>/dev/null || echo 0)"
-  [ "$NODE_MAJOR" -ge 20 ] || die "需要 node >= 20(当前 $(node -v));请从 https://nodejs.org 安装 20.x"
+  if [ "$NODE_MAJOR" -ne 20 ]; then
+    die "需要 node 20.x(当前 $(node -v))。请安装 Node.js 20 LTS——不是越新越好:更新版本没有 better-sqlite3 预编译包,会在本机触发 C++ 编译然后失败。多版本共存可用 nvm-windows:https://github.com/coreybutler/nvm-windows"
+  fi
   ok "node $(node -v)(系统安装)"
 else
   if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
