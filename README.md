@@ -31,7 +31,14 @@ Windows 预编译包,装 24/25 会在本机触发 C++ 编译(需要 VS Build Too
   `npm config get registry` 看源——lockfile 钉的是官方源,公司内部源重新打包过的
   tarball 校验和对不上。能直连就 `npm ci --registry=https://registry.npmjs.org`;
   只能走内部源就删掉 `node_modules` 和 `package-lock.json` 后 `npm install` 重新生成。
-- better-sqlite3 编译报错:node 版本不是 20.x,见上一条。
+- better-sqlite3 编译报错:node 版本不是 20.x,见上一条。已装 node 24 想共存的话用
+  [nvm-windows](https://github.com/coreybutler/nvm-windows):`nvm install 20.19.5 && nvm use 20.19.5`。
+- better-sqlite3 预编译包「拉不到」:它从 GitHub releases 下载,公司网络挡 GitHub 就会失败。
+  在 `~/.npmrc` 加镜像后清缓存重装:
+  ```ini
+  registry=https://registry.npmmirror.com
+  better_sqlite3_binary_host_mirror=https://npmmirror.com/mirrors/better-sqlite3/
+  ```
 bun 由 setup.sh 走 PowerShell 自动安装;sqlite3 不需要装(观测脚本会用 vendor
 里的 better-sqlite3 兜底)。或者直接用 WSL2,和 macOS/Linux 完全同一套流程。
 
