@@ -1,10 +1,10 @@
 import test from "node:test"
 import assert from "node:assert/strict"
 import { join } from "node:path"
-import { testInternals } from "../template/.deveco/plugin/devecocode-goal-plugin/goal-plugin.js"
+import { GoalPlugin, testInternals } from "../template/.deveco/plugin/devecocode-goal-plugin/goal-plugin.js"
 import { createOpenCodeSessionApi } from "../template/.deveco/plugin/devecocode-goal-plugin/opencode-session-api.js"
 
-const { resolveStateFilePath } = testInternals
+const { resolveStateFilePath, currentGoal } = testInternals
 
 test("项目默认状态路径落在 .deveco 下", () => {
   assert.equal(
@@ -85,4 +85,77 @@ test("messages 的 legacy 形状把 directory 合并进已有 query", async () =
   const api = createOpenCodeSessionApi(client, { preferredShape: "legacy", directory: "/proj" })
   await api.messages("s1", { limit: 5 })
   assert.deepEqual(client.calls[0].input.query, { limit: 5, directory: "/proj" })
+})
+
+// deveco renders `/goal $ARGUMENTS` command templates before persisting the
+// resulting chat message, so the message that lands in chat.message is the
+// bare argument text with no `/goal ` prefix (see docs/probe-notes.md 问题 1).
+// The upstream `text.startsWith("/goal ")` exemption never matches that
+// message, so without the fix below the goal the command just created is
+// immediately paused as "user intervention".
+function goalMessagePart(text) {
+  return { type: "text", text }
+}
+
+async function buildGoalHooks(overrides = {}) {
+  const client = {
+    session: {
+      messages: async () => ({ data: [] }),
+      promptAsync: async () => ({}),
+      abort: async () => ({}),
+    },
+  }
+  return GoalPlugin({ client }, { persistState: false, minDelayMs: 1, ...overrides })
+}
+
+test("deveco 命令展开消息（同 sessionID、同文本、无 /goal 前缀）不触发 pause", async () => {
+  const hooks = await buildGoalHooks()
+  const sessionID = "session-deveco-1"
+  await hooks["command.execute.before"](
+    { command: "goal", sessionID, arguments: "make X" },
+    { parts: [] },
+  )
+  await hooks["chat.message"](
+    { sessionID },
+    { message: { role: "user" }, parts: [goalMessagePart("make X")] },
+  )
+  assert.equal(currentGoal(sessionID).stopped, false)
+})
+
+test("真人新消息（不同文本）仍然触发 pause", async () => {
+  const hooks = await buildGoalHooks()
+  const sessionID = "session-deveco-2"
+  await hooks["command.execute.before"](
+    { command: "goal", sessionID, arguments: "make X" },
+    { parts: [] },
+  )
+  await hooks["chat.message"](
+    { sessionID },
+    { message: { role: "user" }, parts: [goalMessagePart("actually do Y instead")] },
+  )
+  const goal = currentGoal(sessionID)
+  assert.equal(goal.stopped, true)
+  assert.equal(goal.stopReason, "user intervention")
+})
+
+test("同文本一次性豁免：第二条相同文本的消息触发 pause", async () => {
+  const hooks = await buildGoalHooks()
+  const sessionID = "session-deveco-3"
+  await hooks["command.execute.before"](
+    { command: "goal", sessionID, arguments: "make X" },
+    { parts: [] },
+  )
+  await hooks["chat.message"](
+    { sessionID },
+    { message: { role: "user" }, parts: [goalMessagePart("make X")] },
+  )
+  assert.equal(currentGoal(sessionID).stopped, false)
+
+  await hooks["chat.message"](
+    { sessionID },
+    { message: { role: "user" }, parts: [goalMessagePart("make X")] },
+  )
+  const goal = currentGoal(sessionID)
+  assert.equal(goal.stopped, true)
+  assert.equal(goal.stopReason, "user intervention")
 })

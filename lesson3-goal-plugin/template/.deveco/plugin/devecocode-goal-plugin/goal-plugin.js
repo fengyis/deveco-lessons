@@ -92,6 +92,7 @@ function createRuntimeState() {
     sessionStatuses: new Map(),
     sessionExecutionContexts: new Map(),
     readOnlyCommandGuards: new Set(),
+    pendingCommandTexts: new Map(),
     ledgerSink: null,
     persistenceLease: null,
     migrationLease: null,
@@ -787,6 +788,7 @@ function clearRuntimeState() {
   runtime.sessionStatuses.clear()
   runtime.sessionExecutionContexts.clear()
   runtime.readOnlyCommandGuards.clear()
+  runtime.pendingCommandTexts.clear()
 }
 
 function pruneGoalResults(options) {
@@ -3161,6 +3163,20 @@ async function createGoalPlugin({ client, directory } = {}, pluginOptions = {}) 
       const text = getText(message.parts)
       const commandPrefix = `/${commandName}`
       if (text === commandPrefix || text.startsWith(`${commandPrefix} `)) return
+      // deveco expands `/goal $ARGUMENTS` command templates before persisting
+      // the chat message, so the message that lands here is the bare argument
+      // text with no `/goal` prefix — the check above never matches it.
+      // command.execute.before records the just-issued argument text per
+      // session; a one-time exact match here is that same command's own
+      // expanded echo, not a real new human message, so it is exempt too.
+      // Delete on match so a genuine follow-up message with the identical
+      // text is not silently swallowed as well.
+      const pendingCommandTexts = currentRuntime().pendingCommandTexts
+      const pendingText = pendingCommandTexts.get(sessionID)
+      if (pendingText !== undefined && text.trim() === pendingText) {
+        pendingCommandTexts.delete(sessionID)
+        return
+      }
 
       const goal = goalStates.get(sessionID)
       if (!goal || goal.stopped) return
@@ -3192,6 +3208,9 @@ async function createGoalPlugin({ client, directory } = {}, pluginOptions = {}) 
       }
       const args = input.arguments.trim()
       const sessionID = input.sessionID
+      // Record the expanded command text so chat.message can recognize its own
+      // echo (see the pendingCommandTexts read there for why deveco needs this).
+      currentRuntime().pendingCommandTexts.set(sessionID, args)
       currentRuntime().readOnlyCommandGuards.delete(sessionID)
       pruneGoalResults(defaultGoalOptions)
 
