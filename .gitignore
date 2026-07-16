@@ -9,3 +9,6 @@ vendor/cannbot-insight/prisma/dev.db*
 
 # SDD 执行台账(会话脚手架,不入库)
 .superpowers/
+
+# OMC 会话状态(钩子生成,不入库)
+.omc/
