@@ -6,9 +6,13 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PORT="${1:-4099}"
 WORK="$(mktemp -d /tmp/goal-smoke-XXXXXX)"
 
-cleanup() {
-  # server 只能按端口杀：真正监听的是 deveco serve fork 出的子进程（lesson2 经验）
+# server 只能按端口杀：真正监听的是 deveco serve fork 出的子进程（lesson2 经验）
+kill_port() {
   lsof -ti:"$PORT" | xargs kill -9 2>/dev/null || true
+}
+
+cleanup() {
+  kill_port
   rm -rf "$WORK"
 }
 trap cleanup EXIT
@@ -18,7 +22,7 @@ trap 'cleanup; exit 130' INT TERM
 
 # 一设这个变量 serve 就开 basic auth，插件内 client 会 401（lesson2 坑 #4）
 unset DEVECO_SERVER_PASSWORD || true
-lsof -ti:"$PORT" | xargs kill -9 2>/dev/null || true
+kill_port
 ( cd "$WORK" && nohup deveco serve --port "$PORT" > serve.log 2>&1 & )
 for _ in $(seq 1 25); do
   lsof -iTCP:"$PORT" -sTCP:LISTEN -n -P >/dev/null 2>&1 && break
@@ -26,9 +30,12 @@ for _ in $(seq 1 25); do
 done
 lsof -iTCP:"$PORT" -sTCP:LISTEN -n -P >/dev/null 2>&1 || { echo "❌ server 没起来"; cat "$WORK/serve.log"; exit 1; }
 
-SID=$(curl -s -X POST "http://127.0.0.1:$PORT/session?directory=$WORK" \
+# 整条管线用 `|| true` 兜底：curl|python3 任一段非零（server 返回错误体导致
+# python3 KeyError 等）在 pipefail 下会让这次赋值本身失败，set -e 会在这一行
+# 直接把脚本杀掉，导致下面 [ -n "$SID" ] 的诊断分支（dump serve.log）永远走不到。
+SID=$(curl -s -m 30 -X POST "http://127.0.0.1:$PORT/session?directory=$WORK" \
   -H 'Content-Type: application/json' -d '{"title":"goal-smoke"}' \
-  | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])")
+  | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])" || true)
 [ -n "$SID" ] || { echo "❌ 建会话失败"; cat "$WORK/serve.log"; exit 1; }
 
 # docs/probe-notes.md 问题 (3)：插件是在「首个会话创建时」才实例化加载的，
@@ -62,13 +69,27 @@ OUT=$(curl -s -m 30 -X POST "http://127.0.0.1:$PORT/session/$SID/command?directo
   -H 'Content-Type: application/json' -d '{"command":"goal","arguments":"status"}')
 
 FOUND=0
-echo "$OUT" | grep -q "No active goal" && FOUND=1
+MATCH_SOURCE=""
+MATCH_LINE=""
+MATCH_LINE=$(echo "$OUT" | grep -m1 "No active goal" || true)
+if [ -n "$MATCH_LINE" ]; then
+  FOUND=1
+  MATCH_SOURCE='命令响应体（$OUT，直接 POST .../command 的返回）'
+fi
 
+# 轮询用 `MSGS=$(curl ... || true)` 兜底：单次 curl 瞬时失败（超时/连接被
+# 重置）不能让 set -e 直接中断整个 30 次轮询——必须能落到 sleep 后重试，
+# 且轮询结束后仍要能走到下面的诊断 dump，而不是被 set -e 提前带走。
 MSGS=""
 if [ "$FOUND" -eq 0 ]; then
   for _ in $(seq 1 30); do
-    MSGS=$(curl -s -m 30 "http://127.0.0.1:$PORT/session/$SID/message?directory=$WORK")
-    echo "$MSGS" | grep -q "No active goal" && { FOUND=1; break; }
+    MSGS=$(curl -s -m 30 "http://127.0.0.1:$PORT/session/$SID/message?directory=$WORK" || true)
+    MATCH_LINE=$(echo "$MSGS" | grep -m1 "No active goal" || true)
+    if [ -n "$MATCH_LINE" ]; then
+      FOUND=1
+      MATCH_SOURCE='落盘会话消息（$MSGS，轮询 GET .../message 命中）'
+      break
+    fi
     sleep 2
   done
 fi
@@ -81,4 +102,9 @@ if [ "$FOUND" -eq 0 ]; then
   echo "${MSGS:-<never fetched: 命令响应体已命中，未走到轮询>}" >&2
   exit 1
 fi
-echo "✅ /goal 命令拦截链路通"
+# 命中来源可审计：明确是哪条路径（直接响应 vs 轮询落盘消息）命中的，以及命中的原始行，
+# 而不是只有一个内部 FOUND 标记——见评审 Important #1。
+# 同 ${SID} 的坑：$MATCH_SOURCE 后面紧跟全角右括号，必须加花括号，
+# 否则 macOS bash 3.2 会把 ） 吞进变量名（见上文 ${SID} 处的注释）
+echo "✅ /goal 命令拦截链路通（命中来源：${MATCH_SOURCE}）"
+echo "   命中行：$MATCH_LINE"
