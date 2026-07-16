@@ -175,6 +175,12 @@ host *实际*怎么执行这些 hook——尤其是 `output.parts` 这种"写了
    不影响后续真人消息(哪怕文本恰好相同,也只豁免这一次,第二条同文本消息照样触发 pause)。
    上游不带这坑,是因为 opencode 的命令消息本来就带前缀落盘,`startsWith` 检查天然覆盖;这纯粹是
    deveco `$ARGUMENTS` 模板展开机制的差异,不是设计缺陷。
+9. **`goal.sh observe` 在 `/tmp/...` 路径下曾误报"没用 deveco 跑过"。** 根因:
+   `lesson1-insight/observe.sh` 的 `cmd_observe()` 用逻辑路径 `cd "$target" && pwd`(不加 `-P`)归一化
+   目录,macOS 上 `/tmp` 是指向 `/private/tmp` 的符号链接;deveco 自己往 `deveco.db` 里落盘的
+   `session.directory` 是解析后的物理路径 `/private/tmp/...`,两边字符串对不上,SQL 精确匹配落空,
+   误报成"这个项目还没用 deveco 跑过"。已修:`observe.sh` 把 `pwd` 换成 `pwd -P`(lesson1-insight
+   commit `176c452`,一行改动),同一条 `/tmp/...` 命令重跑即可正确导入 cannbot-insight。
 
 ## 观测(复用 Lesson 1)
 
@@ -193,4 +199,11 @@ node --test test/*.test.js   # 278 条:上游原有 + 本课新增的适配/goal
 scripts/smoke.sh              # 起真实 deveco serve,验证插件加载 + /goal 命令拦截链路,实测过两次
 ```
 
-<!-- 端到端验证结论:Task 10 走查后回填 -->
+端到端验证过(tmux 驱动真实 deveco 0.1.1 + GLM-5.1,两轮):round 1 在 `/tmp/goal-e2e` 跑单步目标时
+发现「`/goal <目标>` 提交消息本身被判定为人工介入」导致创建即 paused(坑 #8,已修,commit `1e482d7`);
+round 2 在修复后用刻意分两步的目标重跑,`/goal` 提交后全程 `stopped:false` 无 paused,Step 1 结束
+18ms 后 state.json 出现 `auto-continue` 事件,sqlite 落盘的续推消息带 `synthetic:true` +
+`metadata.opencode-goal-plugin.kind=continuation` 标记,证明 idle 驱动的自动续推是插件合成注入、被
+直接观测到,不是靠模型自述;模型据此从 Step 1 转入 Step 2,以 `update_goal[status=complete,
+evidence=...]` 完成证据门控收尾,`state.json` 归档 `state:"achieved"`,`a.txt`/`b.txt` 与两个独立
+commit 均落盘验证通过。
