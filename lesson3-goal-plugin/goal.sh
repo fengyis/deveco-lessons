@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+# devecocode-goal-plugin for DevEco Code
+#
+#   ./goal.sh init <项目目录> [--update]   装：插件 + /goal 命令配置（改你的仓库）
+#   ./goal.sh status <项目目录>            看目标状态（.deveco/goals/state.json）
+#   ./goal.sh observe <项目目录>           把会话导进 cannbot-insight 回看（委托 lesson1）
+#
+# 装好后：cd <项目目录> && deveco ，会话里输入 /goal <目标>。
+set -euo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEMPLATE="$HERE/template"
+
+PLUGIN_ENTRY=".deveco/plugin/devecocode-goal-plugin.ts"
+PLUGIN_DIR=".deveco/plugin/devecocode-goal-plugin"
+VENDOR_FILES=(goal-plugin.js opencode-session-api.js native-agent-config.js completion-claim.js goal-tool-result.js persistence-lease.js index.d.ts LICENSE)
+
+say() { printf "\033[1m%s\033[0m\n" "$*"; }
+die() { echo "❌ $*" >&2; exit 1; }
+
+usage() {
+  cat >&2 <<EOF
+用法:
+  $0 init   <项目目录> [--update]   装插件 + merge deveco.json 的 /goal 命令
+  $0 status <项目目录>              看当前目标状态
+  $0 observe <项目目录>             导会话进 cannbot-insight（委托 lesson1）
+
+  --update  重新覆盖项目里的插件文件（会丢掉你在项目里的改动）
+EOF
+  exit 1
+}
+
+install_file() {
+  local f="$1" update="$2"
+  if [ -f "$f" ] && [ "$update" = "0" ]; then
+    if ! cmp -s "$TEMPLATE/$f" "$f"; then
+      # ${f} 的花括号不能省：macOS 的 bash 3.2 会把紧跟其后的中文字符当成变量名的一部分
+      say "→ 保留你改过的 ${f}（要覆盖成模板版本用 --update）"
+    fi
+    return 0
+  fi
+  cp "$TEMPLATE/$f" "$f"
+  say "→ 装好 $f"
+}
+
+cmd_init() {
+  local target="${1:-}" update=0
+  shift || true
+  for a in "$@"; do
+    case "$a" in
+      --update) update=1 ;;
+      *) usage ;;
+    esac
+  done
+  [ -n "$target" ] || usage
+
+  mkdir -p "$target"
+  target="$(cd "$target" && pwd)"
+  cd "$target"
+
+  # deveco 只认 .deveco/，放 .opencode/ 下是静默失效（lesson2 坑 #1）
+  mkdir -p "$PLUGIN_DIR"
+  install_file "$PLUGIN_ENTRY" "$update"
+  local f
+  for f in "${VENDOR_FILES[@]}"; do
+    install_file "$PLUGIN_DIR/$f" "$update"
+  done
+
+  # /goal 命令必须注册在 deveco.json（$ARGUMENTS 模板）；插件只负责拦截执行。
+  # 已有字段一律不覆盖——merge 而不是重写。
+  node - "$target" <<'JS'
+const fs = require("fs")
+const path = require("path")
+const file = path.join(process.argv[2], "deveco.json")
+const config = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf-8")) : {}
+config.model ||= "deveco/GLM-5.1"
+config.command ||= {}
+config.command.goal ||= {
+  description: "设定会话级目标并自动续推到完成",
+  template: "$ARGUMENTS",
+  agent: "build",
+}
+fs.writeFileSync(file, JSON.stringify(config, null, 2) + "\n")
+JS
+  say "→ deveco.json 已 merge /goal 命令（已有字段不覆盖）"
+
+  echo
+  say "✅ 装好了: $target"
+  say "   下一步: cd $target && deveco ，会话里输入 /goal <目标>"
+}
+
+cmd_status() {
+  local target="${1:-}"
+  [ -n "$target" ] || usage
+  [ -d "$target" ] || die "$target 不存在"
+  target="$(cd "$target" && pwd)"
+  local state="$target/.deveco/goals/state.json"
+  if [ ! -f "$state" ]; then
+    say "还没有目标状态（${state} 不存在）——先在 deveco 会话里 /goal <目标>"
+    return 0
+  fi
+  cat "$state"
+}
+
+# 观测是第一课的内容，这里只委托；旁路失败不影响主流程（同 lesson2）。
+OBSERVE_SH="$(cd "$HERE/.." && pwd)/lesson1-insight/observe.sh"
+cmd_observe() {
+  if [ -x "$OBSERVE_SH" ]; then
+    "$OBSERVE_SH" "$@"
+  else
+    say "ℹ️  没找到 lesson1 的 observe.sh（${OBSERVE_SH}），跳过观测。"
+  fi
+}
+
+case "${1:-}" in
+  init) shift; cmd_init "$@" ;;
+  status) shift; cmd_status "$@" ;;
+  observe) shift; cmd_observe "$@" ;;
+  *) usage ;;
+esac
