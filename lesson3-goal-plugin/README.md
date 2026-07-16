@@ -29,7 +29,7 @@ token 消耗——去卡完成条件,不看模型嘴上怎么说。
 - `deveco auth login` 已配好模型。
 - node ≥18(跑本课的 `node --test`)。
 - shell 里**不能有** `DEVECO_SERVER_PASSWORD`(同 [Lesson 2 坑 #4](../lesson2-ralph-loop/README.md#适配-deveco-时踩到的四个坑):一设,插件内 `client` 调自己 server 会吃 401)。
-- **Windows 用户**走 Git Bash,对齐根 [README 的 Windows 前置说明](../README.md#windows-用户git-bash):
+- **Windows 用户**走 Git Bash,对齐根 [README 快速开始里的 Windows(Git Bash) 前置说明](../README.md#快速开始):
   node ≥20(`better-sqlite3` 只对 20/22 有 Windows 预编译包),自己装好,`setup.sh` 不代装。
 
 ## 用法
@@ -149,8 +149,7 @@ host *实际*怎么执行这些 hook——尤其是 `output.parts` 这种"写了
    冒烟脚本要为此预留超时和轮询时间。
 4. **macOS bash 3.2 的 `${VAR}` 花括号紧跟中文/全角字符,连咬两口。** `goal.sh` 的
    `install_file()` 里 `${f}` 后面紧跟中文字符,`scripts/smoke.sh` 里 `${SID}` 后面紧跟全角右括号
-   `）`、`${MATCH_SOURCE}` 同样紧跟全角右括号——三处都因为省略花括号在 macOS 自带的 bash 3.2 下炸出
-   `unbound variable`。[Lesson 2](../lesson2-ralph-loop/README.md) 已经记过一次同款坑,这一课又踩了
+   `）`、`${MATCH_SOURCE}` 同样紧跟全角右括号——一处提前按经验写对、两处真的炸了 `unbound variable`。[Lesson 2](../lesson2-ralph-loop/README.md) 已经记过一次同款坑,这一课又踩了
    两次,说明这不是运气问题而是习惯问题:**变量后面紧跟非 ASCII 字符,花括号必须写**,写代码时的
    第一直觉常常漏掉这条。
 5. **`set -euo pipefail` 下 `VAR=$(curl ...)` 在循环里会整个杀死脚本。** `smoke.sh` 的轮询循环里,
