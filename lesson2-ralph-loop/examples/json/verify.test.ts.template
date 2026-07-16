@@ -1,0 +1,59 @@
+import { expect, test } from "bun:test"
+import { readdirSync, readFileSync } from "fs"
+import { join } from "path"
+import { parse } from "../src/json"
+
+// 独立验收 —— JSON conformance 测试集(nst/JSONTestSuite, MIT)。
+// 故意放 .ralph/:worker 扫不到、改不了,也读不到「答案」。
+//
+//   y_*.json  必须**接受**(parse 不抛)
+//   n_*.json  必须**拒绝**(parse 必须抛)
+//   i_*       没收录 —— 实现自定,接受/拒绝都算对,没法计分
+//
+// 基线:JS 内建 JSON.parse 在这 283 条上是 283/283,所以满分**可达**,不是刁难。
+
+const SUITE = join(import.meta.dir, "jsontestsuite")
+const files = readdirSync(SUITE)
+  .filter((f) => f.endsWith(".json"))
+  .sort()
+
+const accepts = files.filter((f) => f.startsWith("y_"))
+const rejects = files.filter((f) => f.startsWith("n_"))
+
+function read(f: string): string {
+  return readFileSync(join(SUITE, f), "utf8")
+}
+
+/** 单条是否达标。不抛,只返回布尔 —— 便于汇总计分。 */
+function ok(f: string): boolean {
+  let threw = false
+  try {
+    parse(read(f))
+  } catch {
+    threw = true
+  }
+  return f.startsWith("y_") ? !threw : threw
+}
+
+// —— 逐条:哪条挂了一目了然,reviewer 要靠这个说出「还差什么」——
+for (const f of accepts) {
+  test(`y 必须接受: ${f}`, () => {
+    expect(() => parse(read(f))).not.toThrow()
+  })
+}
+for (const f of rejects) {
+  test(`n 必须拒绝: ${f}`, () => {
+    expect(() => parse(read(f))).toThrow()
+  })
+}
+
+// —— 总分:给 reviewer 和学员看的「收敛曲线」读数 ——
+test("conformance 满分 283/283", () => {
+  const failed = files.filter((f) => !ok(f))
+  console.log(`\nCONFORMANCE SCORE: ${files.length - failed.length}/${files.length}`)
+  if (failed.length) {
+    console.log(`FAILING (${failed.length}):`)
+    for (const f of failed) console.log("  -", f)
+  }
+  expect(failed).toEqual([])
+})

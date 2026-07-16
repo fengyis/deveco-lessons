@@ -1,0 +1,32 @@
+import { expect, test } from "bun:test"
+import { parse, compare } from "../src/semver"
+
+test("预发布 < 正式版", () => {
+  expect(compare("1.0.0-beta", "1.0.0")).toBe(-1)
+  expect(compare("1.0.0", "1.0.0-beta")).toBe(1)
+})
+test("数字段按数值比而非字典序（这里是最容易写错的地方）", () => {
+  expect(compare("1.0.0-alpha.2", "1.0.0-alpha.10")).toBe(-1)   // 2 < 10，字典序会判成 >
+})
+test("数字段 < 非数字段", () => {
+  expect(compare("1.0.0-1", "1.0.0-alpha")).toBe(-1)
+})
+test("段数少的更小（前缀相同时）", () => {
+  expect(compare("1.0.0-alpha", "1.0.0-alpha.1")).toBe(-1)
+})
+test("semver 官方顺序链", () => {
+  const chain = ["1.0.0-alpha", "1.0.0-alpha.1", "1.0.0-alpha.beta", "1.0.0-beta",
+                 "1.0.0-beta.2", "1.0.0-beta.11", "1.0.0-rc.1", "1.0.0"]
+  for (let i = 0; i + 1 < chain.length; i++) {
+    expect([chain[i], chain[i + 1], compare(chain[i], chain[i + 1])]).toEqual([chain[i], chain[i + 1], -1])
+  }
+})
+test("非法输入 throw", () => {
+  expect(() => parse("1.2")).toThrow()
+  expect(() => parse("x.y.z")).toThrow()
+  expect(() => parse("")).toThrow()
+})
+test("parse 结构", () => {
+  expect(parse("1.2.3")).toMatchObject({ major: 1, minor: 2, patch: 3, prerelease: [] })
+  expect(parse("1.2.3-beta.1").prerelease).toEqual(["beta", 1])
+})

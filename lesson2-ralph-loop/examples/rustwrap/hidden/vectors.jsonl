@@ -1,0 +1,817 @@
+{"_meta": {"generator": "gen_vectors.py", "python": "3.14.3", "count": 816}}
+{"id": 1, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 2, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* The", "  quick", "  brown", "  fox", "  jumps", "  over the", "  lazy dog"]}
+{"id": 3, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 4, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 5, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 6, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 7, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 8, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["The quick ", "brown fox ", "jumps over", " the lazy ", "dog"]}
+{"id": 9, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 10, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["The quick", "[...]"]}
+{"id": 11, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["The …"]}
+{"id": 12, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["The quick", "brown fox", "jumps over", "the lazy", "dog"]}
+{"id": 13, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["The quick ", "brown fox ", "jumps over", " the lazy ", "dog"]}
+{"id": 14, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 15, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* The quick brown", "  fox jumps over the", "  lazy dog"]}
+{"id": 16, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 17, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 18, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 19, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 20, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 21, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["The quick brown fox ", "jumps over the lazy ", "dog"]}
+{"id": 22, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 23, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["The quick brown fox", "jumps over the [...]"]}
+{"id": 24, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["The quick brown …"]}
+{"id": 25, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["The quick brown fox", "jumps over the lazy", "dog"]}
+{"id": 26, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["The quick brown fox ", "jumps over the lazy ", "dog"]}
+{"id": 27, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 28, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* The quick brown fox jumps over the lazy dog"]}
+{"id": 29, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 30, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 31, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 32, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 33, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 34, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 35, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 36, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 37, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 38, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 39, "func": "wrap", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["The quick brown fox jumps over the lazy dog"]}
+{"id": 40, "func": "wrap", "text": "hello", "kwargs": {"width": 10}, "expected": ["hello"]}
+{"id": 41, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* hello"]}
+{"id": 42, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["hello"]}
+{"id": 43, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["hello"]}
+{"id": 44, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["hello"]}
+{"id": 45, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["hello"]}
+{"id": 46, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["hello"]}
+{"id": 47, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["hello"]}
+{"id": 48, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["hello"]}
+{"id": 49, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["hello"]}
+{"id": 50, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["hello"]}
+{"id": 51, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["hello"]}
+{"id": 52, "func": "wrap", "text": "hello", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["hello"]}
+{"id": 53, "func": "wrap", "text": "hello", "kwargs": {"width": 20}, "expected": ["hello"]}
+{"id": 54, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* hello"]}
+{"id": 55, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["hello"]}
+{"id": 56, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["hello"]}
+{"id": 57, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["hello"]}
+{"id": 58, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["hello"]}
+{"id": 59, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["hello"]}
+{"id": 60, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["hello"]}
+{"id": 61, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["hello"]}
+{"id": 62, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["hello"]}
+{"id": 63, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["hello"]}
+{"id": 64, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["hello"]}
+{"id": 65, "func": "wrap", "text": "hello", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["hello"]}
+{"id": 66, "func": "wrap", "text": "hello", "kwargs": {"width": 70}, "expected": ["hello"]}
+{"id": 67, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* hello"]}
+{"id": 68, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["hello"]}
+{"id": 69, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["hello"]}
+{"id": 70, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["hello"]}
+{"id": 71, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["hello"]}
+{"id": 72, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["hello"]}
+{"id": 73, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["hello"]}
+{"id": 74, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["hello"]}
+{"id": 75, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["hello"]}
+{"id": 76, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["hello"]}
+{"id": 77, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["hello"]}
+{"id": 78, "func": "wrap", "text": "hello", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["hello"]}
+{"id": 79, "func": "wrap", "text": "", "kwargs": {"width": 10}, "expected": []}
+{"id": 80, "func": "wrap", "text": "", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 81, "func": "wrap", "text": "", "kwargs": {"width": 10, "expand_tabs": false}, "expected": []}
+{"id": 82, "func": "wrap", "text": "", "kwargs": {"width": 10, "tabsize": 4}, "expected": []}
+{"id": 83, "func": "wrap", "text": "", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": []}
+{"id": 84, "func": "wrap", "text": "", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": []}
+{"id": 85, "func": "wrap", "text": "", "kwargs": {"width": 10, "break_long_words": false}, "expected": []}
+{"id": 86, "func": "wrap", "text": "", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": []}
+{"id": 87, "func": "wrap", "text": "", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": []}
+{"id": 88, "func": "wrap", "text": "", "kwargs": {"width": 10, "max_lines": 2}, "expected": []}
+{"id": 89, "func": "wrap", "text": "", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 90, "func": "wrap", "text": "", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 91, "func": "wrap", "text": "", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": []}
+{"id": 92, "func": "wrap", "text": "", "kwargs": {"width": 20}, "expected": []}
+{"id": 93, "func": "wrap", "text": "", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 94, "func": "wrap", "text": "", "kwargs": {"width": 20, "expand_tabs": false}, "expected": []}
+{"id": 95, "func": "wrap", "text": "", "kwargs": {"width": 20, "tabsize": 4}, "expected": []}
+{"id": 96, "func": "wrap", "text": "", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": []}
+{"id": 97, "func": "wrap", "text": "", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": []}
+{"id": 98, "func": "wrap", "text": "", "kwargs": {"width": 20, "break_long_words": false}, "expected": []}
+{"id": 99, "func": "wrap", "text": "", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": []}
+{"id": 100, "func": "wrap", "text": "", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": []}
+{"id": 101, "func": "wrap", "text": "", "kwargs": {"width": 20, "max_lines": 2}, "expected": []}
+{"id": 102, "func": "wrap", "text": "", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 103, "func": "wrap", "text": "", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 104, "func": "wrap", "text": "", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": []}
+{"id": 105, "func": "wrap", "text": "", "kwargs": {"width": 70}, "expected": []}
+{"id": 106, "func": "wrap", "text": "", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 107, "func": "wrap", "text": "", "kwargs": {"width": 70, "expand_tabs": false}, "expected": []}
+{"id": 108, "func": "wrap", "text": "", "kwargs": {"width": 70, "tabsize": 4}, "expected": []}
+{"id": 109, "func": "wrap", "text": "", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": []}
+{"id": 110, "func": "wrap", "text": "", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": []}
+{"id": 111, "func": "wrap", "text": "", "kwargs": {"width": 70, "break_long_words": false}, "expected": []}
+{"id": 112, "func": "wrap", "text": "", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": []}
+{"id": 113, "func": "wrap", "text": "", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": []}
+{"id": 114, "func": "wrap", "text": "", "kwargs": {"width": 70, "max_lines": 2}, "expected": []}
+{"id": 115, "func": "wrap", "text": "", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 116, "func": "wrap", "text": "", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 117, "func": "wrap", "text": "", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": []}
+{"id": 118, "func": "wrap", "text": "   ", "kwargs": {"width": 10}, "expected": []}
+{"id": 119, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 120, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "expand_tabs": false}, "expected": []}
+{"id": 121, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "tabsize": 4}, "expected": []}
+{"id": 122, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": []}
+{"id": 123, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": []}
+{"id": 124, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "break_long_words": false}, "expected": []}
+{"id": 125, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["   "]}
+{"id": 126, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": []}
+{"id": 127, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "max_lines": 2}, "expected": []}
+{"id": 128, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 129, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 130, "func": "wrap", "text": "   ", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["   "]}
+{"id": 131, "func": "wrap", "text": "   ", "kwargs": {"width": 20}, "expected": []}
+{"id": 132, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 133, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "expand_tabs": false}, "expected": []}
+{"id": 134, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "tabsize": 4}, "expected": []}
+{"id": 135, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": []}
+{"id": 136, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": []}
+{"id": 137, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "break_long_words": false}, "expected": []}
+{"id": 138, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["   "]}
+{"id": 139, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": []}
+{"id": 140, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "max_lines": 2}, "expected": []}
+{"id": 141, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 142, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 143, "func": "wrap", "text": "   ", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["   "]}
+{"id": 144, "func": "wrap", "text": "   ", "kwargs": {"width": 70}, "expected": []}
+{"id": 145, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 146, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "expand_tabs": false}, "expected": []}
+{"id": 147, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "tabsize": 4}, "expected": []}
+{"id": 148, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": []}
+{"id": 149, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": []}
+{"id": 150, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "break_long_words": false}, "expected": []}
+{"id": 151, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["   "]}
+{"id": 152, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": []}
+{"id": 153, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "max_lines": 2}, "expected": []}
+{"id": 154, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 155, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 156, "func": "wrap", "text": "   ", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["   "]}
+{"id": 157, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10}, "expected": ["  leading", "and", "trailing"]}
+{"id": 158, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* leading", "  and", "  trailing"]}
+{"id": 159, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["  leading", "and", "trailing"]}
+{"id": 160, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["  leading", "and", "trailing"]}
+{"id": 161, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["  leading", "and", "trailing"]}
+{"id": 162, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["  leading", "and", "trailing"]}
+{"id": 163, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["  leading", "and", "trailing"]}
+{"id": 164, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["  leading ", "and ", "trailing  "]}
+{"id": 165, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["  leading", "and", "trailing"]}
+{"id": 166, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["  leading", "and [...]"]}
+{"id": 167, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["…"]}
+{"id": 168, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["  leading", "and", "trailing"]}
+{"id": 169, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["  leading ", "and ", "trailing  "]}
+{"id": 170, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20}, "expected": ["  leading and", "trailing"]}
+{"id": 171, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["*   leading and", "  trailing"]}
+{"id": 172, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["  leading and", "trailing"]}
+{"id": 173, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["  leading and", "trailing"]}
+{"id": 174, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["  leading and", "trailing"]}
+{"id": 175, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["  leading and", "trailing"]}
+{"id": 176, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["  leading and", "trailing"]}
+{"id": 177, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["  leading and ", "trailing  "]}
+{"id": 178, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["  leading and", "trailing"]}
+{"id": 179, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["  leading and", "trailing"]}
+{"id": 180, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["  leading and …"]}
+{"id": 181, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["  leading and", "trailing"]}
+{"id": 182, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["  leading and ", "trailing  "]}
+{"id": 183, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70}, "expected": ["  leading and trailing"]}
+{"id": 184, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["*   leading and trailing"]}
+{"id": 185, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["  leading and trailing"]}
+{"id": 186, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["  leading and trailing"]}
+{"id": 187, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["  leading and trailing"]}
+{"id": 188, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["  leading and trailing"]}
+{"id": 189, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["  leading and trailing"]}
+{"id": 190, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["  leading and trailing  "]}
+{"id": 191, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["  leading and trailing"]}
+{"id": 192, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["  leading and trailing"]}
+{"id": 193, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["  leading and trailing"]}
+{"id": 194, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["  leading and trailing"]}
+{"id": 195, "func": "wrap", "text": "  leading and trailing  ", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["  leading and trailing  "]}
+{"id": 196, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 197, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* multiple", "  internal", "  spaces"]}
+{"id": 198, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 199, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 200, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 201, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 202, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 203, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["multiple", "   ", "internal", "    spaces"]}
+{"id": 204, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 205, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["multiple", "[...]"]}
+{"id": 206, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["multiple …"]}
+{"id": 207, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["multiple", "internal", "spaces"]}
+{"id": 208, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["multiple", "   ", "internal", "    spaces"]}
+{"id": 209, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20}, "expected": ["multiple   internal", "spaces"]}
+{"id": 210, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* multiple", "  internal    spaces"]}
+{"id": 211, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["multiple   internal", "spaces"]}
+{"id": 212, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["multiple   internal", "spaces"]}
+{"id": 213, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["multiple   internal", "spaces"]}
+{"id": 214, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["multiple   internal", "spaces"]}
+{"id": 215, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["multiple   internal", "spaces"]}
+{"id": 216, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["multiple   internal", "    spaces"]}
+{"id": 217, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["multiple   internal", "spaces"]}
+{"id": 218, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["multiple   internal", "spaces"]}
+{"id": 219, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["multiple …"]}
+{"id": 220, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["multiple   internal", "spaces"]}
+{"id": 221, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["multiple   internal", "    spaces"]}
+{"id": 222, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70}, "expected": ["multiple   internal    spaces"]}
+{"id": 223, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* multiple   internal    spaces"]}
+{"id": 224, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 225, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["multiple   internal    spaces"]}
+{"id": 226, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 227, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["multiple   internal    spaces"]}
+{"id": 228, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 229, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 230, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 231, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["multiple   internal    spaces"]}
+{"id": 232, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["multiple   internal    spaces"]}
+{"id": 233, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 234, "func": "wrap", "text": "multiple   internal    spaces", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["multiple   internal    spaces"]}
+{"id": 235, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10}, "expected": ["line one", "line two", "line three"]}
+{"id": 236, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* line one", "  line two", "  line", "  three"]}
+{"id": 237, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["line one", "line two", "line three"]}
+{"id": 238, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["line one", "line two", "line three"]}
+{"id": 239, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["line one", "line two", "line three"]}
+{"id": 240, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["line one", "line two", "line three"]}
+{"id": 241, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["line one", "line two", "line three"]}
+{"id": 242, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["line one ", "line two ", "line three"]}
+{"id": 243, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["line one", "line two", "line three"]}
+{"id": 244, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["line one", "line [...]"]}
+{"id": 245, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["line one …"]}
+{"id": 246, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["line one", "line two", "line three"]}
+{"id": 247, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["line one\n", "line two\n", "line three"]}
+{"id": 248, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20}, "expected": ["line one line two", "line three"]}
+{"id": 249, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* line one line two", "  line three"]}
+{"id": 250, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["line one line two", "line three"]}
+{"id": 251, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["line one line two", "line three"]}
+{"id": 252, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["line one\nline two", "line three"]}
+{"id": 253, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["line one line two", "line three"]}
+{"id": 254, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["line one line two", "line three"]}
+{"id": 255, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["line one line two ", "line three"]}
+{"id": 256, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["line one line two", "line three"]}
+{"id": 257, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["line one line two", "line three"]}
+{"id": 258, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["line one line two …"]}
+{"id": 259, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["line one line two", "line three"]}
+{"id": 260, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["line one\nline two\n", "line three"]}
+{"id": 261, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70}, "expected": ["line one line two line three"]}
+{"id": 262, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* line one line two line three"]}
+{"id": 263, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["line one line two line three"]}
+{"id": 264, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["line one line two line three"]}
+{"id": 265, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["line one\nline two\nline three"]}
+{"id": 266, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["line one line two line three"]}
+{"id": 267, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["line one line two line three"]}
+{"id": 268, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["line one line two line three"]}
+{"id": 269, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["line one line two line three"]}
+{"id": 270, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["line one line two line three"]}
+{"id": 271, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["line one line two line three"]}
+{"id": 272, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["line one line two line three"]}
+{"id": 273, "func": "wrap", "text": "line one\nline two\nline three", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["line one\nline two\nline three"]}
+{"id": 274, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10}, "expected": ["tabs", "here", "and", "there"]}
+{"id": 275, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* tabs", "  here", "  and", "  there"]}
+{"id": 276, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["tabs here", "and there"]}
+{"id": 277, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["tabs", "here", "and there"]}
+{"id": 278, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["tabs", "here", "and", "there"]}
+{"id": 279, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["tabs", "here", "and", "there"]}
+{"id": 280, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["tabs", "here", "and", "there"]}
+{"id": 281, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["tabs    ", "here    ", "and     ", "there"]}
+{"id": 282, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["tabs", "here", "and", "there"]}
+{"id": 283, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["tabs", "here [...]"]}
+{"id": 284, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["tabs …"]}
+{"id": 285, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["tabs", "here", "and", "there"]}
+{"id": 286, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["tabs    ", "here    ", "and     ", "there"]}
+{"id": 287, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20}, "expected": ["tabs    here    and", "there"]}
+{"id": 288, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* tabs    here", "  and     there"]}
+{"id": 289, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["tabs here and there"]}
+{"id": 290, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["tabs    here    and", "there"]}
+{"id": 291, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["tabs    here    and", "there"]}
+{"id": 292, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["tabs    here    and", "there"]}
+{"id": 293, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["tabs    here    and", "there"]}
+{"id": 294, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["tabs    here    and", "     there"]}
+{"id": 295, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["tabs    here    and", "there"]}
+{"id": 296, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["tabs    here    and", "there"]}
+{"id": 297, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["tabs    here …"]}
+{"id": 298, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["tabs    here    and", "there"]}
+{"id": 299, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["tabs    here    and", "     there"]}
+{"id": 300, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70}, "expected": ["tabs    here    and     there"]}
+{"id": 301, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* tabs    here    and     there"]}
+{"id": 302, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["tabs here and there"]}
+{"id": 303, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["tabs    here    and there"]}
+{"id": 304, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["tabs    here    and     there"]}
+{"id": 305, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["tabs    here    and     there"]}
+{"id": 306, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["tabs    here    and     there"]}
+{"id": 307, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["tabs    here    and     there"]}
+{"id": 308, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["tabs    here    and     there"]}
+{"id": 309, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["tabs    here    and     there"]}
+{"id": 310, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["tabs    here    and     there"]}
+{"id": 311, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["tabs    here    and     there"]}
+{"id": 312, "func": "wrap", "text": "tabs\there\tand\tthere", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["tabs    here    and     there"]}
+{"id": 313, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10}, "expected": []}
+{"id": 314, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 315, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "expand_tabs": false}, "expected": []}
+{"id": 316, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "tabsize": 4}, "expected": []}
+{"id": 317, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": []}
+{"id": 318, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": []}
+{"id": 319, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "break_long_words": false}, "expected": []}
+{"id": 320, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["   "]}
+{"id": 321, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": []}
+{"id": 322, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "max_lines": 2}, "expected": []}
+{"id": 323, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 324, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 325, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["\n\n\n"]}
+{"id": 326, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20}, "expected": []}
+{"id": 327, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 328, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "expand_tabs": false}, "expected": []}
+{"id": 329, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "tabsize": 4}, "expected": []}
+{"id": 330, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": []}
+{"id": 331, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": []}
+{"id": 332, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "break_long_words": false}, "expected": []}
+{"id": 333, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["   "]}
+{"id": 334, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": []}
+{"id": 335, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "max_lines": 2}, "expected": []}
+{"id": 336, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 337, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 338, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["\n\n\n"]}
+{"id": 339, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70}, "expected": []}
+{"id": 340, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": []}
+{"id": 341, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "expand_tabs": false}, "expected": []}
+{"id": 342, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "tabsize": 4}, "expected": []}
+{"id": 343, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": []}
+{"id": 344, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": []}
+{"id": 345, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "break_long_words": false}, "expected": []}
+{"id": 346, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["   "]}
+{"id": 347, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": []}
+{"id": 348, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "max_lines": 2}, "expected": []}
+{"id": 349, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": []}
+{"id": 350, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": []}
+{"id": 351, "func": "wrap", "text": "\n\n\n", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["\n\n\n"]}
+{"id": 352, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10}, "expected": ["para one", "para two"]}
+{"id": 353, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* para one", "  para two"]}
+{"id": 354, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["para one", "para two"]}
+{"id": 355, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["para one", "para two"]}
+{"id": 356, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["para one", "para two"]}
+{"id": 357, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["para one", "para two"]}
+{"id": 358, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["para one", "para two"]}
+{"id": 359, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["para one  ", "para two"]}
+{"id": 360, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["para one", "para two"]}
+{"id": 361, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["para one", "para two"]}
+{"id": 362, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["para one …"]}
+{"id": 363, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["para one", "para two"]}
+{"id": 364, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["para one\n\n", "para two"]}
+{"id": 365, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20}, "expected": ["para one  para two"]}
+{"id": 366, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* para one  para two"]}
+{"id": 367, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["para one  para two"]}
+{"id": 368, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["para one  para two"]}
+{"id": 369, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["para one\n\npara two"]}
+{"id": 370, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["para one  para two"]}
+{"id": 371, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["para one  para two"]}
+{"id": 372, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["para one  para two"]}
+{"id": 373, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["para one  para two"]}
+{"id": 374, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["para one  para two"]}
+{"id": 375, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["para one  para two"]}
+{"id": 376, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["para one  para two"]}
+{"id": 377, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["para one\n\npara two"]}
+{"id": 378, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70}, "expected": ["para one  para two"]}
+{"id": 379, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* para one  para two"]}
+{"id": 380, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["para one  para two"]}
+{"id": 381, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["para one  para two"]}
+{"id": 382, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["para one\n\npara two"]}
+{"id": 383, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["para one  para two"]}
+{"id": 384, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["para one  para two"]}
+{"id": 385, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["para one  para two"]}
+{"id": 386, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["para one  para two"]}
+{"id": 387, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["para one  para two"]}
+{"id": 388, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["para one  para two"]}
+{"id": 389, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["para one  para two"]}
+{"id": 390, "func": "wrap", "text": "para one\n\npara two", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["para one\n\npara two"]}
+{"id": 391, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious", "word"]}
+{"id": 392, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* a superc", "  alifragi", "  listicex", "  pialidoc", "  ious", "  word"]}
+{"id": 393, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious", "word"]}
+{"id": 394, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious", "word"]}
+{"id": 395, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious", "word"]}
+{"id": 396, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious", "word"]}
+{"id": 397, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["a", "supercalifragilisticexpialidocious", "word"]}
+{"id": 398, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious ", "word"]}
+{"id": 399, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious", "word"]}
+{"id": 400, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["a supercal", "[...]"]}
+{"id": 401, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["a …"]}
+{"id": 402, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["a", "supercalifragilisticexpialidocious", "word"]}
+{"id": 403, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["a supercal", "ifragilist", "icexpialid", "ocious ", "word"]}
+{"id": 404, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20}, "expected": ["a supercalifragilist", "icexpialidocious", "word"]}
+{"id": 405, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* a supercalifragili", "  sticexpialidocious", "  word"]}
+{"id": 406, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["a supercalifragilist", "icexpialidocious", "word"]}
+{"id": 407, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["a supercalifragilist", "icexpialidocious", "word"]}
+{"id": 408, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["a supercalifragilist", "icexpialidocious", "word"]}
+{"id": 409, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["a supercalifragilist", "icexpialidocious", "word"]}
+{"id": 410, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["a", "supercalifragilisticexpialidocious", "word"]}
+{"id": 411, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["a supercalifragilist", "icexpialidocious ", "word"]}
+{"id": 412, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["a supercalifragilist", "icexpialidocious", "word"]}
+{"id": 413, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["a supercalifragilist", "[...]"]}
+{"id": 414, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["a …"]}
+{"id": 415, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["a", "supercalifragilisticexpialidocious", "word"]}
+{"id": 416, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["a supercalifragilist", "icexpialidocious ", "word"]}
+{"id": 417, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 418, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* a supercalifragilisticexpialidocious word"]}
+{"id": 419, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 420, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 421, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 422, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 423, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 424, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 425, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 426, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 427, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 428, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 429, "func": "wrap", "text": "a supercalifragilisticexpialidocious word", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["a supercalifragilisticexpialidocious word"]}
+{"id": 430, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 431, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* antidise", "  stablish", "  mentaria", "  nism"]}
+{"id": 432, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 433, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 434, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 435, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 436, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 437, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 438, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 439, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["antidisest", "[...]"]}
+{"id": 440, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["…"]}
+{"id": 441, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 442, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["antidisest", "ablishment", "arianism"]}
+{"id": 443, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 444, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* antidisestablishme", "  ntarianism"]}
+{"id": 445, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 446, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 447, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 448, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 449, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 450, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 451, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 452, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 453, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["…"]}
+{"id": 454, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 455, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["antidisestablishment", "arianism"]}
+{"id": 456, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70}, "expected": ["antidisestablishmentarianism"]}
+{"id": 457, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* antidisestablishmentarianism"]}
+{"id": 458, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 459, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["antidisestablishmentarianism"]}
+{"id": 460, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 461, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["antidisestablishmentarianism"]}
+{"id": 462, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 463, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 464, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 465, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["antidisestablishmentarianism"]}
+{"id": 466, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["antidisestablishmentarianism"]}
+{"id": 467, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 468, "func": "wrap", "text": "antidisestablishmentarianism", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["antidisestablishmentarianism"]}
+{"id": 469, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 470, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* short", "  and-", "  then-a-", "  very-", "  long-hyp", "  henated-", "  compound", "  -word", "  here"]}
+{"id": 471, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 472, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 473, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 474, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 475, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated-", "compound-", "word here"]}
+{"id": 476, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 477, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["short and-", "then-a-ver", "y-long-hyp", "henated-co", "mpound-wor", "d here"]}
+{"id": 478, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["short and-", "[...]"]}
+{"id": 479, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["short …"]}
+{"id": 480, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["short", "and-then-a-very-long-hyphenated-compound-word", "here"]}
+{"id": 481, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["short and-", "then-a-", "very-long-", "hyphenated", "-compound-", "word here"]}
+{"id": 482, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 483, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* short and-then-a-", "  very-long-", "  hyphenated-", "  compound-word here"]}
+{"id": 484, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 485, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 486, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 487, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 488, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 489, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 490, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["short and-then-a-ver", "y-long-hyphenated-co", "mpound-word here"]}
+{"id": 491, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["short and-then-a-", "very-long- [...]"]}
+{"id": 492, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["short and-then-a- …"]}
+{"id": 493, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["short", "and-then-a-very-long-hyphenated-compound-word", "here"]}
+{"id": 494, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["short and-then-a-", "very-long-", "hyphenated-compound-", "word here"]}
+{"id": 495, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 496, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 497, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 498, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 499, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 500, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 501, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 502, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 503, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 504, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 505, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 506, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 507, "func": "wrap", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["short and-then-a-very-long-hyphenated-compound-word here"]}
+{"id": 508, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10}, "expected": ["well-known", "state-of-", "the-art", "solutions"]}
+{"id": 509, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* well-", "  known", "  state-", "  of-the-", "  art solu", "  tions"]}
+{"id": 510, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["well-known", "state-of-", "the-art", "solutions"]}
+{"id": 511, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["well-known", "state-of-", "the-art", "solutions"]}
+{"id": 512, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["well-known", "state-of-", "the-art", "solutions"]}
+{"id": 513, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["well-known", "state-of-", "the-art", "solutions"]}
+{"id": 514, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["well-known", "state-of-", "the-art", "solutions"]}
+{"id": 515, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["well-known", " state-of-", "the-art ", "solutions"]}
+{"id": 516, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["well-known", "state-of-t", "he-art", "solutions"]}
+{"id": 517, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["well-known", "[...]"]}
+{"id": 518, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["well- …"]}
+{"id": 519, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["well-known", "state-of-the-art", "solutions"]}
+{"id": 520, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["well-known", " state-of-", "the-art ", "solutions"]}
+{"id": 521, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 522, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* well-known state-", "  of-the-art", "  solutions"]}
+{"id": 523, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 524, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 525, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 526, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 527, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 528, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 529, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["well-known", "state-of-the-art", "solutions"]}
+{"id": 530, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 531, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["well-known state- …"]}
+{"id": 532, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["well-known", "state-of-the-art", "solutions"]}
+{"id": 533, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["well-known state-of-", "the-art solutions"]}
+{"id": 534, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 535, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* well-known state-of-the-art solutions"]}
+{"id": 536, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 537, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 538, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 539, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 540, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 541, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 542, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 543, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 544, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 545, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 546, "func": "wrap", "text": "well-known state-of-the-art solutions", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["well-known state-of-the-art solutions"]}
+{"id": 547, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10}, "expected": ["pre- and", "post-", "processing"]}
+{"id": 548, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* pre- and", "  post-pro", "  cessing"]}
+{"id": 549, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["pre- and", "post-", "processing"]}
+{"id": 550, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["pre- and", "post-", "processing"]}
+{"id": 551, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["pre- and", "post-", "processing"]}
+{"id": 552, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["pre- and", "post-", "processing"]}
+{"id": 553, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["pre- and", "post-", "processing"]}
+{"id": 554, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["pre- and ", "post-", "processing"]}
+{"id": 555, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["pre- and p", "ost-proces", "sing"]}
+{"id": 556, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["pre- and", "[...]"]}
+{"id": 557, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["pre- and …"]}
+{"id": 558, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["pre- and", "post-processing"]}
+{"id": 559, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["pre- and ", "post-", "processing"]}
+{"id": 560, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20}, "expected": ["pre- and post-", "processing"]}
+{"id": 561, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* pre- and post-", "  processing"]}
+{"id": 562, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["pre- and post-", "processing"]}
+{"id": 563, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["pre- and post-", "processing"]}
+{"id": 564, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["pre- and post-", "processing"]}
+{"id": 565, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["pre- and post-", "processing"]}
+{"id": 566, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["pre- and post-", "processing"]}
+{"id": 567, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["pre- and post-", "processing"]}
+{"id": 568, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["pre- and", "post-processing"]}
+{"id": 569, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["pre- and post-", "processing"]}
+{"id": 570, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["pre- and post- …"]}
+{"id": 571, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["pre- and", "post-processing"]}
+{"id": 572, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["pre- and post-", "processing"]}
+{"id": 573, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70}, "expected": ["pre- and post-processing"]}
+{"id": 574, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* pre- and post-processing"]}
+{"id": 575, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["pre- and post-processing"]}
+{"id": 576, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["pre- and post-processing"]}
+{"id": 577, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["pre- and post-processing"]}
+{"id": 578, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["pre- and post-processing"]}
+{"id": 579, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["pre- and post-processing"]}
+{"id": 580, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["pre- and post-processing"]}
+{"id": 581, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["pre- and post-processing"]}
+{"id": 582, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["pre- and post-processing"]}
+{"id": 583, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["pre- and post-processing"]}
+{"id": 584, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["pre- and post-processing"]}
+{"id": 585, "func": "wrap", "text": "pre- and post-processing", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["pre- and post-processing"]}
+{"id": 586, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 587, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* First se", "  ntence.", "  Second", "  one!", "  Third?", "  Yes."]}
+{"id": 588, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 589, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 590, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 591, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 592, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 593, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["First ", "sentence.", "  Second ", "one!  ", "Third?  ", "Yes."]}
+{"id": 594, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 595, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["First", "[...]"]}
+{"id": 596, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["First …"]}
+{"id": 597, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["First", "sentence.", "Second", "one!", "Third?", "Yes."]}
+{"id": 598, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["First ", "sentence.", "  Second ", "one!  ", "Third?  ", "Yes."]}
+{"id": 599, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 600, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* First sentence.", "  Second one!", "  Third?  Yes."]}
+{"id": 601, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 602, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 603, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 604, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 605, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 606, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["First sentence.  ", "Second one!  Third?", "  Yes."]}
+{"id": 607, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 608, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["First sentence.", "Second one! [...]"]}
+{"id": 609, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["First sentence. …"]}
+{"id": 610, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["First sentence.", "Second one!  Third?", "Yes."]}
+{"id": 611, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["First sentence.  ", "Second one!  Third?", "  Yes."]}
+{"id": 612, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 613, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* First sentence.  Second one!  Third?  Yes."]}
+{"id": 614, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 615, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 616, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 617, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 618, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 619, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 620, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 621, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 622, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 623, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 624, "func": "wrap", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["First sentence.  Second one!  Third?  Yes."]}
+{"id": 625, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10}, "expected": ["Dr. Smith", "went to Wa", "shington.", "He arrived", "Monday."]}
+{"id": 626, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* Dr.", "  Smith", "  went to", "  Washingt", "  on. He", "  arrived", "  Monday."]}
+{"id": 627, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["Dr. Smith", "went to Wa", "shington.", "He arrived", "Monday."]}
+{"id": 628, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["Dr. Smith", "went to Wa", "shington.", "He arrived", "Monday."]}
+{"id": 629, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["Dr. Smith", "went to Wa", "shington.", "He arrived", "Monday."]}
+{"id": 630, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["Dr.  Smith", "went to Wa", "shington.", "He arrived", "Monday."]}
+{"id": 631, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["Dr. Smith", "went to", "Washington.", "He arrived", "Monday."]}
+{"id": 632, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["Dr. Smith ", "went to Wa", "shington. ", "He arrived", " Monday."]}
+{"id": 633, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["Dr. Smith", "went to Wa", "shington.", "He arrived", "Monday."]}
+{"id": 634, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["Dr. Smith", "went [...]"]}
+{"id": 635, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["Dr. …"]}
+{"id": 636, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["Dr. Smith", "went to", "Washington.", "He arrived", "Monday."]}
+{"id": 637, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["Dr. Smith ", "went to Wa", "shington. ", "He arrived", " Monday."]}
+{"id": 638, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 639, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* Dr. Smith went to", "  Washington. He", "  arrived Monday."]}
+{"id": 640, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 641, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 642, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 643, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["Dr.  Smith went to", "Washington.  He", "arrived Monday."]}
+{"id": 644, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 645, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["Dr. Smith went to ", "Washington. He ", "arrived Monday."]}
+{"id": 646, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 647, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["Dr. Smith went to", "Washington. He [...]"]}
+{"id": 648, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["Dr. Smith went to …"]}
+{"id": 649, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["Dr. Smith went to", "Washington. He", "arrived Monday."]}
+{"id": 650, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["Dr. Smith went to ", "Washington. He ", "arrived Monday."]}
+{"id": 651, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 652, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 653, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 654, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 655, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 656, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["Dr.  Smith went to Washington.  He arrived Monday."]}
+{"id": 657, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 658, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 659, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 660, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 661, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 662, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 663, "func": "wrap", "text": "Dr. Smith went to Washington. He arrived Monday.", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["Dr. Smith went to Washington. He arrived Monday."]}
+{"id": 664, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 665, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* 中文字符", "  mixed", "  with", "  English", "  words", "  here"]}
+{"id": 666, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 667, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 668, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 669, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 670, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 671, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["中文字符 mixed", " with ", "English ", "words here"]}
+{"id": 672, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 673, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["中文字符 mixed", "with [...]"]}
+{"id": 674, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["中文字符 …"]}
+{"id": 675, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["中文字符 mixed", "with", "English", "words here"]}
+{"id": 676, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["中文字符 mixed", " with ", "English ", "words here"]}
+{"id": 677, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 678, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* 中文字符 mixed with", "  English words here"]}
+{"id": 679, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 680, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 681, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 682, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 683, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 684, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["中文字符 mixed with ", "English words here"]}
+{"id": 685, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 686, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 687, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["中文字符 mixed with …"]}
+{"id": 688, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["中文字符 mixed with", "English words here"]}
+{"id": 689, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["中文字符 mixed with ", "English words here"]}
+{"id": 690, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 691, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* 中文字符 mixed with English words here"]}
+{"id": 692, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 693, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 694, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 695, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 696, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 697, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 698, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 699, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 700, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 701, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 702, "func": "wrap", "text": "中文字符 mixed with English words here", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["中文字符 mixed with English words here"]}
+{"id": 703, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10}, "expected": ["naïve café", "résumé"]}
+{"id": 704, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* naïve", "  café", "  résumé"]}
+{"id": 705, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["naïve café", "résumé"]}
+{"id": 706, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["naïve café", "résumé"]}
+{"id": 707, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["naïve café", "résumé"]}
+{"id": 708, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["naïve café", "résumé"]}
+{"id": 709, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["naïve café", "résumé"]}
+{"id": 710, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["naïve café", " résumé"]}
+{"id": 711, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["naïve café", "résumé"]}
+{"id": 712, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["naïve café", "résumé"]}
+{"id": 713, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["naïve …"]}
+{"id": 714, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["naïve café", "résumé"]}
+{"id": 715, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["naïve café", " résumé"]}
+{"id": 716, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20}, "expected": ["naïve café résumé"]}
+{"id": 717, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* naïve café résumé"]}
+{"id": 718, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["naïve café résumé"]}
+{"id": 719, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["naïve café résumé"]}
+{"id": 720, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["naïve café résumé"]}
+{"id": 721, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["naïve café résumé"]}
+{"id": 722, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["naïve café résumé"]}
+{"id": 723, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["naïve café résumé"]}
+{"id": 724, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["naïve café résumé"]}
+{"id": 725, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["naïve café résumé"]}
+{"id": 726, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["naïve café résumé"]}
+{"id": 727, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["naïve café résumé"]}
+{"id": 728, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["naïve café résumé"]}
+{"id": 729, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70}, "expected": ["naïve café résumé"]}
+{"id": 730, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* naïve café résumé"]}
+{"id": 731, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["naïve café résumé"]}
+{"id": 732, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["naïve café résumé"]}
+{"id": 733, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["naïve café résumé"]}
+{"id": 734, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["naïve café résumé"]}
+{"id": 735, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["naïve café résumé"]}
+{"id": 736, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["naïve café résumé"]}
+{"id": 737, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["naïve café résumé"]}
+{"id": 738, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["naïve café résumé"]}
+{"id": 739, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["naïve café résumé"]}
+{"id": 740, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["naïve café résumé"]}
+{"id": 741, "func": "wrap", "text": "naïve café résumé", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["naïve café résumé"]}
+{"id": 742, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10}, "expected": ["1,000,000", "dollars (a", "pproximate", "ly) --", "give or", "take"]}
+{"id": 743, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* 1,000,00", "  0", "  dollars", "  (approxi", "  mately)", "  -- give", "  or take"]}
+{"id": 744, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "expand_tabs": false}, "expected": ["1,000,000", "dollars (a", "pproximate", "ly) --", "give or", "take"]}
+{"id": 745, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "tabsize": 4}, "expected": ["1,000,000", "dollars (a", "pproximate", "ly) --", "give or", "take"]}
+{"id": 746, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "replace_whitespace": false}, "expected": ["1,000,000", "dollars (a", "pproximate", "ly) --", "give or", "take"]}
+{"id": 747, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "fix_sentence_endings": true}, "expected": ["1,000,000", "dollars (a", "pproximate", "ly) --", "give or", "take"]}
+{"id": 748, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "break_long_words": false}, "expected": ["1,000,000", "dollars", "(approximately)", "-- give or", "take"]}
+{"id": 749, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "drop_whitespace": false}, "expected": ["1,000,000 ", "dollars (a", "pproximate", "ly) -- ", "give or ", "take"]}
+{"id": 750, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "break_on_hyphens": false}, "expected": ["1,000,000", "dollars (a", "pproximate", "ly) --", "give or", "take"]}
+{"id": 751, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "max_lines": 2}, "expected": ["1,000,000", "[...]"]}
+{"id": 752, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "max_lines": 1, "placeholder": " …"}, "expected": ["…"]}
+{"id": 753, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "break_long_words": false, "break_on_hyphens": false}, "expected": ["1,000,000", "dollars", "(approximately)", "-- give or", "take"]}
+{"id": 754, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 10, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["1,000,000 ", "dollars (a", "pproximate", "ly) -- ", "give or ", "take"]}
+{"id": 755, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 756, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* 1,000,000 dollars", "  (approximately) --", "  give or take"]}
+{"id": 757, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "expand_tabs": false}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 758, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "tabsize": 4}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 759, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "replace_whitespace": false}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 760, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "fix_sentence_endings": true}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 761, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "break_long_words": false}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 762, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "drop_whitespace": false}, "expected": ["1,000,000 dollars ", "(approximately) -- ", "give or take"]}
+{"id": 763, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "break_on_hyphens": false}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 764, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "max_lines": 2}, "expected": ["1,000,000 dollars", "[...]"]}
+{"id": 765, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "max_lines": 1, "placeholder": " …"}, "expected": ["1,000,000 dollars …"]}
+{"id": 766, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "break_long_words": false, "break_on_hyphens": false}, "expected": ["1,000,000 dollars", "(approximately) --", "give or take"]}
+{"id": 767, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 20, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["1,000,000 dollars ", "(approximately) -- ", "give or take"]}
+{"id": 768, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 769, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "initial_indent": "* ", "subsequent_indent": "  "}, "expected": ["* 1,000,000 dollars (approximately) -- give or take"]}
+{"id": 770, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "expand_tabs": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 771, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "tabsize": 4}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 772, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "replace_whitespace": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 773, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "fix_sentence_endings": true}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 774, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "break_long_words": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 775, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "drop_whitespace": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 776, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "break_on_hyphens": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 777, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "max_lines": 2}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 778, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "max_lines": 1, "placeholder": " …"}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 779, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "break_long_words": false, "break_on_hyphens": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 780, "func": "wrap", "text": "1,000,000 dollars (approximately) -- give or take", "kwargs": {"width": 70, "drop_whitespace": false, "replace_whitespace": false}, "expected": ["1,000,000 dollars (approximately) -- give or take"]}
+{"id": 781, "func": "fill", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20}, "expected": "The quick brown fox\njumps over the lazy\ndog"}
+{"id": 782, "func": "fill", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 70}, "expected": "The quick brown fox jumps over the lazy dog"}
+{"id": 783, "func": "fill", "text": "   ", "kwargs": {"width": 20}, "expected": ""}
+{"id": 784, "func": "fill", "text": "   ", "kwargs": {"width": 70}, "expected": ""}
+{"id": 785, "func": "fill", "text": "line one\nline two\nline three", "kwargs": {"width": 20}, "expected": "line one line two\nline three"}
+{"id": 786, "func": "fill", "text": "line one\nline two\nline three", "kwargs": {"width": 70}, "expected": "line one line two line three"}
+{"id": 787, "func": "fill", "text": "para one\n\npara two", "kwargs": {"width": 20}, "expected": "para one  para two"}
+{"id": 788, "func": "fill", "text": "para one\n\npara two", "kwargs": {"width": 70}, "expected": "para one  para two"}
+{"id": 789, "func": "fill", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 20}, "expected": "short and-then-a-\nvery-long-\nhyphenated-compound-\nword here"}
+{"id": 790, "func": "fill", "text": "short and-then-a-very-long-hyphenated-compound-word here", "kwargs": {"width": 70}, "expected": "short and-then-a-very-long-hyphenated-compound-word here"}
+{"id": 791, "func": "fill", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 20}, "expected": "First sentence.\nSecond one!  Third?\nYes."}
+{"id": 792, "func": "fill", "text": "First sentence.  Second one!  Third?  Yes.", "kwargs": {"width": 70}, "expected": "First sentence.  Second one!  Third?  Yes."}
+{"id": 793, "func": "fill", "text": "naïve café résumé", "kwargs": {"width": 20}, "expected": "naïve café résumé"}
+{"id": 794, "func": "fill", "text": "naïve café résumé", "kwargs": {"width": 70}, "expected": "naïve café résumé"}
+{"id": 795, "func": "dedent", "text": "    hello\n    world", "kwargs": {}, "expected": "hello\nworld"}
+{"id": 796, "func": "dedent", "text": "\thello\n\tworld", "kwargs": {}, "expected": "hello\nworld"}
+{"id": 797, "func": "dedent", "text": "    hello\n        world\n    end", "kwargs": {}, "expected": "hello\n    world\nend"}
+{"id": 798, "func": "dedent", "text": "  mixed\n\ttabs", "kwargs": {}, "expected": "  mixed\n\ttabs"}
+{"id": 799, "func": "dedent", "text": "no indent\n    some indent", "kwargs": {}, "expected": "no indent\n    some indent"}
+{"id": 800, "func": "dedent", "text": "", "kwargs": {}, "expected": ""}
+{"id": 801, "func": "dedent", "text": "\n\n", "kwargs": {}, "expected": "\n\n"}
+{"id": 802, "func": "dedent", "text": "    only one line", "kwargs": {}, "expected": "only one line"}
+{"id": 803, "func": "dedent", "text": "    trailing blank\n\n    line", "kwargs": {}, "expected": "trailing blank\n\nline"}
+{"id": 804, "func": "indent", "text": "hello\nworld", "kwargs": {"prefix": "  "}, "expected": "  hello\n  world"}
+{"id": 805, "func": "indent", "text": "hello\nworld\n", "kwargs": {"prefix": "> "}, "expected": "> hello\n> world\n"}
+{"id": 806, "func": "indent", "text": "line\n\nblank line\n", "kwargs": {"prefix": "* "}, "expected": "* line\n\n* blank line\n"}
+{"id": 807, "func": "indent", "text": "", "kwargs": {"prefix": "x "}, "expected": ""}
+{"id": 808, "func": "indent", "text": "no trailing newline", "kwargs": {"prefix": "\t"}, "expected": "\tno trailing newline"}
+{"id": 809, "func": "shorten", "text": "Hello  world!", "kwargs": {"width": 12, "placeholder": " [...]"}, "expected": "Hello world!"}
+{"id": 810, "func": "shorten", "text": "Hello  world!", "kwargs": {"width": 11, "placeholder": " [...]"}, "expected": "Hello [...]"}
+{"id": 811, "func": "shorten", "text": "Hello  world!", "kwargs": {"width": 10, "placeholder": " [...]"}, "expected": "[...]"}
+{"id": 812, "func": "shorten", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "placeholder": " [...]"}, "expected": "The quick [...]"}
+{"id": 813, "func": "shorten", "text": "The quick brown fox jumps over the lazy dog", "kwargs": {"width": 20, "placeholder": "..."}, "expected": "The quick brown..."}
+{"id": 814, "func": "shorten", "text": "short", "kwargs": {"width": 100, "placeholder": " [...]"}, "expected": "short"}
+{"id": 815, "func": "shorten", "text": "  lots   of   whitespace   collapses  ", "kwargs": {"width": 15, "placeholder": " [...]"}, "expected": "lots of [...]"}
+{"id": 816, "func": "shorten", "text": "supercalifragilisticexpialidocious", "kwargs": {"width": 10, "placeholder": " [...]"}, "expected": "[...]"}
