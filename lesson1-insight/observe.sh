@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+# Lesson 1: 把一个项目的 deveco 会话导进 cannbot-insight,turn-by-turn 回看轨迹。
+#
+#   ./observe.sh <项目目录>
+#
+# cannbot-insight 是个会话观测器:它的 opencode-db 适配器要的表结构
+# (session / message / part)和 deveco 的 ~/.local/share/deveco/deveco.db
+# 一模一样(deveco 本就是 opencode 派生的),所以不用改它一行代码就能直读。
+#
+# 环境变量(都可选):
+#   CANNBOT_INSIGHT_DIR   cannbot-insight 在哪(默认用本仓 vendor/cannbot-insight)
+#   CANNBOT_INSIGHT_PORT  cannbot Web 端口(默认 21025)
+#   DEVECO_DB             deveco 会话库(默认 ~/.local/share/deveco/deveco.db)
+#
+# 观测是旁路:环境不满足只提示并跳过(退出码 0),绝不影响调用方的结论。
+set -euo pipefail
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$HERE/.." && pwd)"
+
+say() { printf "\033[1m%s\033[0m\n" "$*"; }
+die() { echo "❌ $*" >&2; exit 1; }
+
+usage() {
+  echo "用法: $0 <项目目录>" >&2
+  exit 1
+}
+
+CANNBOT_INSIGHT_DIR="${CANNBOT_INSIGHT_DIR:-$REPO_ROOT/vendor/cannbot-insight}"
+CANNBOT_INSIGHT_PORT="${CANNBOT_INSIGHT_PORT:-21025}"
+DEVECO_DB="${DEVECO_DB:-$HOME/.local/share/deveco/deveco.db}"
+
+# cannbot 的原生依赖(better-sqlite3)只在 node 20 装得起来、跑得动;node 26 编不过。
+# 有 nvm 就切到 20,切不了就照当前 node 硬试(大概率失败,但不拦着)。
+_cannbot_node20() {
+  if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    set +u
+    . "$HOME/.nvm/nvm.sh"
+    nvm use 20 >/dev/null 2>&1 || nvm use --lts >/dev/null 2>&1 || true
+    set -u
+  fi
+}
+
+# CLI 要连 cannbot 的 HTTP server。没起就后台拉起来,等到能连上;起不来返回 1。
+_cannbot_ensure_server() {
+  local base="http://localhost:$CANNBOT_INSIGHT_PORT"
+  curl -s "$base/api/observe/data?pageSize=1" >/dev/null 2>&1 && return 0
+  say "→ cannbot server 没运行,后台拉起 :$CANNBOT_INSIGHT_PORT ..."
+  (
+    cd "$CANNBOT_INSIGHT_DIR" || exit 1
+    export DATABASE_URL="file:$CANNBOT_INSIGHT_DIR/prisma/dev.db"
+    nohup npx next dev --port "$CANNBOT_INSIGHT_PORT" >/tmp/cannbot-insight.log 2>&1 &
+  )
+  for _ in $(seq 1 40); do
+    curl -s "$base/api/observe/data?pageSize=1" >/dev/null 2>&1 && return 0
+    sleep 1
+  done
+  return 1
+}
+
+# 把某个项目的所有 root 会话(worker 和 reviewer 都是各自独立的 root,
+# 靠 directory 归到一起)导进 cannbot-insight。整个观测是旁路,任何一步都软失败。
+cmd_observe() {
+  local target="${1:-}"
+  [ -n "$target" ] || usage
+  [ -d "$target" ] || die "$target 不存在"
+  target="$(cd "$target" && pwd)"
+
+  # ${VAR} 的花括号不能省:macOS bash 3.2 会把紧跟 $VAR 的中文字符当成变量名的一部分
+  [ -f "$CANNBOT_INSIGHT_DIR/package.json" ] || { say "ℹ️  没找到 cannbot-insight(${CANNBOT_INSIGHT_DIR}),跳过观测。先跑仓库根的 ./setup.sh,装在别处就设 CANNBOT_INSIGHT_DIR。"; return 0; }
+  [ -f "$DEVECO_DB" ] || { say "ℹ️  没找到 deveco.db(${DEVECO_DB}),跳过观测。"; return 0; }
+  command -v sqlite3 >/dev/null 2>&1 || { say "ℹ️  没有 sqlite3,跳过观测。"; return 0; }
+
+  # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断
+  local esc="${target//\'/\'\'}"
+  local ids
+  ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory='$esc' AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
+  [ -n "$ids" ] || { say "ℹ️  deveco.db 里没有 $target 的会话(这个项目还没用 deveco 跑过?),跳过观测。"; return 0; }
+
+  _cannbot_node20
+  _cannbot_ensure_server || { say "⚠️  cannbot server 起不来,跳过观测(见 /tmp/cannbot-insight.log)"; return 0; }
+
+  say "→ 导入 $target 的 deveco 会话到 cannbot-insight ..."
+  (
+    cd "$CANNBOT_INSIGHT_DIR" || exit 0
+    export DATABASE_URL="file:$CANNBOT_INSIGHT_DIR/prisma/dev.db"
+    local id
+    for id in $ids; do
+      npx tsx src/cli/index.ts import --source opencode-db --file "$DEVECO_DB" --session-id "$id" --yes 2>&1 \
+        | grep -E "Imported|skipped|turns|已" | sed 's/^/   /' || true
+    done
+  ) || true
+
+  echo
+  say "✅ 观测就绪: http://localhost:$CANNBOT_INSIGHT_PORT"
+  say "   点会话看 9 个分析页:tokens/成本、上下文增长、工具调用、工作流阶段、概念传播……"
+}
+
+cmd_observe "$@"
