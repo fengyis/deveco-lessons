@@ -22,8 +22,20 @@ die() { echo "❌ $*" >&2; exit 1; }
 IS_WINDOWS=0
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;; esac
 
-# python3/python 兼容(Windows 官方安装器只有 python.exe,没有 python3)
-PYTHON="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
+# python3/python 兼容(Windows 官方安装器只有 python.exe,没有 python3)。
+# 光 command -v 不够:Windows 自带一个假的 python3.exe(微软商店占位 stub,
+# 运行只会提示装 Python、什么都不输出),必须实际执行一次验明真身。
+_pick_python() {
+  local p
+  for p in python3 python; do
+    command -v "$p" >/dev/null 2>&1 || continue
+    "$p" -c "import sys" >/dev/null 2>&1 || continue
+    command -v "$p"
+    return 0
+  done
+  return 1
+}
+PYTHON="$(_pick_python || true)"
 
 # 端口工具:列出监听 PID / 按端口杀 / 是否在监听。
 # Windows 的 netstat 输出:TCP  0.0.0.0:4097  0.0.0.0:0  LISTENING  1234
@@ -559,11 +571,17 @@ cmd_run() {
 
   # 不用 `deveco run --attach`：deveco 0.1.1 的 run --attach 用扁平参数调 session.create，
   # 创建不出会话，只会报 "Session not found"。直接打 HTTP API。
-  local sid
-  sid=$(curl -s -X POST "http://127.0.0.1:$port/session?directory=$target_url" \
+  # 返回先落盘再解析:失败时能看到 server 的原话,而不是 python 的一句 traceback。
+  curl -s -X POST "http://127.0.0.1:$port/session?directory=$target_url" \
     -H 'Content-Type: application/json' -d '{"title":"ralph"}' \
-    | "$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])") \
-    || die "创建会话失败,server 返回异常;确认这台机器上做过 deveco auth login"
+    -o .ralph/session-create.json \
+    || die "创建会话的请求没发出去(curl 失败)"
+  local sid
+  sid=$("$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])" < .ralph/session-create.json) || {
+    echo "---- server 返回(.ralph/session-create.json)----" >&2
+    cat .ralph/session-create.json >&2; echo >&2
+    die "创建会话失败(server 返回见上)"
+  }
   echo "$sid" > .ralph/session_id
   say "→ worker session $sid"
   say "→ 实时观察: deveco attach http://127.0.0.1:$port --session $sid"
