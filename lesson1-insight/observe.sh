@@ -28,7 +28,12 @@ usage() {
 
 CANNBOT_INSIGHT_DIR="${CANNBOT_INSIGHT_DIR:-$REPO_ROOT/vendor/cannbot-insight}"
 CANNBOT_INSIGHT_PORT="${CANNBOT_INSIGHT_PORT:-21025}"
+# deveco.db 默认在 ~/.local/share(Git Bash 下 $HOME 是 /c/Users/<你>,通常也在这);
+# 个别 Windows 安装会落在 %LOCALAPPDATA%,探测一下
 DEVECO_DB="${DEVECO_DB:-$HOME/.local/share/deveco/deveco.db}"
+if [ ! -f "$DEVECO_DB" ] && [ -n "${LOCALAPPDATA:-}" ] && [ -f "$LOCALAPPDATA/deveco/deveco.db" ]; then
+  DEVECO_DB="$LOCALAPPDATA/deveco/deveco.db"
+fi
 
 # cannbot 的原生依赖(better-sqlite3)只在 node 20 装得起来、跑得动;node 26 编不过。
 # 有 nvm 就切到 20,切不了就照当前 node 硬试(大概率失败,但不拦着)。
@@ -48,7 +53,9 @@ _cannbot_ensure_server() {
   say "→ cannbot server 没运行,后台拉起 :$CANNBOT_INSIGHT_PORT ..."
   (
     cd "$CANNBOT_INSIGHT_DIR" || exit 1
-    export DATABASE_URL="file:$CANNBOT_INSIGHT_DIR/prisma/dev.db"
+    # 相对路径按 prisma/schema.prisma 所在目录解析 → vendor 的 prisma/dev.db。
+    # 不能用绝对路径:Git Bash 的 /c/... 形式 prisma 解析不了
+    export DATABASE_URL="file:./dev.db"
     # 开高级标签页(subagents / interactions / AI workflow),看子代理轨迹要靠它。
     # 生产模式下这个开关在 setup.sh 的 next build 时已烙进产物,这里只对 dev 兜底生效。
     export NEXT_PUBLIC_SHOW_ADVANCED_TABS=true
@@ -80,22 +87,38 @@ cmd_observe() {
   # 依赖没装就别去 npx——它会现场拉包或干等 40 秒超时,报错还只指向 /tmp 日志
   [ -d "$CANNBOT_INSIGHT_DIR/node_modules" ] || { say "ℹ️  cannbot-insight 依赖还没装(${CANNBOT_INSIGHT_DIR}/node_modules 不存在),先跑仓库根的 ./setup.sh。跳过观测。"; return 0; }
   [ -f "$DEVECO_DB" ] || { say "ℹ️  没找到 deveco.db(${DEVECO_DB}),跳过观测。"; return 0; }
-  command -v sqlite3 >/dev/null 2>&1 || { say "ℹ️  没有 sqlite3,跳过观测。"; return 0; }
 
-  # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断。
-  # 替换串不能写成 \'\':bash 3.2 会把反斜杠原样保留进结果,悄悄改掉路径
-  local esc=${target//"'"/"''"}
+  # 必须先切 node 20:下面的兜底查询和后面的导入都会加载 better-sqlite3,
+  # 它是按 node 20 编译的,默认 node(如 26)加载会 ERR_DLOPEN_FAILED
+  _cannbot_node20
+
   local ids
-  ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory='$esc' AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
+  if command -v sqlite3 >/dev/null 2>&1; then
+    # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断。
+    # 替换串不能写成 \'\':bash 3.2 会把反斜杠原样保留进结果,悄悄改掉路径
+    local esc=${target//"'"/"''"}
+    ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory='$esc' AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
+  elif [ -d "$CANNBOT_INSIGHT_DIR/node_modules/better-sqlite3" ]; then
+    # 没有 sqlite3 CLI(Git Bash 默认没有)就借 vendor 里现成的 better-sqlite3,参数化查询免转义
+    ids=$(cd "$CANNBOT_INSIGHT_DIR" && node -e "
+      const db = require('better-sqlite3')(process.argv[1], { readonly: true });
+      db.prepare(\"SELECT id FROM session WHERE directory=? AND (parent_id IS NULL OR parent_id='') ORDER BY time_created\")
+        .all(process.argv[2]).forEach(r => console.log(r.id));
+    " "$DEVECO_DB" "$target" 2>/dev/null || true)
+  else
+    say "ℹ️  没有 sqlite3,vendor 依赖也没装(先跑仓库根的 ./setup.sh),跳过观测。"
+    return 0
+  fi
   [ -n "$ids" ] || { say "ℹ️  deveco.db 里没有 $target 的会话(这个项目还没用 deveco 跑过?),跳过观测。"; return 0; }
 
-  _cannbot_node20
   _cannbot_ensure_server || { say "⚠️  cannbot server 起不来,跳过观测(见 /tmp/cannbot-insight.log)"; return 0; }
 
   say "→ 导入 $target 的 deveco 会话到 cannbot-insight ..."
   (
     cd "$CANNBOT_INSIGHT_DIR" || exit 0
-    export DATABASE_URL="file:$CANNBOT_INSIGHT_DIR/prisma/dev.db"
+    # 相对路径按 prisma/schema.prisma 所在目录解析 → vendor 的 prisma/dev.db。
+    # 不能用绝对路径:Git Bash 的 /c/... 形式 prisma 解析不了
+    export DATABASE_URL="file:./dev.db"
     local id
     for id in $ids; do
       npx tsx src/cli/index.ts import --source opencode-db --file "$DEVECO_DB" --session-id "$id" --yes 2>&1 \

@@ -18,12 +18,42 @@ TEMPLATE="$HERE/template"
 say() { printf "\033[1m%s\033[0m\n" "$*"; }
 die() { echo "❌ $*" >&2; exit 1; }
 
+# Windows(Git Bash / MSYS)适配:没有 lsof,用 netstat/taskkill;python 叫 python.exe
+IS_WINDOWS=0
+case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;; esac
+
+# python3/python 兼容(Windows 官方安装器只有 python.exe,没有 python3)
+PYTHON="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
+
+# 端口工具:列出监听 PID / 按端口杀 / 是否在监听。
+# Windows 的 netstat 输出:TCP  0.0.0.0:4097  0.0.0.0:0  LISTENING  1234
+_port_pids() {
+  if [ "$IS_WINDOWS" = "1" ]; then
+    netstat -ano 2>/dev/null | awk -v port=":$1" \
+      '$1=="TCP" && $4=="LISTENING" { n=split($2,a,":"); if (":" a[n] == port) print $5 }' | sort -u
+  else
+    lsof -ti:"$1" 2>/dev/null || true
+  fi
+}
+_port_kill() {
+  local pid
+  for pid in $(_port_pids "$1"); do
+    if [ "$IS_WINDOWS" = "1" ]; then
+      # 双斜杠防 MSYS 把 /F 当路径转换
+      taskkill //F //PID "$pid" >/dev/null 2>&1 || true
+    else
+      kill -9 "$pid" 2>/dev/null || true
+    fi
+  done
+}
+_port_listening() { [ -n "$(_port_pids "$1")" ]; }
+
 CLEANUP_PORT=""
 CLEANUP_KEEP=0
 cleanup() {
   [ "$CLEANUP_KEEP" = "1" ] && return 0
   [ -n "$CLEANUP_PORT" ] || return 0
-  lsof -ti:"$CLEANUP_PORT" | xargs kill -9 2>/dev/null || true
+  _port_kill "$CLEANUP_PORT"
 }
 
 usage() {
@@ -69,6 +99,7 @@ cmd_swebench_prepare() {
   done
 
   [ -n "$target" ] && [ -n "$instance" ] || usage
+  [ -n "$PYTHON" ] || die "需要 python3(或 python),请先安装 Python"
   [ -d "$target/.git" ] || die "$target 不是 Git 仓库；请先在 SWE-bench base_commit 上准备仓库"
   [ -f "$instance" ] || die "找不到实例 JSON: $instance"
   target="$(cd "$target" && pwd)"
@@ -78,7 +109,7 @@ cmd_swebench_prepare() {
   [ ! -f "$target/.ralph/swebench.json" ] || die "这个项目已经 prepare 过；请换干净 worktree"
 
   local base_commit head
-  base_commit=$(python3 - "$instance" "$model_name" <<'PY'
+  base_commit=$("$PYTHON" - "$instance" "$model_name" <<'PY'
 import json, pathlib, re, sys
 
 try:
@@ -115,7 +146,7 @@ PY
   done
 
   cmd_init "$target"
-  python3 - "$instance" "$target" "$model_name" <<'PY'
+  "$PYTHON" - "$instance" "$target" "$model_name" <<'PY'
 import json, pathlib, sys
 
 instance_file = pathlib.Path(sys.argv[1])
@@ -188,7 +219,7 @@ for sentinel in ("DONE", "STOPPED", "ONCE", "ONCE_DONE"):
 PY
 
   [ -z "$(git -C "$target" status --porcelain)" ] || die "Ralph 控制文件没有被本地 Git exclude 正确隔离"
-  say "✅ SWE-bench 实例已准备: $(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["instance_id"])' "$target/.ralph/swebench.json")"
+  say "✅ SWE-bench 实例已准备: $("$PYTHON" -c 'import json,sys; print(json.load(open(sys.argv[1]))["instance_id"])' "$target/.ralph/swebench.json")"
   say "   单次基线: $0 once $target"
   say "   Ralph Loop: $0 run $target"
 }
@@ -213,6 +244,7 @@ cmd_swebench_export() {
         ;;
     esac
   done
+  [ -n "$PYTHON" ] || die "需要 python3(或 python),请先安装 Python"
   [ -d "$target/.git" ] || die "$target 不是 Git 仓库"
   target="$(cd "$target" && pwd)"
   [ -f "$target/.ralph/swebench.json" ] || die "缺 .ralph/swebench.json；先跑 swebench prepare"
@@ -229,7 +261,7 @@ cmd_swebench_export() {
   output="${output:-$target/.ralph/predictions.jsonl}"
 
   local base_commit
-  base_commit=$(python3 - "$target/.ralph/swebench.json" <<'PY'
+  base_commit=$("$PYTHON" - "$target/.ralph/swebench.json" <<'PY'
 import json, pathlib, sys
 
 metadata = json.loads(pathlib.Path(sys.argv[1]).read_text())
@@ -252,7 +284,7 @@ PY
     die "产品补丁为空，拒绝生成无效 prediction"
   fi
 
-  python3 - "$target/.ralph/swebench.json" "$patch_file" "$output" <<'PY'
+  "$PYTHON" - "$target/.ralph/swebench.json" "$patch_file" "$output" <<'PY'
 import json, os, pathlib, sys
 
 metadata = json.loads(pathlib.Path(sys.argv[1]).read_text())
@@ -276,7 +308,7 @@ PY
   else
     say "✅ Ralph Loop prediction 已导出: $output"
   fi
-  say "   官方评测: python -m swebench.harness.run_evaluation --dataset_name princeton-nlp/SWE-bench_Lite --predictions_path $output --instance_ids $(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["instance_id"])' "$target/.ralph/swebench.json") --max_workers 1 --run_id $run_id"
+  say "   官方评测: python -m swebench.harness.run_evaluation --dataset_name princeton-nlp/SWE-bench_Lite --predictions_path $output --instance_ids $("$PYTHON" -c 'import json,sys; print(json.load(open(sys.argv[1]))["instance_id"])' "$target/.ralph/swebench.json") --max_workers 1 --run_id $run_id"
 }
 
 # 模板文件（插件 + 两个 agent）在项目里的相对路径
@@ -468,6 +500,7 @@ cmd_run() {
     esac
   done
   [ -n "$target" ] || usage
+  [ -n "$PYTHON" ] || die "需要 python3(或 python),请先安装 Python"
   [ -d "$target" ] || die "$target 不存在，先跑 $0 init $target"
   target="$(cd "$target" && pwd)"
   port="${port:-4097}"
@@ -497,8 +530,8 @@ cmd_run() {
 
   # 注意：pkill -f "deveco serve" 杀不掉，真正监听的是它 fork 出的 deveco-code-darwin-arm，
   # 只能按端口收尸——否则下次跑的还是旧进程里的旧插件。
-  if lsof -ti:"$port" >/dev/null 2>&1; then
-    lsof -ti:"$port" | xargs kill -9 2>/dev/null || true
+  if _port_listening "$port"; then
+    _port_kill "$port"
     sleep 2
   fi
   nohup deveco serve --port "$port" > .ralph/serve.log 2>&1 &
@@ -510,10 +543,10 @@ cmd_run() {
   trap cleanup EXIT
 
   for _ in $(seq 1 25); do
-    lsof -iTCP:"$port" -sTCP:LISTEN -n -P >/dev/null 2>&1 && break
+    _port_listening "$port" && break
     sleep 1
   done
-  lsof -iTCP:"$port" -sTCP:LISTEN -n -P >/dev/null 2>&1 || die "server 没起来，见 .ralph/serve.log"
+  _port_listening "$port" || die "server 没起来，见 .ralph/serve.log"
   say "→ server http://127.0.0.1:$port"
 
   # 不用 `deveco run --attach`：deveco 0.1.1 的 run --attach 用扁平参数调 session.create，
@@ -521,7 +554,7 @@ cmd_run() {
   local sid
   sid=$(curl -s -X POST "http://127.0.0.1:$port/session?directory=$target" \
     -H 'Content-Type: application/json' -d '{"title":"ralph"}' \
-    | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])")
+    | "$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])")
   echo "$sid" > .ralph/session_id
   say "→ worker session $sid"
   say "→ 实时观察: deveco attach http://127.0.0.1:$port --session $sid"
@@ -529,7 +562,7 @@ cmd_run() {
   # 点火这轮是脚本发的（插件只管后续轮次），必须自己带上 workerModel，
   # 否则首轮会悄悄走 deveco.json 的项目默认模型。
   local body
-  body=$(python3 - "$target" "$mode" <<'PY'
+  body=$("$PYTHON" - "$target" "$mode" <<'PY'
 import json, sys, pathlib
 cfg = json.loads((pathlib.Path(sys.argv[1]) / ".ralph" / "config.json").read_text())
 once = sys.argv[2] == "once"
@@ -602,7 +635,7 @@ PY
     echo
     say "server 保持运行（--keep）："
     say "   网页回看: http://127.0.0.1:$port/"
-    say "   关掉它:   lsof -ti:$port | xargs kill -9"
+    say "   关掉它:   lsof -ti:$port | xargs kill -9   (Windows: netstat -ano 找 PID 后 taskkill //F //PID <pid>)"
   fi
 
   # 收工后把这轮 deveco 会话导进 cannbot-insight，turn-by-turn 回看这个 loop 的轨迹。

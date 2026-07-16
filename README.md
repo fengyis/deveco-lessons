@@ -17,9 +17,14 @@ git clone <本仓库> && cd deveco-lessons
 deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 ```
 
-唯一前置:已安装 deveco(`npm install -g @deveco/deveco-code`)。
+前置:已安装 deveco(`npm install -g @deveco/deveco-code`)。
 其余依赖(含 cannbot-insight 本体,vendor 在 `vendor/` 下)全部由
 `setup.sh` 就地装好,不需要手工配置。
+
+**Windows 用户(Git Bash)**:三个脚本都适配了 Git Bash,额外前置只有一条——
+自己装好 **Node.js 20+**(https://nodejs.org ,setup.sh 在 Windows 上不代装 node)。
+bun 由 setup.sh 走 PowerShell 自动安装;sqlite3 不需要装(观测脚本会用 vendor
+里的 better-sqlite3 兜底)。或者直接用 WSL2,和 macOS/Linux 完全同一套流程。
 
 装完从 [Lesson 1](lesson1-insight/README.md) 开始。
 
@@ -30,7 +35,7 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 ```bash
 # 1) 随便建个目录,用 deveco 造几条会话
 mkdir -p ~/play/hello-deveco && cd ~/play/hello-deveco
-deveco run "写一个 fizzbuzz.py 并运行它"
+deveco run "写一个 fizzbuzz.js 并用 node 运行它"
 
 # 2) 回到本仓库,把会话导进 cannbot-insight
 cd <本仓库>
