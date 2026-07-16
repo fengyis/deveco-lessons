@@ -80,7 +80,7 @@ cmd_observe() {
   local target="${1:-}"
   [ -n "$target" ] || usage
   [ -d "$target" ] || die "$target 不存在"
-  target="$(cd "$target" && pwd)"
+  target="$(cd "$target" && pwd -P)"
 
   # ${VAR} 的花括号不能省:macOS bash 3.2 会把紧跟 $VAR 的中文字符当成变量名的一部分
   [ -f "$CANNBOT_INSIGHT_DIR/package.json" ] || { say "ℹ️  没找到 cannbot-insight(${CANNBOT_INSIGHT_DIR}),跳过观测。先跑仓库根的 ./setup.sh,装在别处就设 CANNBOT_INSIGHT_DIR。"; return 0; }
