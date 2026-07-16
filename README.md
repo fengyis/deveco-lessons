@@ -42,6 +42,11 @@ Windows 预编译包,装 24/25 会在本机触发 C++ 编译(需要 VS Build Too
   registry=https://registry.npmmirror.com
   better_sqlite3_binary_host_mirror=https://npmmirror.com/mirrors/better-sqlite3/
   ```
+- prisma 报错(`binaries.prisma.sh` 连不上 / checksum 失败):Prisma 引擎二进制走独立 CDN。
+  **本仓已自带 Windows 的两个引擎**(`vendor/prebuilds/prisma/windows/`,校验和与官方一致),
+  setup.sh 会把它们种进 Prisma 的本地缓存,generate/migrate 直接命中、不联网;同时默认设了
+  npmmirror 镜像(`PRISMA_ENGINES_MIRROR`,可覆盖)作为兜底。
+  如果之前装到一半失败,先 `rm -rf vendor/cannbot-insight/node_modules` 再重跑 `./setup.sh`。
 bun 由 setup.sh 走 PowerShell 自动安装;sqlite3 不需要装(观测脚本会用 vendor
 里的 better-sqlite3 兜底)。或者直接用 WSL2,和 macOS/Linux 完全同一套流程。
 

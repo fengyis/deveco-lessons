@@ -68,12 +68,38 @@ ok "bun $(bun --version)"
 # prebuild-install 装的时候会先查这个目录,命中就不去 GitHub 下载——
 # 公司网络挡 GitHub 也能装。文件名必须和官方发布的资产名完全一致。
 export npm_config_better_sqlite3_local_prebuilds="$HERE/vendor/prebuilds"
+# prisma 的引擎二进制从 binaries.prisma.sh 下载(npm ci 时由 @prisma/engines 的
+# postinstall 触发),公司网络常被挡;默认改走 npmmirror 的镜像(二进制与官方一致)。
+# 能直连官方或有内网镜像时,用 PRISMA_ENGINES_MIRROR 覆盖。
+export PRISMA_ENGINES_MIRROR="${PRISMA_ENGINES_MIRROR:-https://registry.npmmirror.com/-/binary/prisma}"
 cd "$VENDOR"
 if [ -d node_modules ] && node -e "require('better-sqlite3')" >/dev/null 2>&1; then
   ok "cannbot-insight 依赖已就绪(跳过 npm ci)"
 else
   say "→ npm ci(首次要几分钟,better-sqlite3 会现场编译)..."
   npm ci
+fi
+
+# ---- 4.5 Windows:预置 prisma 引擎(离线可用)-----------------------------
+# prisma 引擎二进制从 binaries.prisma.sh 下载,公司网络常被挡。仓库自带了
+# windows 的两个引擎(vendor/prebuilds/prisma/windows/),种进 fetch-engine 的
+# 缓存目录(Windows 上是 <项目>/node_modules/.cache/prisma/master/<commit>/windows,
+# 文件名平台无关:libquery-engine / schema-engine,.sha256 内容是裸 hex)。
+# 之后 generate / migrate 一律先命中缓存,不再联网。
+if [ "$IS_WINDOWS" = "1" ] && [ -d "$HERE/vendor/prebuilds/prisma/windows" ]; then
+  ENGINES_COMMIT="$(node -e "console.log(require('@prisma/engines-version/package.json').prisma.enginesVersion)")"
+  PRISMA_CACHE="$VENDOR/node_modules/.cache/prisma/master/$ENGINES_COMMIT/windows"
+  mkdir -p "$PRISMA_CACHE"
+  gunzip -c "$HERE/vendor/prebuilds/prisma/windows/query_engine.dll.node.gz" > "$PRISMA_CACHE/libquery-engine"
+  gunzip -c "$HERE/vendor/prebuilds/prisma/windows/schema-engine.exe.gz"     > "$PRISMA_CACHE/schema-engine"
+  for n in libquery-engine schema-engine; do
+    printf %s "$(sha256sum "$PRISMA_CACHE/$n" | cut -d' ' -f1)" > "$PRISMA_CACHE/$n.sha256"
+  done
+  ok "prisma 引擎已预置(离线缓存命中)"
+  # @prisma/client 的 postinstall 在断网下会失败但不致命,这里显式补一次 generate
+  export DATABASE_URL="file:./dev.db"
+  npx prisma generate >/dev/null 2>&1 && ok "prisma client 已生成" \
+    || say "⚠️  prisma generate 失败,稍后跑 migrate 时会再试"
 fi
 
 # ---- 5. prisma 数据库 ------------------------------------------------------
