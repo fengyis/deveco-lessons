@@ -68,11 +68,14 @@ cmd_observe() {
 
   # ${VAR} 的花括号不能省:macOS bash 3.2 会把紧跟 $VAR 的中文字符当成变量名的一部分
   [ -f "$CANNBOT_INSIGHT_DIR/package.json" ] || { say "ℹ️  没找到 cannbot-insight(${CANNBOT_INSIGHT_DIR}),跳过观测。先跑仓库根的 ./setup.sh,装在别处就设 CANNBOT_INSIGHT_DIR。"; return 0; }
+  # 依赖没装就别去 npx——它会现场拉包或干等 40 秒超时,报错还只指向 /tmp 日志
+  [ -d "$CANNBOT_INSIGHT_DIR/node_modules" ] || { say "ℹ️  cannbot-insight 依赖还没装(${CANNBOT_INSIGHT_DIR}/node_modules 不存在),先跑仓库根的 ./setup.sh。跳过观测。"; return 0; }
   [ -f "$DEVECO_DB" ] || { say "ℹ️  没找到 deveco.db(${DEVECO_DB}),跳过观测。"; return 0; }
   command -v sqlite3 >/dev/null 2>&1 || { say "ℹ️  没有 sqlite3,跳过观测。"; return 0; }
 
-  # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断
-  local esc="${target//\'/\'\'}"
+  # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断。
+  # 替换串不能写成 \'\':bash 3.2 会把反斜杠原样保留进结果,悄悄改掉路径
+  local esc=${target//"'"/"''"}
   local ids
   ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory='$esc' AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
   [ -n "$ids" ] || { say "ℹ️  deveco.db 里没有 $target 的会话(这个项目还没用 deveco 跑过?),跳过观测。"; return 0; }

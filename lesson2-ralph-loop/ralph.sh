@@ -4,6 +4,8 @@
 #   ./ralph.sh init <项目目录> [--update]   装：插件、agent、git、配置、GOAL 骨架（改你的仓库）
 #   ./ralph.sh once <项目目录> [端口] [--keep] 单次 worker 基线（无 reviewer、无续轮）
 #   ./ralph.sh run  <项目目录> [端口] [--keep]   跑：起 server、点火、盯到收工（不写模板文件）
+#   ./ralph.sh sample <名字> <项目目录>       把现成案例（目标 + reviewer + 验收测试）灌进项目
+#   ./ralph.sh observe <项目目录>             把会话导进 cannbot-insight 回看（委托 lesson1）
 #   ./ralph.sh swebench prepare <项目目录> <instance.json>   准备一个盲测实例
 #   ./ralph.sh swebench export  <项目目录> [predictions.jsonl] [--once] 导出官方预测
 #
@@ -388,7 +390,7 @@ cmd_sample() {
       [ -f "$d/GOAL.md" ] || continue
       local n desc
       n="$(basename "$d")"
-      # 拿案例 README 的首个标题当一句话说明;README 可以没有(json 就没有),
+      # 拿案例 README 的首个标题当一句话说明;README 允许缺失,
       # 缺了不能让 head 的非零退出码在 set -e 下把整个 list 掐死
       desc="$(head -1 "$d/README.md" 2>/dev/null | sed 's/^# *//' || true)"
       printf "   %-12s %s\n" "$n" "$desc"
@@ -440,7 +442,11 @@ cmd_sample() {
   echo
   say "✅ 案例 $name 已装入 $target"
   say "   跑:   $0 run $target"
-  [ -f "$src/verify.test.ts.template" ] && say "   复验: cd $target && bun test ./.ralph/verify.test.ts"
+  # 这行是函数最后一条命令,模板不存在时 [ -f ] 的退出码 1 会变成整个 sample 的退出码,
+  # 必须兜住——否则 sample smoke 一切成功却 exit 1,骗过所有按退出码判断的调用方
+  if [ -f "$src/verify.test.ts.template" ]; then
+    say "   复验: cd $target && bun test ./.ralph/verify.test.ts"
+  fi
 }
 
 # ---------------------------------------------------------------- run
