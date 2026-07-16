@@ -35,8 +35,9 @@ Windows 预编译包,装 24/25 会在本机触发 C++ 编译(需要 VS Build Too
   只能走内部源就删掉 `node_modules` 和 `package-lock.json` 后 `npm install` 重新生成。
 - better-sqlite3 编译报错:node 版本不是 20.x,见上一条。已装 node 24 想共存的话用
   [nvm-windows](https://github.com/coreybutler/nvm-windows):`nvm install 20.19.5 && nvm use 20.19.5`。
-- better-sqlite3 预编译包「拉不到」:它从 GitHub releases 下载,公司网络挡 GitHub 就会失败。
-  在 `~/.npmrc` 加镜像后清缓存重装:
+- better-sqlite3 预编译包「拉不到」:它默认从 GitHub releases 下载,公司网络挡 GitHub 会失败。
+  **本仓已自带 Windows(x64 + node 20)的预编译包**(`vendor/prebuilds/`),setup.sh 会让
+  npm 优先用它,不需要联网到 GitHub。如果你换了别的 node 大版本或架构,再按镜像方案兜底:
   ```ini
   registry=https://registry.npmmirror.com
   better_sqlite3_binary_host_mirror=https://npmmirror.com/mirrors/better-sqlite3/

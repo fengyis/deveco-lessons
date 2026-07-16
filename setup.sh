@@ -64,6 +64,10 @@ fi
 ok "bun $(bun --version)"
 
 # ---- 4. cannbot-insight 依赖(npm ci 按 lockfile 精确复原)----------------
+# 仓库自带 better-sqlite3 的预编译包(vendor/prebuilds/,目前是 win32-x64 + node20)。
+# prebuild-install 装的时候会先查这个目录,命中就不去 GitHub 下载——
+# 公司网络挡 GitHub 也能装。文件名必须和官方发布的资产名完全一致。
+export npm_config_better_sqlite3_local_prebuilds="$HERE/vendor/prebuilds"
 cd "$VENDOR"
 if [ -d node_modules ] && node -e "require('better-sqlite3')" >/dev/null 2>&1; then
   ok "cannbot-insight 依赖已就绪(跳过 npm ci)"
