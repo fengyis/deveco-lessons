@@ -97,6 +97,61 @@
     .flowing, .scanning { animation: none; }
   }
 
+  /* ---------- Loop Engineering 背景 ---------- */
+  .kicker {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em;
+    color: var(--muted); margin: 36px 0 12px;
+  }
+  .loopflow {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    margin: 22px 0 8px; font-family: var(--mono); font-size: 13px;
+  }
+  .loopflow .node {
+    border: 1.5px solid var(--signal); color: var(--signal);
+    border-radius: 99px; padding: 4px 15px; background: var(--card);
+  }
+  .loopflow .exit { border-color: var(--commit); color: var(--commit); }
+  .loopflow .arrow { color: var(--muted); }
+  .conds { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0; }
+  .conds span {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink);
+    border: 1px solid var(--line); background: var(--card);
+    border-radius: 99px; padding: 3px 13px;
+  }
+  .fit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .fit-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px 16px;
+  }
+  .fit-card .idx { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; color: var(--replay); }
+  .fit-card h3 { font-size: 16.5px; font-weight: 700; margin: 4px 0 6px; }
+  .fit-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .fit-card .flowline {
+    font-family: var(--mono); font-size: 12px; color: var(--replay);
+    margin-top: 10px; overflow-x: auto; white-space: nowrap;
+  }
+  .unfit { list-style: none; }
+  .unfit li { padding-left: 26px; position: relative; margin-bottom: 8px; font-size: 14.5px; color: var(--muted); }
+  .unfit li::before { content: "✗"; position: absolute; left: 0; color: var(--signal); font-weight: 700; }
+  .unfit li b { color: var(--ink); font-weight: 600; }
+  .verdict {
+    background: var(--card); border: 1.5px solid var(--ink); border-radius: 10px;
+    padding: 22px 24px; margin-top: 6px;
+  }
+  .verdict .formula {
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px;
+  }
+  .verdict .formula .plus { color: var(--muted); font-weight: 400; }
+  .verdict .formula .yes { color: var(--commit); }
+  .verdict p { font-size: 14.5px; color: var(--muted); }
+  .map-course { list-style: none; margin-top: 8px; }
+  .map-course li { padding-left: 20px; position: relative; margin-bottom: 6px; font-size: 14.5px; }
+  .map-course li::before { content: "▸"; position: absolute; left: 0; }
+  .map-course .m1::before { color: var(--replay); }
+  .map-course .m2::before { color: var(--signal); }
+  .map-course .m3::before { color: var(--commit); }
+
   /* ---------- 三课主线卡 ---------- */
   .arc { padding: 40px 0 8px; }
   .arc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -240,6 +295,7 @@
   <div class="wrap topbar-inner">
     <a class="topbar-name" href="#top">deveco-lessons</a>
     <nav class="topbar-nav" aria-label="页内导航">
+      <a href="#loop">Loop 工程</a>
       <a href="#setup">快速开始</a>
       <a href="#lesson1">L1 镜头</a>
       <a href="#lesson2">L2 循环</a>
@@ -319,6 +375,107 @@
         </svg>
         <figcaption class="diagram-caption">课程主线：装镜头（L1）→ 跑循环（L2）→ 插件化（L3）</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- ============ 背景:Loop Engineering ============ -->
+  <section class="section" id="loop">
+    <div class="wrap">
+      <h2>背景知识：什么是 Loop Engineering</h2>
+      <p class="section-sub">
+        <b>Loop Engineering（循环工程）</b>不是让 agent 简单重复执行同一个 prompt，
+        而是围绕 agent 构建一套可持续迭代的工程闭环。它关注的重点不是「如何写出一个完美 Prompt」，而是：
+        如何设计<b>任务环境、验证器、进度状态和反馈机制</b>，让 agent 在多次不完美执行中逐步收敛。
+      </p>
+
+      <div class="loopflow" role="img" aria-label="闭环：执行、验证、定位差距、注入反馈、再执行，直到达到目标或触发退出条件">
+        <span class="node">执行</span><span class="arrow">→</span>
+        <span class="node">验证</span><span class="arrow">→</span>
+        <span class="node">定位差距</span><span class="arrow">→</span>
+        <span class="node">注入反馈</span><span class="arrow">→</span>
+        <span class="node">再执行</span><span class="arrow">⋯→</span>
+        <span class="node exit">达到目标 / 触发退出条件</span>
+      </div>
+
+      <p class="section-sub" style="margin-top:14px">
+        LangChain 把它分成四层：<b>Agent 执行循环、验证循环、事件驱动循环</b>，以及基于运行 Trace
+        改进 Harness 的<b>爬坡循环</b>（hill-climbing）——也就是说，循环既可以优化单次任务的结果，
+        也可以持续优化 agent 系统本身。
+      </p>
+
+      <div class="kicker">判断一个任务适不适合，看五个条件</div>
+      <div class="conds">
+        <span>一次做不完</span><span>结果可验证</span><span>失败可反馈</span><span>进度可继承</span><span>重复有收益</span>
+      </div>
+
+      <div class="kicker">最适合的六类场景</div>
+      <div class="fit-grid">
+        <div class="fit-card">
+          <span class="idx">FIT 1</span>
+          <h3>长程软件工程任务</h3>
+          <p>规模超过单次上下文或单个 Session：大型代码库迁移、Python → Rust 重写、Android → HarmonyOS 迁移、大规模依赖升级、技术债治理。每轮只解决一个局部问题，用 Git、任务列表、进度文件把状态留给下一轮——增量推进、读取前序进度、自验证后提交。</p>
+          <div class="flowline">读状态 → 选子任务 → 改代码 → 编译/测试 → 提交 → 下一轮</div>
+        </div>
+        <div class="fit-card">
+          <span class="idx">FIT 2</span>
+          <h3>有明确自动验证器的任务</h3>
+          <p>Loop 最重要的前提不是任务复杂，而是 <b>agent 能知道自己有没有变好</b>：SWE-bench 修复、单测修复、消编译错、性能优化、UI 截图差异修复。验证器不准确，agent 就会持续优化错误目标。</p>
+          <div class="flowline">测试 62/100 → 修一个失败点 → 67/100 → 保留修改继续</div>
+        </div>
+        <div class="fit-card">
+          <span class="idx">FIT 3</span>
+          <h3>生成 — 评审 — 修改</h3>
+          <p>单次生成难达标、但独立 Reviewer 能持续改进的任务：架构设计、技术方案、代码 review、安全审查、需求与实现对齐。Reviewer 必须输出<b>可执行反馈</b>（「缺少失败恢复策略」），而不是「方案不够完善」。</p>
+          <div class="flowline">Generator 生成 → Reviewer 按 rubric 评分 → 定向修改</div>
+        </div>
+        <div class="fit-card">
+          <span class="idx">FIT 4</span>
+          <h3>大量独立问题逐步清零</h3>
+          <p>任务能表示成不断缩小的待办集合：100 个失败测试、500 个 API 兼容问题、lint 清零、批量补文档。天然带进度函数（已完成 / 总数），问题独立时还能并行——但都被同一个强耦合问题堵住时，加 agent 没有收益。</p>
+          <div class="flowline">待处理 237 → 修 Issue #48 并验证 → 待处理 236 → 继续</div>
+        </div>
+        <div class="fit-card">
+          <span class="idx">FIT 5</span>
+          <h3>持续运行的事件驱动任务</h3>
+          <p>循环不一定在一个任务内部，也可以是系统持续接收事件：新 Issue 自动调查、PR 自动 review、发布后自动查回归、线上异常自动定位。把 agent 从「一次性工具」变成长期运行的工程组件。</p>
+          <div class="flowline">事件触发 → 执行 → 验证 → 更新状态 → 等下一个事件</div>
+        </div>
+        <div class="fit-card">
+          <span class="idx">FIT 6</span>
+          <h3>Agent 能力需要持续演进</h3>
+          <p>更高一层：不是循环完成某个任务，而是利用多次运行数据改进 agent 本身——收集 Trace 与失败案例、归因、修改 Prompt / Skill / Tool / Grader，再回归评测。优化对象是整个 Harness（hill-climbing loop）。</p>
+          <div class="flowline">生产运行 → 归因失败 → 改 Harness → 回归评测 → 发新版</div>
+        </div>
+      </div>
+
+      <div class="kicker">不适合的场景</div>
+      <ul class="unfit">
+        <li><b>简单的一次性任务</b>：解释概念、生成小函数、改一句文案——单次能完成，上 loop 只增加成本和延迟。</li>
+        <li><b>没有可靠验证标准</b>：「最有创意的设计」「绝对优秀的文章」——每轮判断不了有没有变好，循环只是反复改写，不保证收敛。</li>
+        <li><b>每轮无法继承有效状态</b>：没有 Git、任务清单、进度文件或结构化 Memory，下一轮重新理解问题，变成「重复劳动循环」。</li>
+        <li><b>高风险且不可逆的自动操作</b>：直接操作生产库、转账、删重要资源——loop 可以做分析和验证，关键动作必须有权限边界、审批节点和人工确认。</li>
+        <li><b>强耦合、不可拆分且反馈很晚</b>：必须全部做完才知道对错、中间没有局部验证信号——先改造任务，加阶段性 oracle、测试或检查点。</li>
+      </ul>
+
+      <div class="kicker">一句话判断</div>
+      <div class="verdict">
+        <div class="formula">
+          <span>任务可以分解</span><span class="plus">+</span>
+          <span>每轮可以验证</span><span class="plus">+</span>
+          <span>状态可以保留</span><span class="plus">+</span>
+          <span>下一轮能根据反馈调整</span><span class="plus">⇒</span>
+          <span class="yes">非常适合 Loop Engineering</span>
+        </div>
+        <p>
+          对 AI Coding，最典型的适用对象不是「实现一个函数」，而是：<b>在大型代码库中，围绕一个可自动验证的目标，
+          让 agent 跨多轮持续发现问题、修复问题、验证结果并积累进度。</b>本课程的三个 lesson 正好对应这套闭环的三块基础设施：
+        </p>
+        <ul class="map-course">
+          <li class="m1"><b>Lesson 1 · 镜头</b> —— 爬坡循环的 Trace 基础：看得见每轮烧了什么、干了什么，才能归因和改进。</li>
+          <li class="m2"><b>Lesson 2 · ralph loop</b> —— 执行 + 验证循环：worker 执行、reviewer 验证，<code>.ralph/</code> 保留进度给下一轮。</li>
+          <li class="m3"><b>Lesson 3 · /goal 插件</b> —— 单会话内的事件驱动循环：<code>session.idle</code> 触发续推，证据门控决定退出。</li>
+        </ul>
+      </div>
     </div>
   </section>
 
