@@ -2,17 +2,46 @@
 # 冒烟：goal.sh init 一个临时项目 → 起 deveco serve → 确认插件真的加载了，
 # 并（依 docs/probe-notes.md 问题 (2)(3) 的实测结论）走一遍 /goal 命令拦截链路。
 set -euo pipefail
+
+# Windows(Git Bash / MSYS)适配:没有 lsof,用 netstat/taskkill;python 叫 python.exe
+IS_WINDOWS=0
+case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;; esac
+
+# python3/python 兼容(Windows 官方安装器只有 python.exe,没有 python3)
+PYTHON="$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)"
+
+# 端口工具:列出监听 PID / 按端口杀 / 是否在监听。
+# Windows 的 netstat 输出:TCP  0.0.0.0:4097  0.0.0.0:0  LISTENING  1234
+_port_pids() {
+  if [ "$IS_WINDOWS" = "1" ]; then
+    netstat -ano 2>/dev/null | awk -v port=":$1" \
+      '$1=="TCP" && $4=="LISTENING" { n=split($2,a,":"); if (":" a[n] == port) print $5 }' | sort -u
+  else
+    lsof -ti:"$1" 2>/dev/null || true
+  fi
+}
+_port_kill() {
+  local pid
+  for pid in $(_port_pids "$1"); do
+    if [ "$IS_WINDOWS" = "1" ]; then
+      # 双斜杠防 MSYS 把 /F 当路径转换
+      taskkill //F //PID "$pid" >/dev/null 2>&1 || true
+    else
+      kill -9 "$pid" 2>/dev/null || true
+    fi
+  done
+}
+_port_listening() { [ -n "$(_port_pids "$1")" ]; }
+
+[ -n "$PYTHON" ] || { echo "❌ 需要 python3(或 python),请先安装 Python"; exit 1; }
+
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PORT="${1:-4099}"
 WORK="$(mktemp -d /tmp/goal-smoke-XXXXXX)"
 
 # server 只能按端口杀：真正监听的是 deveco serve fork 出的子进程（lesson2 经验）
-kill_port() {
-  lsof -ti:"$PORT" | xargs kill -9 2>/dev/null || true
-}
-
 cleanup() {
-  kill_port
+  _port_kill "$PORT"
   rm -rf "$WORK"
 }
 trap cleanup EXIT
@@ -22,20 +51,20 @@ trap 'cleanup; exit 130' INT TERM
 
 # 一设这个变量 serve 就开 basic auth，插件内 client 会 401（lesson2 坑 #4）
 unset DEVECO_SERVER_PASSWORD || true
-kill_port
+_port_kill "$PORT"
 ( cd "$WORK" && nohup deveco serve --port "$PORT" > serve.log 2>&1 & )
 for _ in $(seq 1 25); do
-  lsof -iTCP:"$PORT" -sTCP:LISTEN -n -P >/dev/null 2>&1 && break
+  _port_listening "$PORT" && break
   sleep 1
 done
-lsof -iTCP:"$PORT" -sTCP:LISTEN -n -P >/dev/null 2>&1 || { echo "❌ server 没起来"; cat "$WORK/serve.log"; exit 1; }
+_port_listening "$PORT" || { echo "❌ server 没起来"; cat "$WORK/serve.log"; exit 1; }
 
 # 整条管线用 `|| true` 兜底：curl|python3 任一段非零（server 返回错误体导致
 # python3 KeyError 等）在 pipefail 下会让这次赋值本身失败，set -e 会在这一行
 # 直接把脚本杀掉，导致下面 [ -n "$SID" ] 的诊断分支（dump serve.log）永远走不到。
 SID=$(curl -s -m 30 -X POST "http://127.0.0.1:$PORT/session?directory=$WORK" \
   -H 'Content-Type: application/json' -d '{"title":"goal-smoke"}' \
-  | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])" || true)
+  | "$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])" || true)
 [ -n "$SID" ] || { echo "❌ 建会话失败"; cat "$WORK/serve.log"; exit 1; }
 
 # docs/probe-notes.md 问题 (3)：插件是在「首个会话创建时」才实例化加载的，
