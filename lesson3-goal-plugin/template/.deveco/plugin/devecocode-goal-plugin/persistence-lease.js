@@ -84,7 +84,7 @@ export async function acquirePersistenceLease(
         ? `pid ${existing.pid} on ${existing.hostname}`
         : "an unknown owner"
       throw new Error(
-        `goal persistence is already owned by ${description}; close the other OpenCode instance or configure a different stateFilePath`,
+        `goal persistence is already owned by ${description}; close the other DevEco Code instance or configure a different stateFilePath`,
       )
     }
   }
