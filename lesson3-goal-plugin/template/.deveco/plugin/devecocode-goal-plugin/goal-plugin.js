@@ -2812,7 +2812,7 @@ function extractAuditVerdictText(response) {
 // opt into the legacy fail-open policy for compatibility.
 function createChildSessionAuditor(
   client,
-  { agent = "build", timeoutMs = 120_000, sdkShape = "legacy", failurePolicy = "reject" } = {},
+  { agent = "build", timeoutMs = 120_000, sdkShape = "legacy", directory, failurePolicy = "reject" } = {},
 ) {
   if (failurePolicy !== "reject" && failurePolicy !== "approve") {
     throw new TypeError('auditorOptions.failurePolicy must be "reject" or "approve"')
@@ -2827,7 +2827,7 @@ function createChildSessionAuditor(
       if (!client?.session?.create || !client?.session?.prompt) {
         return operationalFailure("child-session API unavailable")
       }
-      const sessionApi = createOpenCodeSessionApi(client, { preferredShape: sdkShape })
+      const sessionApi = createOpenCodeSessionApi(client, { preferredShape: sdkShape, directory })
       const created = await sessionApi.createChild(sessionID, { title: "goal completion audit" })
       childID = created?.id || created?.sessionID
       if (!childID) return operationalFailure("child session id unavailable")
@@ -2855,7 +2855,7 @@ function createChildSessionAuditor(
           if (childID && typeof client?.session?.abort === "function") {
             // Timeout settlement must not depend on a host cancellation request,
             // which may itself hang. Cancellation remains best-effort cleanup.
-            void createOpenCodeSessionApi(client, { preferredShape: sdkShape })
+            void createOpenCodeSessionApi(client, { preferredShape: sdkShape, directory })
               .abort(childID)
               .catch(() => {})
           }
@@ -2875,7 +2875,7 @@ function createChildSessionAuditor(
         // The verdict has already been extracted. Remove the verifier child so
         // audit prompts and workspace evidence do not accumulate indefinitely.
         // Cleanup is best-effort and must never delay or alter the verdict.
-        void createOpenCodeSessionApi(client, { preferredShape: sdkShape })
+        void createOpenCodeSessionApi(client, { preferredShape: sdkShape, directory })
           .delete(childID)
           .catch(() => {})
       }
@@ -2894,6 +2894,7 @@ async function createGoalPlugin({ client, directory } = {}, pluginOptions = {}) 
   const runtime = currentRuntime()
   const sessionApi = createOpenCodeSessionApi(client, {
     preferredShape: pluginOptions.sdkShape === "flat" ? "flat" : "legacy",
+    directory,
   })
   const defaultGoalOptions = normalizeOptions(pluginOptions)
   // OpenCode's PluginInput carries the active session's project directory
@@ -2975,6 +2976,7 @@ async function createGoalPlugin({ client, directory } = {}, pluginOptions = {}) 
     ? createChildSessionAuditor(client, {
         ...(pluginOptions.auditorOptions || {}),
         agent: pluginOptions.verifierAgentName || "goal-verify",
+        directory,
       })
     : null
   const completionAuditor =

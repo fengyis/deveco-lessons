@@ -35,6 +35,13 @@ export function createOpenCodeSessionApi(client, options = {}) {
   if (preferredShape !== "flat" && preferredShape !== "legacy") {
     throw new TypeError('preferredShape must be "flat" or "legacy"')
   }
+  const directory =
+    typeof options.directory === "string" && options.directory.trim() ? options.directory.trim() : undefined
+
+  function withDirectory(legacyInput) {
+    if (!directory) return legacyInput
+    return { ...legacyInput, query: { ...(legacyInput.query || {}), directory } }
+  }
   const shapes = new Map()
 
   async function invoke(operation, flatInput, legacyInput) {
@@ -67,42 +74,42 @@ export function createOpenCodeSessionApi(client, options = {}) {
       return invoke(
         "messages",
         { sessionID, ...options },
-        { path: { id: sessionID }, query: options },
+        withDirectory({ path: { id: sessionID }, query: options }),
       )
     },
     promptAsync(sessionID, input = {}) {
       return invoke(
         "promptAsync",
         { sessionID, ...input },
-        { path: { id: sessionID }, body: input },
+        withDirectory({ path: { id: sessionID }, body: input }),
       )
     },
     createChild(parentID, input = {}) {
       const body = { ...input, parentID }
-      return invoke("create", body, { body })
+      return invoke("create", body, withDirectory({ body }))
     },
     prompt(sessionID, input = {}) {
       return invoke(
         "prompt",
         { sessionID, ...input },
-        { path: { id: sessionID }, body: input },
+        withDirectory({ path: { id: sessionID }, body: input }),
       )
     },
     update(sessionID, input = {}) {
       return invoke(
         "update",
         { sessionID, ...input },
-        { path: { id: sessionID }, body: input },
+        withDirectory({ path: { id: sessionID }, body: input }),
       )
     },
     get(sessionID) {
-      return invoke("get", { sessionID }, { path: { id: sessionID } })
+      return invoke("get", { sessionID }, withDirectory({ path: { id: sessionID } }))
     },
     delete(sessionID) {
-      return invoke("delete", { sessionID }, { path: { id: sessionID } })
+      return invoke("delete", { sessionID }, withDirectory({ path: { id: sessionID } }))
     },
     abort(sessionID) {
-      return invoke("abort", { sessionID }, { path: { id: sessionID } })
+      return invoke("abort", { sessionID }, withDirectory({ path: { id: sessionID } }))
     },
   })
 }
