@@ -21,7 +21,7 @@ import { goalToolFailure, goalToolSuccess, serializeGoalToolResult } from "./goa
 import { acquirePersistenceLease } from "./persistence-lease.js"
 
 const STATE_FILE_VERSION = 1
-// Default state now follows the project: <cwd>/.opencode/goals/state.json.
+// Default state now follows the project: <cwd>/.deveco/goals/state.json.
 // The legacy home-dir path and the XDG state path are read as migration
 // fallbacks so existing users do not lose state when upgrading.
 const PROJECT_LOCAL_STATE_SUBPATH = join(".deveco", "goals", "state.json")

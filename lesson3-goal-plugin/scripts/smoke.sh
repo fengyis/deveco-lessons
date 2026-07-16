@@ -59,7 +59,7 @@ for _ in $(seq 1 25); do
 done
 _port_listening "$PORT" || { echo "❌ server 没起来"; cat "$WORK/serve.log"; exit 1; }
 
-# 整条管线用 `|| true` 兜底：curl|python3 任一段非零（server 返回错误体导致
+# 整条管线用 `|| true` 兜底：curl|"$PYTHON" 任一段非零（server 返回错误体导致
 # python3 KeyError 等）在 pipefail 下会让这次赋值本身失败，set -e 会在这一行
 # 直接把脚本杀掉，导致下面 [ -n "$SID" ] 的诊断分支（dump serve.log）永远走不到。
 SID=$(curl -s -m 30 -X POST "http://127.0.0.1:$PORT/session?directory=$WORK" \

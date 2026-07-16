@@ -67,13 +67,19 @@ cmd_init() {
   done
 
   # /goal 命令必须注册在 deveco.json（$ARGUMENTS 模板）；插件只负责拦截执行。
-  # 已有字段一律不覆盖——merge 而不是重写。
-  node - "$target" <<'JS'
+  # 已有字段一律不覆盖——merge 而不是重写；model 只在 deveco.json 本来就不存在时才补默认值
+  # （对齐 lesson2 ralph.sh 的语义：不会覆盖用户已有的项目级模型选择）。
+  local had_deveco_json=1
+  [ -f "$target/deveco.json" ] || had_deveco_json=0
+  node - "$target" "$had_deveco_json" <<'JS'
 const fs = require("fs")
 const path = require("path")
 const file = path.join(process.argv[2], "deveco.json")
-const config = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf-8")) : {}
-config.model ||= "deveco/GLM-5.1"
+const hadFile = process.argv[3] === "1"
+const config = hadFile ? JSON.parse(fs.readFileSync(file, "utf-8")) : {}
+if (!hadFile) {
+  config.model = "deveco/GLM-5.1"
+}
 config.command ||= {}
 config.command.goal ||= {
   description: "设定会话级目标并自动续推到完成",
@@ -82,6 +88,9 @@ config.command.goal ||= {
 }
 fs.writeFileSync(file, JSON.stringify(config, null, 2) + "\n")
 JS
+  if [ "$had_deveco_json" = "0" ]; then
+    say "→ 生成 deveco.json（项目默认模型，已有 deveco.json 时不会碰你的 model 配置）"
+  fi
   say "→ deveco.json 已 merge /goal 命令（已有字段不覆盖）"
 
   echo
