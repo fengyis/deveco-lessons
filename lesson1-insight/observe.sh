@@ -92,19 +92,27 @@ cmd_observe() {
   # 它是按 node 20 编译的,默认 node(如 26)加载会 ERR_DLOPEN_FAILED
   _cannbot_node20
 
+  # Windows(Git Bash)上 deveco.db 里存的是原生路径(C:\... 或 C:/...),
+  # 用 /c/... 查永远查不着;把三种形式都当候选,命中哪个算哪个
+  local d1="$target" d2="" d3=""
+  if command -v cygpath >/dev/null 2>&1; then
+    d2="$(cygpath -w "$target" 2>/dev/null || true)"
+    d3="$(cygpath -m "$target" 2>/dev/null || true)"
+  fi
+
   local ids
   if command -v sqlite3 >/dev/null 2>&1; then
     # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断。
     # 替换串不能写成 \'\':bash 3.2 会把反斜杠原样保留进结果,悄悄改掉路径
-    local esc=${target//"'"/"''"}
-    ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory='$esc' AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
+    local esc1=${d1//"'"/"''"} esc2=${d2//"'"/"''"} esc3=${d3//"'"/"''"}
+    ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory IN ('$esc1','$esc2','$esc3') AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
   elif [ -d "$CANNBOT_INSIGHT_DIR/node_modules/better-sqlite3" ]; then
     # 没有 sqlite3 CLI(Git Bash 默认没有)就借 vendor 里现成的 better-sqlite3,参数化查询免转义
     ids=$(cd "$CANNBOT_INSIGHT_DIR" && node -e "
       const db = require('better-sqlite3')(process.argv[1], { readonly: true });
-      db.prepare(\"SELECT id FROM session WHERE directory=? AND (parent_id IS NULL OR parent_id='') ORDER BY time_created\")
-        .all(process.argv[2]).forEach(r => console.log(r.id));
-    " "$DEVECO_DB" "$target" 2>/dev/null || true)
+      db.prepare(\"SELECT id FROM session WHERE directory IN (?,?,?) AND (parent_id IS NULL OR parent_id='') ORDER BY time_created\")
+        .all(process.argv[2], process.argv[3] || '', process.argv[4] || '').forEach(r => console.log(r.id));
+    " "$DEVECO_DB" "$d1" "$d2" "$d3" 2>/dev/null || true)
   else
     say "ℹ️  没有 sqlite3,vendor 依赖也没装(先跑仓库根的 ./setup.sh),跳过观测。"
     return 0

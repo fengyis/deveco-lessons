@@ -549,12 +549,21 @@ cmd_run() {
   _port_listening "$port" || die "server 没起来，见 .ralph/serve.log"
   say "→ server http://127.0.0.1:$port"
 
+  # deveco 是原生 Windows 程序,而 MSYS 的路径自动转换不处理 URL:
+  # 查询参数里的 /c/Users/... 必须显式转成 C:/Users/... 它才认得,
+  # 否则 session 建不出来(表现:plugin.log 有 loaded 但没有 worker session registered)
+  local target_url="$target"
+  if [ "$IS_WINDOWS" = "1" ] && command -v cygpath >/dev/null 2>&1; then
+    target_url="$(cygpath -m "$target")"
+  fi
+
   # 不用 `deveco run --attach`：deveco 0.1.1 的 run --attach 用扁平参数调 session.create，
   # 创建不出会话，只会报 "Session not found"。直接打 HTTP API。
   local sid
-  sid=$(curl -s -X POST "http://127.0.0.1:$port/session?directory=$target" \
+  sid=$(curl -s -X POST "http://127.0.0.1:$port/session?directory=$target_url" \
     -H 'Content-Type: application/json' -d '{"title":"ralph"}' \
-    | "$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])")
+    | "$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])") \
+    || die "创建会话失败,server 返回异常;确认这台机器上做过 deveco auth login"
   echo "$sid" > .ralph/session_id
   say "→ worker session $sid"
   say "→ 实时观察: deveco attach http://127.0.0.1:$port --session $sid"
@@ -584,7 +593,7 @@ if spec and "/" in spec:
 print(json.dumps(body, ensure_ascii=False))
 PY
   )
-  curl -s -X POST "http://127.0.0.1:$port/session/$sid/message?directory=$target" \
+  curl -s -X POST "http://127.0.0.1:$port/session/$sid/message?directory=$target_url" \
     -H 'Content-Type: application/json' -d "$body" \
     -o .ralph/kickoff-response.json &
   local kickoff=$!
