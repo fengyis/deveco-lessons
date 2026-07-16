@@ -308,7 +308,7 @@ function terminalEvent(event) {
       sessionID: getSessionID(event),
       stopReason: "permission rejected",
       status: "Goal paused after a permission request was rejected.",
-      history: "Paused after OpenCode reported a rejected permission request.",
+      history: "Paused after DevEco Code reported a rejected permission request.",
     }
   }
 
@@ -331,8 +331,8 @@ function terminalEvent(event) {
       ? "Goal paused after user interruption."
       : `Goal paused after a terminal provider error: ${summary}`,
     history: aborted
-      ? "Paused after OpenCode reported that the active turn was aborted."
-      : `Paused after OpenCode reported a terminal provider error: ${summary}`,
+      ? "Paused after DevEco Code reported that the active turn was aborted."
+      : `Paused after DevEco Code reported a terminal provider error: ${summary}`,
   }
 }
 
@@ -1932,7 +1932,7 @@ function buildCompactionContext(goal) {
   const snapshotAt = goal.lastContinueAt || goal.startedAt || 0
   const elapsedSeconds = Math.round((snapshotAt - goal.startedAt) / 1000)
   return [
-    "An OpenCode goal is active for this session. Preserve it across compaction.",
+    "A DevEco Code goal is active for this session. Preserve it across compaction.",
     "The summary below is reconstructed deterministically from the plugin's persisted goal record, not from chat memory.",
     buildGoalBlock(goal),
     `Goal status: ${goal.stopped ? goal.stopReason || "stopped" : "active"}.`,
