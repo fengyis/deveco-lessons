@@ -5,7 +5,7 @@
 | | 主题 | 你得到什么 |
 |---|------|-----------|
 | [Lesson 1](lesson1-insight/README.md) | 用 DevEco 对接 cannbot-insight | 任意 DevEco 会话的 turn-by-turn 回放:token、上下文、工具调用 |
-| [Lesson 2](lesson2-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过(smoke 案例 30 秒跑通) |
+| [Lesson 2](lesson2-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过;smoke 案例跑出多轮/多工具/subagent/skill 的丰富会话 |
 
 两课递进:第一课装好「镜头」,第二课跑起 loop 并用镜头回看它。
 
@@ -44,7 +44,7 @@ cd <本仓库>
 ```bash
 cd lesson2-ralph-loop
 ./ralph.sh init   ~/ralph-smoke
-./ralph.sh sample smoke ~/ralph-smoke   # 30 秒冒烟案例
+./ralph.sh sample smoke ~/ralph-smoke   # 观测演示案例:规划→写码→subagent→skill,约 3-5 分钟
 ./ralph.sh run    ~/ralph-smoke         # worker→reviewer 循环到验收;收工自动跑 lesson1 的观测
 ```
 

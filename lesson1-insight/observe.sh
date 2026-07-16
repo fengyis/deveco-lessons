@@ -49,6 +49,8 @@ _cannbot_ensure_server() {
   (
     cd "$CANNBOT_INSIGHT_DIR" || exit 1
     export DATABASE_URL="file:$CANNBOT_INSIGHT_DIR/prisma/dev.db"
+    # 开高级标签页(subagents / interactions / AI workflow),看子代理轨迹要靠它
+    export NEXT_PUBLIC_SHOW_ADVANCED_TABS=true
     nohup npx next dev --port "$CANNBOT_INSIGHT_PORT" >/tmp/cannbot-insight.log 2>&1 &
   )
   for _ in $(seq 1 40); do
