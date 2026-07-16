@@ -23,6 +23,31 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 
 装完从 [Lesson 1](lesson1-insight/README.md) 开始。
 
+## 两课各自怎么跑(最小路径)
+
+**Lesson 1**(详见 [lesson1-insight/README.md](lesson1-insight/README.md)):
+
+```bash
+# 1) 随便建个目录,用 deveco 造几条会话
+mkdir -p ~/play/hello-deveco && cd ~/play/hello-deveco
+deveco run "写一个 fizzbuzz.py 并运行它"
+
+# 2) 回到本仓库,把会话导进 cannbot-insight
+cd <本仓库>
+./lesson1-insight/observe.sh ~/play/hello-deveco
+
+# 3) 浏览器开 http://localhost:21025,点进会话看 token/上下文/工具调用
+```
+
+**Lesson 2**(详见 [lesson2-ralph-loop/README.md](lesson2-ralph-loop/README.md)):
+
+```bash
+cd lesson2-ralph-loop
+./ralph.sh init   ~/ralph-smoke
+./ralph.sh sample smoke ~/ralph-smoke   # 30 秒冒烟案例
+./ralph.sh run    ~/ralph-smoke         # worker→reviewer 循环到验收;收工自动跑 lesson1 的观测
+```
+
 ## 仓库结构
 
 ```
