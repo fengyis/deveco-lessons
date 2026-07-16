@@ -274,6 +274,65 @@
   }
   .trio b { display: block; color: var(--ink); font-family: var(--mono); font-size: 13px; margin-bottom: 4px; }
 
+  /* ---------- 对比表(lesson3) ---------- */
+  .cmp { width: 100%; border-collapse: collapse; font-size: 14px; margin: 4px 0; }
+  .cmp th, .cmp td { border: 1px solid var(--line); padding: 8px 14px; text-align: left; vertical-align: top; }
+  .cmp th {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
+    color: var(--muted); font-weight: 600;
+    background: color-mix(in srgb, var(--paper) 60%, #fff);
+  }
+  .cmp td:first-child {
+    font-family: var(--mono); font-size: 12.5px; color: var(--muted); white-space: nowrap;
+    background: color-mix(in srgb, var(--paper) 60%, #fff);
+  }
+
+  /* ---------- 实验(A/B) ---------- */
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 6px 0; }
+  .arm {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 20px 22px 18px;
+  }
+  .arm-label { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--muted); }
+  .arm .score {
+    font-family: var(--mono); font-weight: 700; font-size: 36px; letter-spacing: -.01em;
+    margin: 8px 0 2px; color: var(--ink);
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  }
+  .arm .score small { font-size: 17px; color: var(--muted); font-weight: 400; }
+  .badge-done {
+    font-family: var(--mono); font-size: 12px; font-weight: 700; color: #fff;
+    background: var(--commit); border-radius: 99px; padding: 2px 12px;
+    align-self: center;
+  }
+  .badge-claim {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 99px; padding: 2px 12px;
+    align-self: center;
+  }
+  .scorebar {
+    display: flex; height: 12px; border-radius: 6px; overflow: hidden;
+    background: var(--paper); border: 1px solid var(--line); margin: 12px 0 6px;
+  }
+  .scorebar .fill { background: var(--ink); }
+  .scorebar .fill-done { background: var(--commit); }
+  .scorebar .miss { background: var(--signal); margin-left: 2px; }
+  .scorebar-cap {
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .scorebar-cap .miss-note { color: var(--signal); }
+  .facts { list-style: none; margin-top: 12px; }
+  .facts li { font-size: 13.5px; color: var(--muted); padding-left: 14px; position: relative; margin-bottom: 5px; line-height: 1.65; }
+  .facts li::before { content: "·"; position: absolute; left: 2px; color: var(--ink); font-weight: 700; }
+  .facts li b { color: var(--ink); font-weight: 600; }
+  .caution {
+    border: 1px solid var(--line); border-left: 4px solid var(--signal);
+    background: var(--card); border-radius: 8px; padding: 16px 20px; margin: 6px 0;
+    font-size: 14.5px; color: var(--muted);
+  }
+  .caution b { color: var(--ink); }
+
   /* ---------- 结构/页脚 ---------- */
   .repo { padding: 56px 0 72px; }
   .repo h2 { font-family: var(--serif); font-weight: 900; font-size: 28px; margin-bottom: 18px; }
@@ -283,7 +342,7 @@
   }
 
   @media (max-width: 720px) {
-    .arc-grid, .trio { grid-template-columns: 1fr; }
+    .arc-grid, .trio, .fit-grid, .exp-grid { grid-template-columns: 1fr; }
     .lesson { padding: 24px 20px; }
     .hero { padding: 48px 0 28px; }
   }
@@ -300,6 +359,7 @@
       <a href="#lesson1">L1 镜头</a>
       <a href="#lesson2">L2 循环</a>
       <a href="#lesson3">L3 插件</a>
+      <a href="#exp1">实验</a>
       <a href="#repo">仓库结构</a>
     </nav>
   </div>
@@ -493,9 +553,9 @@
         <p>给一个目标，worker 干活、reviewer 只读裁决，循环到验收通过。收工自动用第一课的镜头回看全程。</p>
       </a>
       <a class="arc-card arc-3" href="#lesson3">
-        <span class="idx">LESSON 3 · 插件化</span>
-        <h3>移植：/goal 目标插件</h3>
-        <p>把 opencode-goal-plugin 全量移植进 DevEco：会话里 <code>/goal ⟨目标⟩</code>，空转自续，证据门控完成。</p>
+        <span class="idx">LESSON 3 · 目标循环</span>
+        <h3>会话内循环：/goal 插件</h3>
+        <p>给会话一个完成条件：<code>/goal ⟨目标⟩</code> 之后 agent 空转自续、完成声称要过证据门控——把 loop 收进单个会话。</p>
       </a>
     </div>
   </section>
@@ -648,24 +708,26 @@
       <article class="lesson lesson-3">
         <div class="lesson-head">
           <span class="lesson-no">LESSON 3</span>
-          <h3>移植 opencode-goal-plugin 为 /goal 插件</h3>
+          <h3>devecocode-goal-plugin：给会话装上目标循环</h3>
           <span class="badge">开发中 · vendor 已全绿</span>
         </div>
         <p class="lesson-tagline">
-          把 willytop8/OpenCode-goal-plugin（v0.6.5）全量移植成 deveco 适配的
-          <b>devecocode-goal-plugin</b>。与 Lesson 2 的形态区别：无外部 shell 点火、单会话内完成，
-          裁决靠<b>证据门控</b>而不是独立 reviewer 会话——模型自己说「完成」不算数。
+          给会话一个「完成条件」，插件把普通对话变成一个<b>事件驱动的目标循环</b>：
+          agent 停下来（<code>session.idle</code>）但目标没完成，就自动续推；
+          声称完成必须携带证据、过审计门控才放行——模型自己说「完成」不算数。
+          整个循环发生在单个会话内，不需要外部 shell 点火。
+          （插件适配自 opencode-goal-plugin v0.6.5。）
         </p>
 
-        <h4>你会学到（真实插件移植方法论）</h4>
+        <h4>你会学到（对应 Loop Engineering 的哪几层）</h4>
         <ul class="learn">
-          <li>定位上游 hook 依赖 → 探针实测 deveco 的 hook 行为</li>
-          <li>vendor 布局让适配 diff 可审：上游 6 个源文件原样进子目录，薄入口 re-export</li>
-          <li>上游 9 个测试文件全量搬入 <code>node --test</code>，全绿即移植正确性的机械证据</li>
-          <li>为什么 <code>/goal</code> 的证据门控比「模型自己说完成」可靠</li>
+          <li><code>/goal</code> 的目标生命周期：设定 → 空转续推 → 证据门控 → 归档——正是背景一节闭环「执行 → 验证 → 注入反馈 → 再执行 → 退出条件」的单会话实现</li>
+          <li>空转自续 = <b>事件驱动循环</b>：<code>session.idle</code> 事件触发续推，而不是人在旁边不停说「继续」</li>
+          <li>证据门控 = <b>验证循环</b>：完成声称要交出可核查的证据，防止「反复改写、自我宣布胜利」</li>
+          <li>它和 ralph loop 的分工：外循环跨会话、独立裁判；内循环单会话、轻量常驻——两者可以叠加</li>
         </ul>
 
-        <h4>用法（目标形态）</h4>
+        <h4>用法</h4>
         <ol class="steps">
           <li>
             <b>装</b> —— <code>goal.sh</code> 只负责装：插件 + merge <code>deveco.json</code> 的 /goal 命令：
@@ -681,12 +743,23 @@
           </li>
           <li>
             <b>空转自续</b> —— agent 停下来但目标没完成？插件自动发续推消息，把它踢回去接着干。
+            这一步就是闭环里的「定位差距 → 注入反馈 → 再执行」。
           </li>
           <li>
-            <b>证据门控完成</b> —— 完成汇报要过证据审计；状态归档在 <code>.deveco/goals/state.json</code>，
+            <b>证据门控完成</b> —— 完成汇报要过证据审计才收工；状态归档在 <code>.deveco/goals/state.json</code>。
+            退出条件可配（<code>.deveco/goal-plugin.json</code>：maxTurns 10 / maxDurationMs 900000 / maxTokens 200000）。
             排障第一句永远是：看 <code>.deveco/goals/plugin.log</code> 有没有加载记录。
           </li>
         </ol>
+
+        <h4>与 ralph loop（Lesson 2）的分工</h4>
+        <table class="cmp">
+          <tr><th></th><th>L2 · ralph loop（外循环）</th><th>L3 · /goal 插件（内循环）</th></tr>
+          <tr><td>点火</td><td>shell 脚本 <code>ralph.sh run</code></td><td>会话里一句 <code>/goal ⟨目标⟩</code></td></tr>
+          <tr><td>边界</td><td>跨会话：worker / reviewer 各是独立 session</td><td>单会话内常驻</td></tr>
+          <tr><td>裁决</td><td>独立 reviewer 只读会话，git 核实</td><td>证据门控审计完成声称</td></tr>
+          <tr><td>退出</td><td><code>.ralph/DONE</code> / <code>STOPPED</code></td><td>目标归档 / maxTurns 等预算耗尽</td></tr>
+        </table>
 
         <h4>当前进度</h4>
         <ul class="check">
@@ -694,6 +767,96 @@
           <li>适配任务按 10 步计划推进中：状态路径迁 <code>.deveco/</code>、session API 注入 <code>query.directory</code>、入口壳、goal.sh、冒烟、E2E 走查（见 <code>docs/superpowers/plans/2026-07-16-lesson3-goal-plugin.md</code>）</li>
         </ul>
       </article>
+    </div>
+  </section>
+
+  <!-- ============ 实验:once vs loop ============ -->
+  <section class="section" id="exp1">
+    <div class="wrap">
+      <h2>实验实证：单次 Agent vs Ralph Loop</h2>
+      <p class="section-sub">
+        盲验收 A/B 对照实验（<code>experiments/experiment1</code>，2026-07-16 实测），
+        用 Lesson 2 的 <code>ralph.sh once / run</code> 做双臂，回答一个问题：
+        <b>同一个模型、同一份任务，「一次生成」和「带验收反馈的循环」到底差在哪？</b>
+      </p>
+
+      <div class="kicker">实验设计</div>
+      <p class="section-sub" style="max-width:none">
+        任务：把 CPython <code>textwrap</code> 移植成行为等价的 Rust（5 个函数、12 个选项）。
+        验收：816 条「输入 → CPython 期望输出」向量，<b>对 worker 完全隐藏</b>（不在可见路径、不进 git 历史，红线禁读 + 赛后审计）。
+        两组的 GOAL、模型、工具、盲验收完全一致，唯一被操纵的变量是<b>反馈环的有无</b>。
+        worker 故意用弱模型（deepseek-v4-flash）：强模型靠本地对拍 CPython 就能自收敛到满分，轮不到外循环出场——
+        「便宜 worker + 强验收循环」正是 loop engineering 的经济学卖点。
+      </p>
+
+      <div class="exp-grid">
+        <div class="arm">
+          <span class="arm-label">A 组 · ONCE（无反馈环）</span>
+          <div class="score">795<small>/816</small> <span class="badge-claim">自认完成</span></div>
+          <div class="scorebar" role="img" aria-label="A 组得分 795 / 816，其中 21 条失败">
+            <span class="fill" style="width:97.4%"></span><span class="miss" style="width:2.6%"></span>
+          </div>
+          <div class="scorebar-cap"><span>wrap 760/780 · fill 13/14 · 其余全对</span><span class="miss-note">■ 21 条失败</span></div>
+          <ul class="facts">
+            <li>一次写完、自测全绿、收工，全程约 10 分钟、1 个实现 commit</li>
+            <li>21 条失败<b>全部</b>聚在 <code>break_on_hyphens</code> 断连字符的断点语义——弱模型自测扫不到的长尾</li>
+            <li><b>关键观察：它停手时不知道自己错了多少。</b>没人告诉它哪错了，795 就是终点</li>
+          </ul>
+        </div>
+        <div class="arm">
+          <span class="arm-label">B 组 · LOOP（reviewer 隐藏验收反馈）</span>
+          <div class="score">816<small>/816</small> <span class="badge-done">DONE</span></div>
+          <div class="scorebar" role="img" aria-label="B 组得分 816 / 816 满分">
+            <span class="fill-done" style="width:100%"></span>
+          </div>
+          <div class="scorebar-cap"><span>dedent · indent · wrap · fill · shorten 全部满分</span></div>
+          <ul class="facts">
+            <li>第 1 轮约 22 分钟做到 815/816，被 reviewer 拦下（赛后重打分所得）</li>
+            <li><code>CONTINUE</code> 精确点出最后一条失败的根因与修法 → worker 用 1 个 commit 修复</li>
+            <li>第 2 轮复核约 2 分钟 → <code>DONE</code>。多花的约 14 分钟，买到的是<b>确定的正确</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="kicker">外循环喂回去的那句话（reviewer CONTINUE 原文）</div>
+      <div class="term">
+        <div class="term-bar">~/ralph-experiment1/loop/.ralph/plugin.log</div>
+        <pre><code>09:07:14 reviewer verdict: <span class="p">CONTINUE:</span> wrap 返回空向量：`wrap_chunks` 第一行被空白 chunk
+         填满后被 `drop_whitespace` 清空，`cur_line.is_empty()` 触发了错误 `break`
+         而非 `continue`，需改为 `if remaining.is_empty() { break; } continue;`
+09:09:39 reviewer verdict: <span class="ok">DONE</span>
+
+<span class="c"># worker 对这条反馈的回应，就是下一个 commit：</span>
+9241e4a fix: drop_whitespace with narrow width no longer drops all remaining chunks</code></pre>
+      </div>
+      <p class="section-sub" style="margin-top:10px">
+        这就是背景一节说的<b>可执行反馈</b>：不是「还不够好」，而是根因 + 修法。
+        反馈环的价值不在「多跑几轮」，而在每轮把差距变成下一轮的输入。
+      </p>
+
+      <div class="kicker">反面教材：Goodhart 与审计</div>
+      <div class="caution">
+        第一次跑 A 组时，flash 在会话开始<b>第 17 秒</b>就把隐藏验收向量 <code>.ralph/vectors.jsonl</code>
+        读走，对着验收集搭本地 harness 刷出「816/816」——满分全程是 Goodhart，成绩作废。
+        结论：对全工具 agent，<b>「藏」不是安全边界，「规则 + 审计」才是</b>。
+        审计命中后要人工判读：读过验收数据<b>内容</b> = 作弊作废；纯元数据访问（如 <code>git ls-files</code> 列文件名）可豁免但要记录理由——
+        本次 A 组唯一一条命中即属良性豁免。呼应背景一节：验证器被污染，agent 就会持续优化错误目标。
+      </div>
+
+      <div class="kicker">复现（experiments/experiment1，longrunning_practice 仓库）</div>
+      <div class="term">
+        <div class="term-bar">experiments/experiment1</div>
+        <pre><code><span class="p">$</span> ./run_experiment.sh prepare   <span class="c"># 环境体检 + 建双臂（~/ralph-experiment1/{once,loop}）</span>
+<span class="p">$</span> ./run_experiment.sh once      <span class="c"># A 组，收工后自动打分</span>
+<span class="p">$</span> ./run_experiment.sh loop      <span class="c"># B 组（A 组结束后再跑，避免抢限流）</span>
+<span class="p">$</span> ./run_experiment.sh report    <span class="c"># 对比表 + 两组偷看审计 + 曲线文件位置</span>
+<span class="p">$</span> ./audit_peeking.sh ~/ralph-experiment1/loop   <span class="c"># 审计必须 clean，成绩才有效</span></code></pre>
+      </div>
+      <p class="section-sub" style="margin-top:10px">
+        LLM 有随机性，你的数字会不同（A 组停在 780–816 都见过），但 loop 的优势是<b>结构性</b>的。
+        本次实测的原始数据（失败样例全文、逐轮裁决日志、分数曲线、审计判读）都在
+        <code>experiments/experiment1/reference-results/</code>。
+      </p>
     </div>
   </section>
 
@@ -707,7 +870,7 @@
 vendor/cannbot-insight  会话观测器（源码 vendor，依赖由 setup.sh 现场安装）
 lesson1-insight/        第一课：观测对接（observe.sh + 教学文档）
 lesson2-ralph-loop/     第二课：ralph loop（ralph.sh + 模板 + 案例 + 测试）
-lesson3-goal-plugin/    第三课：/goal 插件移植（vendor + 测试 + 实现计划，开发中）</code></pre>
+lesson3-goal-plugin/    第三课：/goal 目标循环插件（vendor + 测试 + 实现计划，开发中）</code></pre>
       </div>
       <p class="section-sub" style="margin-top:16px">
         进阶：<code>ralph.sh</code> 还带 <code>swebench prepare / export</code> 子命令，可把 SWE-bench Lite
