@@ -3169,7 +3169,7 @@ test("resolveStateFilePath precedence: explicit option > env > project-local", (
   )
   assert.equal(
     resolveStateFilePath({ env: {}, cwd: "/proj" }),
-    join("/proj", ".opencode", "goals", "state.json"),
+    join("/proj", ".deveco", "goals", "state.json"),
   )
 })
 
@@ -3187,7 +3187,7 @@ test("xdgStateFilePath honors XDG_STATE_HOME and falls back to ~/.local/state", 
 test("normalizePersistenceOptions defaults to project-local with migration fallbacks", () => {
   const opts = normalizePersistenceOptions({}, { env: {}, cwd: "/proj" })
   assert.equal(opts.persistState, true)
-  assert.equal(opts.stateFilePath, join("/proj", ".opencode", "goals", "state.json"))
+  assert.equal(opts.stateFilePath, join("/proj", ".deveco", "goals", "state.json"))
   assert.deepEqual(opts.fallbackPaths, legacyStateFilePaths({}))
 })
 
@@ -3245,7 +3245,7 @@ test("migrates state from a legacy XDG path to the project-local default", async
     // The goal was recovered from the legacy XDG location...
     assert.notEqual(currentGoal("session-migrated"), null)
     // ...and migrated forward to the project-local default path.
-    const projStatePath = join(projDir, ".opencode", "goals", "state.json")
+    const projStatePath = join(projDir, ".deveco", "goals", "state.json")
     const migrated = JSON.parse(await readFile(projStatePath, "utf8"))
     assert.equal(migrated.goals.length, 1)
     assert.equal(migrated.goals[0].sessionID, "session-migrated")
@@ -3294,12 +3294,12 @@ test("GoalPlugin resolves project-local state against the host-provided director
       output,
     )
 
-    const expectedPath = join(sessionDir, ".opencode", "goals", "state.json")
+    const expectedPath = join(sessionDir, ".deveco", "goals", "state.json")
     const written = JSON.parse(await readFile(expectedPath, "utf8"))
     assert.equal(written.goals[0].condition, "directory-aware persistence")
 
-    // Nothing was written under process.cwd()'s .opencode directory.
-    await assert.rejects(stat(join(process.cwd(), ".opencode", "goals", "state.json")))
+    // Nothing was written under process.cwd()'s .deveco directory.
+    await assert.rejects(stat(join(process.cwd(), ".deveco", "goals", "state.json")))
   } finally {
     await rm(sessionDir, { recursive: true, force: true })
   }

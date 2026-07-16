@@ -24,7 +24,7 @@ const STATE_FILE_VERSION = 1
 // Default state now follows the project: <cwd>/.opencode/goals/state.json.
 // The legacy home-dir path and the XDG state path are read as migration
 // fallbacks so existing users do not lose state when upgrading.
-const PROJECT_LOCAL_STATE_SUBPATH = join(".opencode", "goals", "state.json")
+const PROJECT_LOCAL_STATE_SUBPATH = join(".deveco", "goals", "state.json")
 // Home base for path resolution. Honors an injected `env.HOME` when present so
 // path resolution is deterministic and testable across platforms — `os.homedir()`
 // ignores `$HOME` on macOS (it reads the account record), which would otherwise
@@ -1009,12 +1009,18 @@ function xdgStateFilePath(env = process.env) {
 
 // State-file resolution precedence:
 //   1. explicit `stateFilePath` plugin option
-//   2. OPENCODE_GOAL_STATE_PATH environment variable
-//   3. project-local default: <cwd>/.opencode/goals/state.json
+//   2. DEVECO_GOAL_STATE_PATH environment variable
+//   3. OPENCODE_GOAL_STATE_PATH environment variable
+//   4. project-local default: <cwd>/.deveco/goals/state.json
 function resolveStateFilePath({ stateFilePath, env = process.env, cwd } = {}) {
   const base = typeof cwd === "string" && cwd.trim() ? cwd : process.cwd()
   if (typeof stateFilePath === "string" && stateFilePath.trim()) {
     const configured = stateFilePath.trim()
+    return isAbsolute(configured) ? configured : resolvePath(base, configured)
+  }
+  const devecoEnvPath = env?.DEVECO_GOAL_STATE_PATH
+  if (typeof devecoEnvPath === "string" && devecoEnvPath.trim()) {
+    const configured = devecoEnvPath.trim()
     return isAbsolute(configured) ? configured : resolvePath(base, configured)
   }
   const envPath = env?.OPENCODE_GOAL_STATE_PATH

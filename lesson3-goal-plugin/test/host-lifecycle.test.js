@@ -310,7 +310,7 @@ test("disposed instance cannot persist over a replacement instance after a late 
     releasePrompt()
     await oldIdle
 
-    const raw = JSON.parse(await fs.readFile(join(directory, ".opencode", "goals", "state.json"), "utf8"))
+    const raw = JSON.parse(await fs.readFile(join(directory, ".deveco", "goals", "state.json"), "utf8"))
     assert.deepEqual(raw.goals.map((goal) => goal.condition), ["replacement objective"])
   } finally {
     releasePrompt?.()
@@ -340,20 +340,20 @@ test("workspace persistence and lifecycle ledgers remain isolated", async () => 
   await setGoal(second, "session-persist-two", "persist only workspace two")
 
   const firstState = JSON.parse(
-    await fs.readFile(join(firstDirectory, ".opencode", "goals", "state.json"), "utf8"),
+    await fs.readFile(join(firstDirectory, ".deveco", "goals", "state.json"), "utf8"),
   )
   const secondState = JSON.parse(
-    await fs.readFile(join(secondDirectory, ".opencode", "goals", "state.json"), "utf8"),
+    await fs.readFile(join(secondDirectory, ".deveco", "goals", "state.json"), "utf8"),
   )
   assert.deepEqual(firstState.goals.map((goal) => goal.sessionID), ["session-persist-one"])
   assert.deepEqual(secondState.goals.map((goal) => goal.sessionID), ["session-persist-two"])
 
   const firstLedger = await fs.readFile(
-    join(firstDirectory, ".opencode", "goals", "state.json.ledger.jsonl"),
+    join(firstDirectory, ".deveco", "goals", "state.json.ledger.jsonl"),
     "utf8",
   )
   const secondLedger = await fs.readFile(
-    join(secondDirectory, ".opencode", "goals", "state.json.ledger.jsonl"),
+    join(secondDirectory, ".deveco", "goals", "state.json.ledger.jsonl"),
     "utf8",
   )
   assert.match(firstLedger, /session-persist-one/)
