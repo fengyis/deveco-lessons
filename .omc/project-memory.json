@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1784204456903,
+  "projectRoot": "/Users/fengyi/Workspace/others/deveco-lessons",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1784204456895,
+      "keyFiles": []
+    },
+    "lesson1-insight": {
+      "path": "lesson1-insight",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1784204456896,
+      "keyFiles": [
+        "README.md",
+        "observe.sh"
+      ]
+    },
+    "lesson2-ralph-loop": {
+      "path": "lesson2-ralph-loop",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1784204456897,
+      "keyFiles": [
+        "README.md",
+        "ralph.sh"
+      ]
+    },
+    "vendor": {
+      "path": "vendor",
+      "purpose": "Third-party code",
+      "fileCount": 0,
+      "lastAccessed": 1784204456897,
+      "keyFiles": []
+    },
+    "lesson2-ralph-loop/examples": {
+      "path": "lesson2-ralph-loop/examples",
+      "purpose": "Example code",
+      "fileCount": 0,
+      "lastAccessed": 1784204456897,
+      "keyFiles": []
+    },
+    "lesson2-ralph-loop/test": {
+      "path": "lesson2-ralph-loop/test",
+      "purpose": "Test files",
+      "fileCount": 2,
+      "lastAccessed": 1784204456897,
+      "keyFiles": [
+        "ralph-loop.test.ts",
+        "swebench-cli.test.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "lesson2-ralph-loop/README.md",
+      "accessCount": 1,
+      "lastAccessed": 1784204496995,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

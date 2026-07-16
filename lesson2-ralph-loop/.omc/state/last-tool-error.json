@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"ls ~/Workspace/others/deveco-code/packages/plugin/src/ 2>/dev/null; echo ---; grep -n \\\"\\\\\\\"command.execute.before\\\\\\\"\\\\|command\\\\.execute\\\\|session\\\\.idle\\\\|chat\\\\.system\\\\|chat.message\\\"...",
+  "error": "Exit code 1\nexample-workspace.ts\nexample.ts\nindex.ts\nshell.ts\ntool.ts\ntui.ts\n---\n237:  \"chat.message\"?: (\n265:  \"command.execute.before\"?: (\n285:  \"experimental.chat.messages.transform\"?: (\n294:  \"experimental.chat.system.transform\"?: (\n(eval):1: == not found",
+  "timestamp": "2026-07-16T12:26:36.406Z",
+  "retry_count": 1
+}

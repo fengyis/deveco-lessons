@@ -97,30 +97,6 @@ test("prepare creates a blind mode-neutral workspace without moving the base com
   expect(git(repo, "status", "--porcelain")).toBe("")
 })
 
-test("bundled hard practice is a blind official-schema input", () => {
-  const input = path.join(
-    ROOT,
-    "examples",
-    "swebench",
-    "django__django-12589",
-    "instance.json",
-  )
-  const record = JSON.parse(readFileSync(input, "utf8"))
-
-  expect(record).toEqual({
-    repo: "django/django",
-    instance_id: "django__django-12589",
-    base_commit: "895f28f9cbed817c00ab68770433170d83132d90",
-    problem_statement: expect.any(String),
-    version: "3.1",
-  })
-  expect(record.problem_statement).toContain("column reference \"status\" is ambiguous")
-  expect(record.problem_statement).toContain("GROUP BY")
-  for (const oracle of ["patch", "test_patch", "FAIL_TO_PASS", "PASS_TO_PASS", "hints_text"]) {
-    expect(record).not.toHaveProperty(oracle)
-  }
-})
-
 test("prepare refuses a dirty target repository", () => {
   const { repo, instance } = fixture()
   writeFileSync(path.join(repo, "module.py"), "dirty\n")

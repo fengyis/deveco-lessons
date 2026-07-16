@@ -5,7 +5,7 @@
 | | 主题 | 你得到什么 |
 |---|------|-----------|
 | [Lesson 1](lesson1-insight/README.md) | 用 DevEco 对接 cannbot-insight | 任意 DevEco 会话的 turn-by-turn 回放:token、上下文、工具调用 |
-| [Lesson 2](lesson2-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过;进阶 SWE-bench A/B |
+| [Lesson 2](lesson2-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过(smoke 案例 30 秒跑通) |
 
 两课递进:第一课装好「镜头」,第二课跑起 loop 并用镜头回看它。
 
