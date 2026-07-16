@@ -512,7 +512,6 @@ cmd_run() {
     esac
   done
   [ -n "$target" ] || usage
-  [ -n "$PYTHON" ] || die "需要 python3(或 python),请先安装 Python"
   [ -d "$target" ] || die "$target 不存在，先跑 $0 init $target"
   target="$(cd "$target" && pwd)"
   port="${port:-4097}"
@@ -577,7 +576,7 @@ cmd_run() {
     -o .ralph/session-create.json \
     || die "创建会话的请求没发出去(curl 失败)"
   local sid
-  sid=$("$PYTHON" -c "import sys,json;print(json.load(sys.stdin)['id'])" < .ralph/session-create.json) || {
+  sid=$(node -e "console.log(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).id)" .ralph/session-create.json 2>/dev/null) || {
     echo "---- server 返回(.ralph/session-create.json)----" >&2
     cat .ralph/session-create.json >&2; echo >&2
     die "创建会话失败(server 返回见上)"
@@ -589,28 +588,24 @@ cmd_run() {
   # 点火这轮是脚本发的（插件只管后续轮次），必须自己带上 workerModel，
   # 否则首轮会悄悄走 deveco.json 的项目默认模型。
   local body
-  body=$("$PYTHON" - "$target" "$mode" <<'PY'
-import json, sys, pathlib
-cfg = json.loads((pathlib.Path(sys.argv[1]) / ".ralph" / "config.json").read_text())
-once = sys.argv[2] == "once"
-body = {
-    "agent": "ralph-once" if once else cfg.get("workerAgent", "ralph-worker"),
-    "parts": [{
-        "type": "text",
-        "text": (
-            "这是唯一一次执行机会，请完整解决 .ralph/GOAL.md 里的目标并提交改动。"
-            if once else
-            "开始推进 .ralph/GOAL.md 里的目标。"
-        ),
-    }],
-}
-spec = cfg.get("workerModel")
-if spec and "/" in spec:
-    provider, model = spec.split("/", 1)
-    body["model"] = {"providerID": provider, "modelID": model}
-print(json.dumps(body, ensure_ascii=False))
-PY
-  )
+  body=$(node -e '
+    const fs = require("fs"), path = require("path");
+    const target = process.argv[1], mode = process.argv[2];
+    const cfg = JSON.parse(fs.readFileSync(path.join(target, ".ralph", "config.json"), "utf8"));
+    const once = mode === "once";
+    const body = {
+      agent: once ? "ralph-once" : (cfg.workerAgent || "ralph-worker"),
+      parts: [{ type: "text", text: once
+        ? "这是唯一一次执行机会，请完整解决 .ralph/GOAL.md 里的目标并提交改动。"
+        : "开始推进 .ralph/GOAL.md 里的目标。" }],
+    };
+    const spec = cfg.workerModel;
+    if (spec && spec.includes("/")) {
+      const i = spec.indexOf("/");
+      body.model = { providerID: spec.slice(0, i), modelID: spec.slice(i + 1) };
+    }
+    console.log(JSON.stringify(body));
+  ' "$target" "$mode")
   curl -s -X POST "http://127.0.0.1:$port/session/$sid/message?directory=$target_url" \
     -H 'Content-Type: application/json' -d "$body" \
     -o .ralph/kickoff-response.json &
