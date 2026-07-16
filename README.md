@@ -1,0 +1,33 @@
+# deveco-lessons:DevEco 长程任务两课
+
+用两个动手 lesson,学会「让 agent 长时间自主干活,并且看得见它在干什么」:
+
+| | 主题 | 你得到什么 |
+|---|------|-----------|
+| [Lesson 1](lesson1-insight/README.md) | 用 DevEco 对接 cannbot-insight | 任意 DevEco 会话的 turn-by-turn 回放:token、上下文、工具调用 |
+| [Lesson 2](lesson2-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过;进阶 SWE-bench A/B |
+
+两课递进:第一课装好「镜头」,第二课跑起 loop 并用镜头回看它。
+
+## 快速开始
+
+```bash
+git clone <本仓库> && cd deveco-lessons
+./setup.sh            # 一键环境:node20/bun/cannbot 依赖与数据库,幂等可重跑
+deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
+```
+
+唯一前置:已安装 deveco(`npm install -g @deveco/deveco-code`)。
+其余依赖(含 cannbot-insight 本体,vendor 在 `vendor/` 下)全部由
+`setup.sh` 就地装好,不需要手工配置。
+
+装完从 [Lesson 1](lesson1-insight/README.md) 开始。
+
+## 仓库结构
+
+```
+setup.sh                一键环境脚本
+vendor/cannbot-insight  会话观测器(源码 vendor,依赖由 setup.sh 现场安装)
+lesson1-insight/        第一课:观测对接(observe.sh + 教学文档)
+lesson2-ralph-loop/     第二课:ralph loop(ralph.sh + 模板 + 案例 + 测试)
+```
