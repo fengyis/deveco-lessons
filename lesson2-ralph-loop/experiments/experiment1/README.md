@@ -118,6 +118,26 @@ cd ~/ralph-experiment1/loop && python3 .ralph/run_qa.py
 
 ## 常见坑
 
+- **cargo 拉不到 crates.io**(`failed to get 'serde' as a dependency ...`):内网/代理环境
+  的经典问题——git 配了代理能通 GitHub,但 **cargo 不读 git 的代理配置**。任选其一,写进
+  `~/.cargo/config.toml`(Windows: `%USERPROFILE%\.cargo\config.toml`):
+
+  ```toml
+  # ① 给 cargo 配上你 git 在用的代理(git config --get http.proxy 能查到)
+  [http]
+  proxy = "http://代理地址:端口"
+  ```
+
+  ```toml
+  # ② 或改用国内镜像源(USTC;清华把 ustc 换成 tuna 的地址同理)
+  [source.crates-io]
+  replace-with = 'mirror'
+  [source.mirror]
+  registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+  ```
+
+  配完**不用重建双臂**:进 `~/ralph-experiment1/once` 跑
+  `python .ralph/run_qa.py --samples 0`,看到 `QA SCORE: 0/816` 就可以直接继续 `once`。
 - **端口被旧进程占着**:`deveco serve` 只能按端口杀:`lsof -ti:4121 | xargs kill -9`
 - **worker 用 GLM-5.1 会在读大文件后挂死**(deveco 端点吃不下大 payload 的请求),
   所以本实验默认 deepseek;换模型用 `RALPH_EXP1_WORKER`/`RALPH_EXP1_REVIEWER` 环境变量,
