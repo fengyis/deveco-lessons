@@ -33,9 +33,32 @@ if sys.platform == "win32" and not sys.flags.utf8_mode:
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
+
+
+def _openai_env():
+    """OpenAI 兼容网关三件套:OPENAI_API_BASE / OPENAI_API_KEY / OPENAI_MODEL。
+    配了就自动生成 deveco 配置并把 worker/reviewer 指到网关,用户不用碰 deveco.jsonc。
+    来源:本目录 local.env(KEY=VALUE 一行一个,拷 local.env.example,不入库),环境变量优先。"""
+    vals = {}
+    f = HERE / "local.env"
+    if f.is_file():
+        for line in f.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                vals[k.strip()] = v.strip().strip("'\"")
+    for k in ("OPENAI_API_BASE", "OPENAI_API_KEY", "OPENAI_MODEL"):
+        if os.environ.get(k):
+            vals[k] = os.environ[k]
+    return vals
+
+
+OPENAI = _openai_env()
+_GATEWAY = ("gateway/" + OPENAI.get("OPENAI_MODEL", "auto")) if OPENAI.get("OPENAI_API_BASE") else None
+
 WORK = pathlib.Path(os.environ.get("RALPH_EXP1_DIR", str(pathlib.Path.home() / "ralph-experiment1")))
-WORKER = os.environ.get("RALPH_EXP1_WORKER", "deepseek/deepseek-v4-flash")
-REVIEWER = os.environ.get("RALPH_EXP1_REVIEWER", "deepseek/deepseek-reasoner")
+WORKER = os.environ.get("RALPH_EXP1_WORKER") or _GATEWAY or "deepseek/deepseek-v4-flash"
+REVIEWER = os.environ.get("RALPH_EXP1_REVIEWER") or _GATEWAY or "deepseek/deepseek-reasoner"
 PORT = {"once": int(os.environ.get("RALPH_EXP1_PORT_ONCE", "4121")),
         "loop": int(os.environ.get("RALPH_EXP1_PORT_LOOP", "4122"))}
 WIN = sys.platform == "win32"
@@ -93,6 +116,10 @@ def init_project(target: pathlib.Path):
     (target / ".ralph").mkdir(parents=True, exist_ok=True)
     for f in TEMPLATE_FILES:
         shutil.copy(ROOT / "template" / f, target / f)
+    # deveco 按会话目录找配置,自定义网关的本地 deveco.jsonc 要跟着进每个臂
+    for name in ("deveco.jsonc", "deveco.json"):
+        if (HERE / name).is_file():
+            shutil.copy(HERE / name, target / name)
     (target / ".ralph/config.json").write_text(json.dumps({
         "workerAgent": "ralph-worker", "workerModel": WORKER,
         "reviewerAgent": "ralph-reviewer", "reviewerModel": REVIEWER,
@@ -106,7 +133,7 @@ def init_project(target: pathlib.Path):
     exclude = target / ".git/info/exclude"
     exclude.parent.mkdir(parents=True, exist_ok=True)
     existing = exclude.read_text() if exclude.exists() else ""
-    for pat in ("/.ralph/", "/.deveco/", "/deveco.json"):
+    for pat in ("/.ralph/", "/.deveco/", "/deveco.json", "/deveco.jsonc"):
         if pat not in existing:
             existing += pat + "\n"
     exclude.write_text(existing)
@@ -132,14 +159,32 @@ def strip_task_false(target: pathlib.Path):
                          if l.strip() != "task: false"))
 
 
+def write_gateway_config():
+    """网关三件套齐了就生成 deveco.json:体检时给 deveco models 认,建臂时注入两臂。"""
+    if not OPENAI.get("OPENAI_API_BASE"):
+        return
+    (HERE / "deveco.json").write_text(json.dumps({
+        "$schema": "https://opencode.ai/config.json",
+        "provider": {"gateway": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "gateway",
+            "options": {"baseURL": OPENAI["OPENAI_API_BASE"],
+                        "apiKey": OPENAI.get("OPENAI_API_KEY", "")},
+            "models": {OPENAI.get("OPENAI_MODEL", "auto"): {}},
+        }},
+    }, indent=2) + "\n", encoding="utf-8")
+    say(f"→ 检测到 OPENAI_API_BASE,已生成网关配置 {HERE / 'deveco.json'}")
+
+
 def cmd_prepare():
     say("=== 环境体检 ===")
+    write_gateway_config()
     for tool in ("cargo", "git"):
         shutil.which(tool) or die(f"缺 {tool}(cargo 装 rustup: https://rustup.rs)")
     dv = deveco_bin()
     # 不写死 provider:worker/reviewer 可以通过 RALPH_EXP1_WORKER/REVIEWER 换成任意
     # deveco 认识的模型(auth login 配的,或 deveco.jsonc 里自定义的 openai 兼容网关)
-    models = sh([dv, "models"])
+    models = sh([dv, "models"], cwd=HERE)  # cwd 定在本目录,让本地 deveco.jsonc 的网关也算数
     available = models.stdout + models.stderr
     for spec in dict.fromkeys((WORKER, REVIEWER)):
         spec in available or die(

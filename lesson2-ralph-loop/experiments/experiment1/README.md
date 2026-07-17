@@ -24,7 +24,10 @@ loop engineering 的经济学卖点。
 
 ## 前置条件
 
-- `deveco` CLI 已装且 `deveco auth login` 配好 **DeepSeek** API(worker/reviewer 都走它)
+- `deveco` CLI 已装,模型二选一:
+  - `deveco auth login` 配好 **DeepSeek** API(默认,worker/reviewer 都走它);
+  - 或用 **OpenAI 兼容网关**:`cp local.env.example local.env` 填三行
+    (`OPENAI_API_BASE`/`OPENAI_API_KEY`/`OPENAI_MODEL`),其余全部由 prepare 自动完成
 - `cargo`/`rustc`(`brew install rust`)、`python3`、`git`、`sqlite3`、`lsof`
 - shell 里**不能有** `DEVECO_SERVER_PASSWORD`(脚本会 unset,自己起 server 时注意)
 - 预算:A 组约 10-15 分钟,B 组约 25-45 分钟;deepseek flash/reasoner 的 token 花费很小
@@ -117,6 +120,7 @@ cd ~/ralph-experiment1/loop && python3 .ralph/run_qa.py
 
 - **端口被旧进程占着**:`deveco serve` 只能按端口杀:`lsof -ti:4121 | xargs kill -9`
 - **worker 用 GLM-5.1 会在读大文件后挂死**(deveco 端点吃不下大 payload 的请求),
-  所以本实验默认 deepseek;换模型用 `RALPH_EXP1_WORKER`/`RALPH_EXP1_REVIEWER` 环境变量
+  所以本实验默认 deepseek;换模型用 `RALPH_EXP1_WORKER`/`RALPH_EXP1_REVIEWER` 环境变量,
+  或配 `local.env` 走 OpenAI 兼容网关(见前置条件)
 - 判断插件到底加载没有:看 `<项目>/.ralph/plugin.log` 是否生成
 - B 组曲线里分数**中途掉到 0** 是正常的:worker 正在改 `lib.rs`,编译不过,计分器判 0
