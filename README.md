@@ -24,10 +24,11 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 `setup.sh` 就地装好,不需要手工配置。
 
 **Windows 用户(Git Bash)**:三个脚本都适配了 Git Bash,额外前置只有一条——
-自己装好 **Node.js 20 或 22 LTS**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node)。
-不是越新越好:观测器的原生依赖 better-sqlite3 只对 node 18/20/22/23 提供
-Windows 预编译包,装 24+ 会在本机触发 C++ 编译(需要 VS Build Tools)然后失败。
-公司网络挡 GitHub 时推荐 20:仓库自带的离线预编译包只覆盖 node 20。
+自己装好 **Node.js**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node,也不卡版本)。
+装依赖时,原生扩展 better-sqlite3 按顺序走三条路:官方预编译包(node 18/20/22/23 有)
+→ 仓库离线包(`vendor/prebuilds/`,覆盖 node 20)→ 本机源码编译(有 VS Build Tools +
+Python 就能过)。三条全不通才失败——推荐 20/22 LTS(免编译最省事),
+有编译工具链的机器用什么版本都行。
 
 **必须用 node 24+?** 有编译工具链(VS Build Tools + Python)的机器可以自编预编译包
 供全班离线复用——在装好依赖的 `vendor/cannbot-insight/node_modules/better-sqlite3`
@@ -41,8 +42,7 @@ tar -czf ../../../prebuilds/better-sqlite3-v11.10.0-node-v${ABI}-${PLAT}.tar.gz 
     build/Release/better_sqlite3.node
 ```
 
-setup.sh 检测到当前 node 的 ABI 在 `vendor/prebuilds/` 里有对应包时,会放行该版本;
-其他没有工具链的机器装依赖时也会直接命中这个包,不再触发本机编译。
+其他没有工具链的机器装依赖时会直接命中这个包,不再触发本机编译。
 
 常见报错:
 - `EINTEGRITY`(npm ci 校验和不匹配):先 `npm cache clean --force` 重试;仍失败则

@@ -20,42 +20,26 @@ ok "deveco $(deveco --version 2>/dev/null | head -1)"
 IS_WINDOWS=0
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;; esac
 
-# ---- 2. node(20/22/23 任一)------------------------------------------------
-# cannbot 的原生依赖 better-sqlite3(11.10.0)官方预编译覆盖 node 18/20/22/23
-# (mac/linux/win 三平台全);cannbot 本体要求 >=20,所以 20/22/23 都能免编译直装。
-# 没有预编译包的版本(24+,如 26)会回退源码编译,学员机器一般编不过——
-# 当前 node 受支持就直接用,不受支持才回退 nvm 装 20(Windows 无 nvm,只检测)。
-_node_supported() {
-  command -v node >/dev/null 2>&1 || return 1
-  case "$(node -e "console.log(process.versions.node.split('.')[0])" 2>/dev/null)" in
-    20|22|23) return 0 ;;
-  esac
-  # 24+ 官方没有 11.10.0 的预编译包,但认自编包:按官方资产名放进 vendor/prebuilds/
-  # 就放行(better-sqlite3-v<版本>-node-v<ABI>-<platform>-<arch>.tar.gz,见 README)
-  local abi plat
-  abi="$(node -e "console.log(process.versions.modules)" 2>/dev/null)"
-  plat="$(node -e "console.log(process.platform + '-' + process.arch)" 2>/dev/null)"
-  ls "$HERE/vendor/prebuilds/better-sqlite3-v"*"-node-v${abi}-${plat}.tar.gz" >/dev/null 2>&1
-}
-if _node_supported; then
-  ok "node $(node -v)(已安装,better-sqlite3 有对应预编译包)"
-elif [ "$IS_WINDOWS" = "1" ]; then
-  die "需要 node 20 或 22(当前 $(node -v 2>/dev/null || echo 未安装))。推荐 20 LTS——仓库自带的离线预编译包只覆盖 node 20,22 需要能联网取包;24+ 没有官方预编译包,会在本机触发 C++ 编译然后失败(有编译工具链的话可以自编包放进 vendor/prebuilds/,见 README)。多版本共存可用 nvm-windows:https://github.com/coreybutler/nvm-windows"
-else
+# ---- 2. node ---------------------------------------------------------------
+# 不卡版本。真正的约束是第 4 步 better-sqlite3(原生扩展)能否装上:
+# 11.10.0 官方预编译覆盖 node 18/20/22/23;其他版本要么命中 vendor/prebuilds/
+# 的自编包,要么本机有工具链现场编译。装不上时那一步会给出指路提示。
+if ! command -v node >/dev/null 2>&1; then
+  if [ "$IS_WINDOWS" = "1" ]; then
+    die "没找到 node。请安装 Node.js(推荐 20/22 LTS):https://nodejs.org"
+  fi
   if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
     say "→ 安装 nvm ${NVM_VERSION} ..."
     curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh" | bash
   fi
   set +u
   . "$HOME/.nvm/nvm.sh"
-  if ! nvm ls 20 >/dev/null 2>&1; then
-    say "→ 安装 node 20 ..."
-    nvm install 20
-  fi
+  say "→ 安装 node 20 ..."
+  nvm install 20
   nvm use 20 >/dev/null
   set -u
-  ok "node $(node -v)(经 nvm)"
 fi
+ok "node $(node -v)"
 
 # ---- 3. bun(lesson2 的测试与独立验收测试用)-----------------------------
 if ! command -v bun >/dev/null 2>&1; then
@@ -84,8 +68,8 @@ cd "$VENDOR"
 if [ -d node_modules ] && node -e "require('better-sqlite3')" >/dev/null 2>&1; then
   ok "cannbot-insight 依赖已就绪(跳过 npm ci)"
 else
-  say "→ npm ci(首次要几分钟,better-sqlite3 会现场编译)..."
-  npm ci
+  say "→ npm ci(首次要几分钟)..."
+  npm ci || die "npm ci 失败。若卡在 better-sqlite3 原生编译:当前 node $(node -v) 没有官方预编译包(node 18/20/22/23 才有)——换 node 20/22 重跑,或用有编译工具链的机器自编包放进 vendor/prebuilds/(见 README)"
 fi
 
 # ---- 4.5 Windows:预置 prisma 引擎(离线可用)-----------------------------
@@ -137,7 +121,7 @@ say "环境自检:"
 ok "deveco:$(deveco --version 2>/dev/null | head -1)"
 node -e "require('better-sqlite3')" >/dev/null 2>&1 \
   && ok "better-sqlite3 可加载(node $(node -v))" \
-  || die "better-sqlite3 加载失败——确认在 node 20/22 下重跑一次 ./setup.sh"
+  || die "better-sqlite3 加载失败——当前 node $(node -v) 和依赖编译时的 ABI 不匹配;换 node 20/22 重跑 ./setup.sh(或自编包,见 README)"
 ok "bun:$(bun --version)"
 [ -f "$VENDOR/prisma/dev.db" ] && ok "cannbot 数据库就绪" || die "prisma/dev.db 没生成"
 [ -f "$VENDOR/.next/BUILD_ID" ] && ok "cannbot 生产构建就绪" || die ".next/BUILD_ID 没生成"
