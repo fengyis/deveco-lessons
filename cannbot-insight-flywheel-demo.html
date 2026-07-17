@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CANNBot Insight · 透明可审计的数据飞轮演示</title>
+  <style>
+    :root {
+      --bg: #f3f5f7;
+      --surface: #ffffff;
+      --surface-2: #f7f8fa;
+      --ink: #172033;
+      --muted: #647084;
+      --line: #dce1e8;
+      --line-strong: #c6ced9;
+      --red: #c7000b;
+      --red-soft: #fff0f1;
+      --blue: #2468e5;
+      --blue-soft: #edf4ff;
+      --green: #11875d;
+      --green-soft: #eaf8f2;
+      --amber: #b55d00;
+      --amber-soft: #fff6e8;
+      --shadow: 0 12px 32px rgba(28, 39, 56, .08);
+      --radius: 12px;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid rgba(36, 104, 229, .35); outline-offset: 2px; }
+    [hidden] { display: none !important; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 10px clamp(16px, 3vw, 44px);
+      color: #fff;
+      background: #151d2c;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 7px;
+      background: var(--red);
+      font-weight: 800;
+      letter-spacing: -.08em;
+    }
+    .brand-copy { min-width: 0; }
+    .brand-copy strong { display: block; font-size: 14px; letter-spacing: .02em; }
+    .brand-copy span { display: block; color: #aab5c6; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .top-meta { display: flex; align-items: center; gap: 10px; color: #c7d0dd; font-size: 12px; }
+    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #31cc88; box-shadow: 0 0 0 4px rgba(49,204,136,.14); }
+
+    main { width: min(1500px, 100%); margin: 0 auto; padding: 0 clamp(12px, 2.4vw, 36px) 36px; }
+    .hero { padding: clamp(34px, 6vw, 72px) 0 28px; }
+    .eyebrow { margin: 0 0 8px; color: var(--red); font: 700 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 1040px; margin: 0; font-size: clamp(30px, 4.4vw, 62px); line-height: 1.08; letter-spacing: -.045em; }
+    .lede { max-width: 960px; margin: 18px 0 0; color: #4d5a6d; font-size: clamp(15px, 1.6vw, 20px); }
+
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 24px; }
+    .btn {
+      min-height: 40px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 9px 14px;
+      background: var(--surface);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .btn:hover { border-color: #9da9b9; background: #fbfcfd; }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { border-color: var(--red); color: #fff; background: var(--red); }
+    .btn-primary:hover { border-color: #a90009; background: #a90009; }
+    .btn-small { min-height: 32px; padding: 6px 10px; font-size: 12px; }
+
+    .tour-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      max-width: 920px;
+      margin-top: 24px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--line);
+    }
+    .tour-step {
+      min-width: 0;
+      border: 0;
+      padding: 12px 14px;
+      text-align: left;
+      background: var(--surface);
+      cursor: pointer;
+    }
+    .tour-step span { display: block; color: var(--muted); font: 700 10px/1.4 var(--mono); letter-spacing: .08em; }
+    .tour-step b { display: block; margin-top: 2px; font-size: 14px; }
+    .tour-step[aria-current="step"] { color: var(--red); background: var(--red-soft); box-shadow: inset 0 -3px 0 var(--red); }
+
+    .audit-story {
+      margin-bottom: 28px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-top: 4px solid var(--red);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 8px 24px rgba(28, 39, 56, .05);
+    }
+    .story-block { display: grid; grid-template-columns: 170px minmax(0, 1fr); }
+    .story-block + .story-block { border-top: 1px solid var(--line); }
+    .story-index { padding: 24px; background: #fafbfc; }
+    .story-index span { display: block; color: var(--red); font: 700 10px/1.4 var(--mono); letter-spacing: .12em; }
+    .story-index b { display: block; margin-top: 6px; font-size: 15px; }
+    .story-content { min-width: 0; padding: 24px 28px; }
+    .story-content h2, .story-content h3 { margin: 0; letter-spacing: -.02em; text-wrap: balance; }
+    .story-content h2 { max-width: 960px; font-size: clamp(21px, 2.5vw, 34px); line-height: 1.22; }
+    .story-content h3 { font-size: 18px; }
+    .story-content > p { max-width: 1000px; margin: 9px 0 0; color: var(--muted); font-size: 13px; }
+    .audit-questions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin-top: 18px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--line); }
+    .audit-questions div { padding: 12px 14px; background: var(--blue-soft); }
+    .audit-questions dt { color: #3566aa; font: 700 9px/1.4 var(--mono); letter-spacing: .08em; }
+    .audit-questions dd { margin: 3px 0 0; font-size: 11px; font-weight: 700; }
+    .risk-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .risk-item { padding: 13px 15px; border-left: 3px solid var(--red); background: var(--red-soft); }
+    .risk-item b { display: block; font-size: 12px; }
+    .risk-item p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+    .intro-route { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 14px 0 0; padding: 0; list-style: none; }
+    .intro-route li { position: relative; min-width: 0; padding: 0 24px 0 0; }
+    .intro-route li:not(:last-child)::after { content: "→"; position: absolute; right: 7px; top: 18px; color: var(--red); font-weight: 800; }
+    .intro-route span { display: block; color: var(--red); font: 700 10px/1.4 var(--mono); letter-spacing: .08em; }
+    .intro-route b { display: block; margin-top: 5px; font-size: 13px; }
+    .intro-route p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+    .audit-band { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 18px 0 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fafbfc; }
+    .audit-band div { min-width: 0; padding: 14px 18px; }
+    .audit-band div + div { border-left: 1px solid var(--line); }
+    .audit-band dt { color: var(--muted); font: 700 9px/1.4 var(--mono); letter-spacing: .08em; }
+    .audit-band dd { margin: 3px 0 0; font-size: 11px; font-weight: 700; }
+
+    .tool-entry {
+      display: grid;
+      grid-template-columns: minmax(280px, .72fr) minmax(0, 1.65fr);
+      gap: 28px;
+      align-items: center;
+      margin: 0 0 16px;
+      padding: 22px 24px;
+      border-left: 4px solid var(--red);
+      background: var(--surface);
+    }
+    .tool-entry-label { margin: 0 0 6px; color: var(--red); font: 700 10px/1.4 var(--mono); letter-spacing: .12em; }
+    .tool-entry h2 { margin: 0; font-size: clamp(20px, 2.3vw, 30px); line-height: 1.2; letter-spacing: -.025em; text-wrap: balance; }
+    .tool-entry-copy > p:not(.tool-entry-label) { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .tool-controls { min-width: 0; }
+    .tool-controls .hero-actions { margin-top: 0; }
+    .tool-controls .tour-steps { max-width: none; margin-top: 12px; }
+
+    .console {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      min-height: 700px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .session-rail { min-width: 0; background: #1b2434; color: #e8edf4; border-right: 1px solid #2d3849; }
+    .rail-head { padding: 18px 16px 12px; border-bottom: 1px solid #303b4b; }
+    .rail-head strong { display: block; font-size: 13px; }
+    .rail-head span { display: block; margin-top: 3px; color: #93a0b3; font-size: 11px; }
+    .session-list { display: grid; gap: 6px; padding: 10px; }
+    .session-item {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 10px;
+      color: #cbd4e1;
+      background: transparent;
+      text-align: left;
+      cursor: default;
+    }
+    .session-item[aria-current="true"] { color: #fff; border-color: #465269; background: #273246; }
+    .session-item:not([aria-current="true"]) { opacity: .72; }
+    .session-item strong, .session-item small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .session-item strong { font-size: 12px; }
+    .session-item small { margin-top: 4px; color: #92a1b5; font: 11px/1.4 var(--mono); }
+    .rail-source { margin: 14px 10px; padding: 12px; border-top: 1px solid #303b4b; color: #95a3b7; font-size: 11px; }
+    .rail-source code { color: #dce5f1; font-family: var(--mono); overflow-wrap: anywhere; }
+
+    .workspace { min-width: 0; display: flex; flex-direction: column; }
+    .session-bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+    .session-title { min-width: 0; }
+    .session-title strong { display: block; font-size: 14px; }
+    .session-title span { display: block; color: var(--muted); font: 11px/1.4 var(--mono); overflow-wrap: anywhere; }
+    .status-badge { flex: 0 0 auto; border: 1px solid #8bd7b6; border-radius: 999px; padding: 4px 9px; color: #08704b; background: var(--green-soft); font-size: 11px; font-weight: 800; }
+
+    .metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 12px 18px; }
+    .metric { min-width: 0; padding: 10px 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .metric span { display: block; color: var(--muted); font-size: 10px; }
+    .metric b { display: block; margin-top: 3px; font: 700 15px/1.3 var(--mono); overflow-wrap: anywhere; }
+    .metric.error b { color: var(--red); }
+
+    .tabbar {
+      display: flex;
+      gap: 2px;
+      padding: 0 18px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line);
+      scrollbar-width: thin;
+    }
+    .tab {
+      flex: 0 0 auto;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      padding: 10px 12px 9px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab[aria-selected="true"] { color: var(--red); border-bottom-color: var(--red); }
+    .panel { min-width: 0; flex: 1; padding: 16px 18px 20px; background: var(--surface-2); }
+    .panel-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+    .panel-heading h2 { margin: 0; font-size: 16px; }
+    .panel-heading p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .panel-note { color: var(--muted); font: 10px/1.4 var(--mono); }
+
+    .trace-grid { display: grid; grid-template-columns: 250px minmax(360px, 1fr) 290px; gap: 10px; min-height: 465px; }
+    .pane { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+    .pane-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: #fafbfc; }
+    .pane-head strong { font-size: 12px; }
+    .pane-head span { color: var(--muted); font: 10px/1.4 var(--mono); }
+    .turn-list { display: grid; max-height: 430px; overflow-y: auto; padding: 7px; }
+    .turn {
+      position: relative;
+      width: 100%;
+      border: 0;
+      border-left: 3px solid #cbd3df;
+      padding: 9px 9px 9px 11px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .turn + .turn { margin-top: 3px; }
+    .turn:hover { background: #f6f8fa; }
+    .turn[aria-current="true"] { border-left-color: var(--blue); background: var(--blue-soft); }
+    .turn[data-state="error"] { border-left-color: var(--red); }
+    .turn[data-state="success"] { border-left-color: var(--green); }
+    .turn-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .turn-index { color: var(--muted); font: 10px/1.3 var(--mono); }
+    .turn-state { border-radius: 999px; padding: 2px 6px; color: #566276; background: #edf0f4; font-size: 9px; font-weight: 800; }
+    .turn[data-state="error"] .turn-state { color: var(--red); background: var(--red-soft); }
+    .turn[data-state="success"] .turn-state { color: var(--green); background: var(--green-soft); }
+    .turn b { display: block; margin-top: 4px; font-size: 11px; }
+    .turn small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+
+    .timeline { padding: 14px 14px 12px; overflow-x: auto; }
+    .time-axis { display: grid; grid-template-columns: 88px repeat(8, minmax(46px, 1fr)); min-width: 620px; margin-bottom: 8px; color: var(--muted); font: 9px/1.4 var(--mono); }
+    .time-axis span:not(:first-child) { text-align: right; }
+    .lane { display: grid; grid-template-columns: 88px minmax(520px, 1fr); align-items: center; min-width: 620px; min-height: 48px; border-top: 1px solid #edf0f3; }
+    .lane-label { padding-right: 10px; }
+    .lane-label b, .lane-label small { display: block; }
+    .lane-label b { font-size: 10px; }
+    .lane-label small { color: var(--muted); font-size: 9px; }
+    .track { position: relative; height: 26px; border-radius: 4px; background: repeating-linear-gradient(90deg, #f4f6f8 0, #f4f6f8 calc(12.5% - 1px), #e2e7ed calc(12.5% - 1px), #e2e7ed 12.5%); }
+    .bar { position: absolute; top: 5px; height: 16px; border-radius: 3px; background: #8aa9dd; }
+    .bar.plan { background: #85c7b0; }
+    .bar.error { background: #e96d73; }
+    .bar.verify { background: #64a18b; }
+    .bar.root { left: 2%; width: 95%; }
+    .bar.plan-range { left: 8%; width: 20%; }
+    .bar.build-range { left: 31%; width: 34%; }
+    .bar.verify-range { left: 69%; width: 27%; }
+    .pin-build { left: 49%; }
+    .event-pin { position: absolute; top: 2px; width: 4px; height: 22px; border-radius: 2px; background: var(--red); }
+    .event-pin::after { content: attr(data-label); position: absolute; left: 7px; top: -14px; width: max-content; max-width: 150px; color: var(--red); font: 9px/1.3 var(--mono); }
+
+    .evidence-body { padding: 12px; }
+    .evidence-kicker { color: var(--blue); font: 700 10px/1.4 var(--mono); letter-spacing: .08em; }
+    .evidence-body h3 { margin: 5px 0 4px; font-size: 15px; line-height: 1.35; }
+    .evidence-body > p { margin: 0 0 12px; color: var(--muted); font-size: 11px; }
+    .evidence-fields { display: grid; gap: 7px; margin: 0; }
+    .evidence-fields div { padding: 8px 9px; border-left: 3px solid var(--line-strong); background: #f8fafb; }
+    .evidence-fields dt { color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
+    .evidence-fields dd { margin: 2px 0 0; font: 10px/1.45 var(--mono); overflow-wrap: anywhere; }
+    .evidence-chain { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-top: 12px; }
+    .evidence-chain span { padding: 6px 4px; border: 1px solid #bcd0f3; border-radius: 5px; color: #24559f; background: var(--blue-soft); text-align: center; font-size: 9px; font-weight: 700; }
+
+    .workflow-map { display: grid; grid-template-columns: repeat(5, minmax(140px, 1fr)); gap: 8px; overflow-x: auto; padding-bottom: 8px; }
+    .phase { min-width: 140px; padding: 14px; border: 1px solid var(--line); border-top: 4px solid #7e8da3; border-radius: 8px; background: var(--surface); }
+    .phase[data-kind="error"] { border-top-color: var(--red); background: #fffafa; }
+    .phase[data-kind="verify"] { border-top-color: var(--blue); background: #fbfdff; }
+    .phase[data-kind="done"] { border-top-color: var(--green); background: #f9fdfa; }
+    .phase span { color: var(--muted); font: 10px/1.3 var(--mono); }
+    .phase h3 { margin: 7px 0 5px; font-size: 14px; }
+    .phase p { margin: 0; color: var(--muted); font-size: 11px; }
+    .phase ul { margin: 10px 0 0; padding-left: 16px; color: #4c586a; font-size: 10px; }
+    .workflow-callout { margin-top: 12px; padding: 12px 14px; border-left: 4px solid var(--red); background: var(--red-soft); font-size: 12px; }
+
+    .context-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 10px; }
+    .chart-card { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+    .chart-card h3 { margin: 0; font-size: 13px; }
+    .chart-card p { margin: 3px 0 12px; color: var(--muted); font-size: 10px; }
+    .context-chart { width: 100%; height: 260px; display: block; overflow: visible; }
+    .context-chart text { font-family: var(--mono); font-size: 9px; fill: #6c778a; }
+    .context-chart .grid { stroke: #e4e8ee; stroke-width: 1; }
+    .context-chart .root-line { fill: none; stroke: var(--blue); stroke-width: 3; }
+    .context-chart .sub-line { fill: none; stroke: #13a36f; stroke-width: 2; stroke-dasharray: 5 4; }
+    .context-chart .limit { fill: none; stroke: var(--red); stroke-width: 1.5; stroke-dasharray: 4 4; }
+    .context-chart .compact { stroke: var(--amber); stroke-width: 2; }
+    .agent-stats { display: grid; gap: 8px; }
+    .agent-stat { padding: 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .agent-stat-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .agent-stat b { font-size: 11px; }
+    .agent-stat span { color: var(--muted); font: 10px/1.3 var(--mono); }
+    .progress { height: 7px; margin-top: 8px; overflow: hidden; border-radius: 999px; background: #e7ebf0; }
+    .progress i { display: block; height: 100%; border-radius: inherit; background: var(--blue); }
+    .agent-stat.sub .progress i { background: var(--green); }
+    .p74 { width: 74%; }
+    .p46 { width: 46%; }
+    .p31 { width: 31%; }
+
+    .asset-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .asset-card { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .asset-card span { color: var(--red); font: 700 10px/1.4 var(--mono); }
+    .asset-card h3 { margin: 6px 0 4px; font-size: 13px; }
+    .asset-card p { margin: 0; color: var(--muted); font-size: 11px; }
+    .pipeline { display: grid; grid-template-columns: repeat(6, minmax(120px, 1fr)); gap: 8px; margin-top: 12px; overflow-x: auto; }
+    .pipeline div { position: relative; min-width: 120px; padding: 11px; border: 1px solid var(--line); border-radius: 7px; background: #fbfcfd; }
+    .pipeline div:not(:last-child)::after { content: "→"; position: absolute; right: -8px; top: 50%; z-index: 2; width: 15px; color: var(--red); background: var(--surface-2); text-align: center; transform: translateY(-50%); }
+    .pipeline b, .pipeline small { display: block; }
+    .pipeline b { font-size: 11px; }
+    .pipeline small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+
+    .flywheel-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .loop-card { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+    .loop-card.outer { border-top: 4px solid var(--red); }
+    .loop-card.inner { border-top: 4px solid var(--blue); }
+    .loop-card h3 { margin: 0; font-size: 15px; }
+    .loop-card > p { margin: 4px 0 14px; color: var(--muted); font-size: 11px; }
+    .loop-flow { display: grid; grid-template-columns: repeat(5, minmax(72px, 1fr)); align-items: center; gap: 14px; }
+    .loop-node { position: relative; min-height: 66px; display: grid; place-items: center; padding: 8px; border: 1px solid #e3a5a8; border-radius: 50%; color: #8f0710; background: var(--red-soft); text-align: center; font-size: 10px; font-weight: 800; }
+    .inner .loop-node { border-color: #9ebbec; color: #1f57b0; background: var(--blue-soft); }
+    .loop-node:not(:last-child)::after { content: "→"; position: absolute; right: -18px; top: 50%; color: var(--red); transform: translateY(-50%); }
+    .inner .loop-node:not(:last-child)::after { color: var(--blue); }
+    .flywheel-thesis { margin-top: 10px; padding: 13px 15px; color: #fff; background: #172033; border-radius: 8px; font-size: 12px; }
+    .flywheel-thesis b { color: #ff7f86; }
+
+    .migbot-board {
+      margin-top: 28px;
+      overflow: hidden;
+      border: 1px solid #2e3c50;
+      border-radius: 14px;
+      color: #eaf0f8;
+      background: #111a28;
+      box-shadow: var(--shadow);
+    }
+    .board-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; padding: 24px 26px 20px; border-bottom: 1px solid #2e3c50; }
+    .board-label { margin: 0 0 6px; color: #78a9ff; font: 700 10px/1.4 var(--mono); letter-spacing: .12em; }
+    .board-head h2 { max-width: 900px; margin: 0; font-size: clamp(22px, 3vw, 38px); line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
+    .board-head-copy { max-width: 440px; margin: 0; color: #9eacbf; font-size: 12px; }
+    .board-kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid #2e3c50; background: #182334; }
+    .board-kpi { min-width: 0; padding: 17px 20px; }
+    .board-kpi + .board-kpi { border-left: 1px solid #2e3c50; }
+    .board-kpi span { display: block; color: #91a0b4; font-size: 10px; }
+    .board-kpi b { display: block; margin-top: 3px; color: #70d5a7; font: 700 clamp(17px, 2vw, 25px)/1.2 var(--mono); overflow-wrap: anywhere; }
+    .board-kpi small { display: block; margin-top: 3px; color: #718097; font-size: 9px; }
+    .board-pipeline { display: grid; grid-template-columns: repeat(7, minmax(126px, 1fr)); gap: 1px; overflow-x: auto; border-bottom: 1px solid #2e3c50; background: #2e3c50; }
+    .board-stage { position: relative; min-width: 126px; padding: 15px 17px; background: #151f2e; }
+    .board-stage:not(:last-child)::after { content: "\2192"; position: absolute; right: -7px; top: 50%; z-index: 2; color: #78a9ff; transform: translateY(-50%); }
+    .board-stage span { color: #78a9ff; font: 700 9px/1.4 var(--mono); }
+    .board-stage b { display: block; margin-top: 3px; font-size: 11px; }
+    .board-body { display: grid; grid-template-columns: minmax(270px, .75fr) minmax(500px, 1.4fr); gap: 1px; background: #2e3c50; }
+    .board-panel { min-width: 0; padding: 20px 22px; background: #111a28; }
+    .board-panel h3 { margin: 0; font-size: 14px; }
+    .board-panel > p { margin: 3px 0 15px; color: #8391a5; font-size: 10px; }
+    .trend-list { display: grid; gap: 12px; }
+    .trend-row { display: grid; grid-template-columns: 80px minmax(0, 1fr) 42px; align-items: center; gap: 10px; color: #c7d1df; font-size: 10px; }
+    .trend-track { height: 8px; overflow: hidden; border-radius: 999px; background: #2a3648; }
+    .trend-bar { display: block; height: 100%; border-radius: inherit; background: #3f83f8; }
+    .trend-bar.green { background: #29b67f; }
+    .w68 { width: 68%; }
+    .w82 { width: 82%; }
+    .w91 { width: 91%; }
+    .closure-wrap { overflow-x: auto; }
+    .closure-table { width: 100%; min-width: 570px; border-collapse: collapse; font-size: 10px; }
+    .closure-table th { padding: 8px 10px; color: #7f8ea3; border-bottom: 1px solid #324055; text-align: left; font: 700 9px/1.4 var(--mono); letter-spacing: .06em; }
+    .closure-table td { padding: 10px; color: #cbd5e2; border-bottom: 1px solid #263347; }
+    .closure-table code { color: #8ab4ff; font-family: var(--mono); }
+    .closure-status { display: inline-block; border-radius: 999px; padding: 3px 7px; color: #74dbae; background: #163e34; font-weight: 700; }
+    .closure-status.pending { color: #f3c175; background: #44341d; }
+    .board-note { margin: 0; padding: 11px 22px; color: #738197; background: #0d1521; font-size: 9px; }
+
+    .source-strip { margin-top: 20px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+    .source-strip h2 { margin: 0; font-size: 15px; }
+    .source-strip ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0 0; padding: 0; list-style: none; counter-reset: source-step; }
+    .source-strip li { counter-increment: source-step; padding-left: 34px; position: relative; color: var(--muted); font-size: 12px; }
+    .source-strip li::before { content: counter(source-step); position: absolute; left: 0; top: 0; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: var(--red); font: 700 11px/1 var(--mono); }
+    .source-strip code { font-family: var(--mono); color: #2f3b4c; overflow-wrap: anywhere; }
+    .sources { margin: 22px 0 0; color: var(--muted); font-size: 11px; }
+    .sources a { color: #315f9f; text-underline-offset: 2px; }
+
+    dialog { width: min(620px, calc(100vw - 24px)); border: 1px solid var(--line-strong); border-radius: 12px; padding: 0; color: var(--ink); background: var(--surface); box-shadow: 0 28px 80px rgba(21,29,44,.24); }
+    dialog::backdrop { background: rgba(18, 26, 39, .54); backdrop-filter: blur(2px); }
+    .dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 18px; border-bottom: 1px solid var(--line); }
+    .dialog-head h2 { margin: 0; font-size: 18px; }
+    .dialog-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .dialog-body { padding: 18px; }
+    .setup-code { margin: 0; overflow-x: auto; border-radius: 8px; padding: 14px; color: #dce8f8; background: #172033; font: 12px/1.65 var(--mono); }
+    .setup-notes { margin: 12px 0 0; padding-left: 20px; color: var(--muted); font-size: 12px; }
+    .dialog-actions { display: flex; justify-content: flex-end; padding: 0 18px 18px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 1180px) {
+      .trace-grid { grid-template-columns: 220px minmax(360px, 1fr); }
+      .evidence-pane { grid-column: 1 / -1; }
+      .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .story-block { grid-template-columns: 140px minmax(0, 1fr); }
+      .tool-entry { grid-template-columns: 1fr; }
+      .console { grid-template-columns: 1fr; }
+      .session-rail { display: none; }
+      .trace-grid, .context-layout, .flywheel-layout { grid-template-columns: 1fr; }
+      .trace-grid { min-height: auto; }
+      .turn-list { max-height: 280px; }
+      .asset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .board-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .board-kpi + .board-kpi { border-left: 0; }
+      .board-kpi:nth-child(even) { border-left: 1px solid #2e3c50; }
+      .board-kpi:nth-child(n+3) { border-top: 1px solid #2e3c50; }
+      .board-body { grid-template-columns: 1fr; }
+      .source-strip ol { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .topbar { padding-inline: 12px; }
+      .top-meta span:last-child { display: none; }
+      main { padding-inline: 10px; }
+      .hero { padding-top: 30px; }
+      .tour-steps { grid-template-columns: 1fr 1fr; }
+      .story-block { grid-template-columns: 1fr; }
+      .story-index { padding: 16px 18px 7px; background: var(--surface); }
+      .story-content { padding: 8px 18px 20px; }
+      .audit-questions, .risk-list { grid-template-columns: 1fr; }
+      .tool-entry { padding: 18px; }
+      .intro-route { grid-template-columns: 1fr; gap: 18px; }
+      .intro-route li { padding: 0 0 15px; }
+      .intro-route li:not(:last-child)::after { content: "↓"; right: auto; left: 2px; top: auto; bottom: -6px; }
+      .audit-band { grid-template-columns: 1fr 1fr; }
+      .audit-band div:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+      .audit-band div:nth-child(4) { border-top: 1px solid var(--line); }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-inline: 10px; }
+      .session-bar, .panel { padding-inline: 10px; }
+      .tabbar { padding-inline: 6px; }
+      .panel-heading { display: block; }
+      .panel-note { display: block; margin-top: 5px; }
+      .asset-grid { grid-template-columns: 1fr; }
+      .loop-flow { grid-template-columns: 1fr; }
+      .loop-node { min-height: 52px; border-radius: 7px; }
+      .loop-node:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -19px; transform: translateX(50%); }
+      .board-head { display: block; padding: 20px 18px; }
+      .board-head-copy { margin-top: 10px; }
+      .board-kpi { padding: 14px; }
+      .board-panel { padding: 18px; }
+      .trend-row { grid-template-columns: 70px minmax(0, 1fr) 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">CI</span>
+      <div class="brand-copy"><strong>CANNBot Insight</strong><span>Data Flywheel Observatory</span></div>
+    </div>
+    <div class="top-meta"><span class="live-dot" aria-hidden="true"></span><span>演示数据 · Trace 已就绪</span></div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">General Data Flywheel · Auditable by Design</p>
+      <h1 id="page-title">让每一次 Agent 执行，都成为可追溯、可归因、可复用的能力样本</h1>
+      <p class="lede">透明可审计把 Agent 的每一步执行变成可复现的工程现场：每个结论都有来源、过程、证据与归因，失败可定位，完成可验证，经验可复用。</p>
+    </section>
+
+    <section class="audit-story" aria-label="透明可审计介绍">
+      <article class="story-block">
+        <div class="story-index"><span>01 · DEFINITION</span><b>什么是透明可审计</b></div>
+        <div class="story-content">
+          <h2>任何执行结论，都能回到原始事实并被重新核查</h2>
+          <p>透明可审计为 Agent 全流程建立可追溯记录，把目标、上下文、模型输出、工具调用、代码变更、验证结果和责任主体串成完整证据链。</p>
+          <dl class="audit-questions">
+            <div><dt>WHAT</dt><dd>实际发生了什么</dd></div>
+            <div><dt>WHY</dt><dd>为什么这样决策</dd></div>
+            <div><dt>EVIDENCE</dt><dd>什么证据支持结论</dd></div>
+            <div><dt>OWNER</dt><dd>问题与改进归属哪里</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="story-block">
+        <div class="story-index"><span>02 · NECESSITY</span><b>为什么需要</b></div>
+        <div class="story-content">
+          <h3>长程 Agent 的风险来自不可见、不可证和不可复用</h3>
+          <p>任务跨越多轮、多工具与多个 Session 后，只有最终结果无法判断过程是否偏离，也无法证明完成质量。</p>
+          <div class="risk-list">
+            <div class="risk-item"><b>过程不可见</b><p>失败发生在哪一轮、哪个工具或哪个 Child Session 无法快速定位。</p></div>
+            <div class="risk-item"><b>完成不可证</b><p>Agent 可以声明完成，但缺少独立验证与原始证据支撑。</p></div>
+            <div class="risk-item"><b>经验不可复用</b><p>失败、修复和验证没有结构化归因，下一次仍会重复踩坑。</p></div>
+          </div>
+        </div>
+      </article>
+      <article class="story-block">
+        <div class="story-index"><span>03 · ENGINEERING</span><b>怎么做到</b></div>
+        <div class="story-content">
+          <h3>用事件、Trace、指标、归因和验证建立可信链路</h3>
+          <p>先完整采集执行现场，再重建跨 Agent 轨迹，将异常关联到责任源与修复，最后用独立验证确认收敛并沉淀能力资产。</p>
+          <ol class="intro-route" aria-label="数据进入能力飞轮的路径">
+            <li><span>01 · CAPTURE</span><b>采集执行事件</b><p>记录消息、工具、状态、Token 与会话关系。</p></li>
+            <li><span>02 · RECONSTRUCT</span><b>重建完整 Trace</b><p>按时间、Turn、Agent 和阶段还原执行过程。</p></li>
+            <li><span>03 · ATTRIBUTE</span><b>定位问题根因</b><p>把失败信号关联到责任源、修改与验证结果。</p></li>
+            <li><span>04 · COMPOUND</span><b>沉淀能力资产</b><p>形成样本、Benchmark、Skill、Harness 与知识。</p></li>
+          </ol>
+          <dl class="audit-band" aria-label="透明可审计的四项可信度">
+            <div><dt>SOURCE</dt><dd>来源可信</dd></div>
+            <div><dt>PROCESS</dt><dd>过程可信</dd></div>
+            <div><dt>EVIDENCE</dt><dd>证据可信</dd></div>
+            <div><dt>ATTRIBUTION</dt><dd>归因可信</dd></div>
+          </dl>
+        </div>
+      </article>
+    </section>
+
+    <section class="tool-entry" aria-labelledby="tool-entry-title">
+      <div class="tool-entry-copy">
+        <p class="tool-entry-label">04 · TOOL DEMO</p>
+        <h2 id="tool-entry-title">用 CANNBot Insight 打开 Agent 执行黑盒</h2>
+        <p>CANNBot Insight 把 Session 拆成 Turn，并关联工具、Child Session、Skill、Token 与上下文变化。下面沿一条迁移 Trace 演示从现场采集到能力沉淀。</p>
+      </div>
+      <div class="tool-controls">
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="tour-toggle" type="button" aria-pressed="false">开始自动演示</button>
+          <button class="btn" id="setup-open" type="button">连接真实数据</button>
+        </div>
+        <div class="tour-steps" aria-label="演示步骤">
+          <button class="tour-step" type="button" data-step="0" aria-current="step"><span>01 · COLLECT</span><b>采集执行现场</b></button>
+          <button class="tour-step" type="button" data-step="1"><span>02 · ATTRIBUTE</span><b>定位失败根因</b></button>
+          <button class="tour-step" type="button" data-step="2"><span>03 · VERIFY</span><b>验证问题收敛</b></button>
+          <button class="tour-step" type="button" data-step="3"><span>04 · COMPOUND</span><b>沉淀能力资产</b></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="console" aria-label="CANNBot Insight 工具演示">
+      <aside class="session-rail" aria-label="Session 列表">
+        <div class="rail-head"><strong>Sessions</strong><span>3 synthetic traces</span></div>
+        <div class="session-list">
+          <div class="session-item" aria-current="true"><strong>用户中心迁移与回归</strong><small>ses_01JY7A9F · 27 turns</small></div>
+          <div class="session-item"><strong>图片模块 API 适配</strong><small>ses_01JY78CD · 19 turns</small></div>
+          <div class="session-item"><strong>构建链路兼容修复</strong><small>ses_01JY73Q2 · 14 turns</small></div>
+        </div>
+        <div class="rail-source">SOURCE<br><code>opencode sessions.db</code><br><code>Claude Code JSONL</code></div>
+      </aside>
+
+      <div class="workspace">
+        <div class="session-bar">
+          <div class="session-title"><strong>Android → HarmonyOS · 用户中心模块</strong><span>task_migration_042 · general / reviewer / test-runner</span></div>
+          <span class="status-badge">✓ COMPLETED</span>
+        </div>
+
+        <div class="metrics" aria-label="Session 指标">
+          <div class="metric"><span>Tokens</span><b>184.2K</b></div>
+          <div class="metric"><span>Wall Clock</span><b>38m 24s</b></div>
+          <div class="metric"><span>Tool Calls</span><b>63</b></div>
+          <div class="metric"><span>Skills</span><b>7</b></div>
+          <div class="metric"><span>Subagents</span><b>3</b></div>
+          <div class="metric error"><span>Error Turns</span><b>2</b></div>
+        </div>
+
+        <div class="tabbar" role="tablist" aria-label="Session 分析视图">
+          <button class="tab" id="tab-trace" role="tab" type="button" aria-selected="true" aria-controls="panel-trace" data-tab="trace">Trace</button>
+          <button class="tab" id="tab-workflow" role="tab" type="button" aria-selected="false" aria-controls="panel-workflow" data-tab="workflow" tabindex="-1">Workflow</button>
+          <button class="tab" id="tab-context" role="tab" type="button" aria-selected="false" aria-controls="panel-context" data-tab="context" tabindex="-1">Context</button>
+          <button class="tab" id="tab-assets" role="tab" type="button" aria-selected="false" aria-controls="panel-assets" data-tab="assets" tabindex="-1">Evidence Assets</button>
+          <button class="tab" id="tab-flywheel" role="tab" type="button" aria-selected="false" aria-controls="panel-flywheel" data-tab="flywheel" tabindex="-1">Data Flywheel</button>
+        </div>
+
+        <section class="panel" id="panel-trace" role="tabpanel" aria-labelledby="tab-trace">
+          <div class="panel-heading">
+            <div><h2>逐轮 Trace：从异常信号回到原始证据</h2><p>选择任意 Turn，查看输入、工具、结果与归因链。</p></div>
+            <span class="panel-note">SYNTHETIC TRACE · 27 TURNS</span>
+          </div>
+          <div class="trace-grid">
+            <div class="pane">
+              <div class="pane-head"><strong>Turns</strong><span>9 / 27 shown</span></div>
+              <div class="turn-list">
+                <button class="turn" type="button" data-turn="goal" aria-current="true"><span class="turn-top"><span class="turn-index">#01 · USER</span><span class="turn-state">INPUT</span></span><b>提交迁移目标与验收条件</b><small>用户中心模块 · 编译 + 12 项回归</small></button>
+                <button class="turn" type="button" data-turn="plan"><span class="turn-top"><span class="turn-index">#05 · PLANNER</span><span class="turn-state">PLAN</span></span><b>生成分阶段迁移计划</b><small>接口盘点 → 转换 → 验证</small></button>
+                <button class="turn" type="button" data-turn="dispatch"><span class="turn-top"><span class="turn-index">#09 · ROOT</span><span class="turn-state">DISPATCH</span></span><b>派发 ArkTS 页面改造</b><small>subagent: ui-migrator</small></button>
+                <button class="turn" type="button" data-turn="error" data-state="error"><span class="turn-top"><span class="turn-index">#12 · BUILD</span><span class="turn-state">ERROR</span></span><b>首次构建失败</b><small>hvigorw · exit 1 · NavState</small></button>
+                <button class="turn" type="button" data-turn="rootcause"><span class="turn-top"><span class="turn-index">#14 · REVIEWER</span><span class="turn-state">CAUSE</span></span><b>归因到生命周期映射遗漏</b><small>责任源：navigation adapter</small></button>
+                <button class="turn" type="button" data-turn="fix"><span class="turn-top"><span class="turn-index">#18 · BUILD</span><span class="turn-state">PATCH</span></span><b>补齐路由状态适配</b><small>3 files · +41 / -12</small></button>
+                <button class="turn" type="button" data-turn="verify"><span class="turn-top"><span class="turn-index">#21 · TEST</span><span class="turn-state">VERIFY</span></span><b>编译与回归测试通过</b><small>12 / 12 checks passed</small></button>
+                <button class="turn" type="button" data-turn="review" data-state="success"><span class="turn-top"><span class="turn-index">#24 · REVIEWER</span><span class="turn-state">DONE</span></span><b>独立 Reviewer 验收</b><small>evidence complete · no blocker</small></button>
+                <button class="turn" type="button" data-turn="asset" data-state="success"><span class="turn-top"><span class="turn-index">#27 · SYSTEM</span><span class="turn-state">ASSET</span></span><b>归档错误模式与评测用例</b><small>sample_id: NAV-LIFE-003</small></button>
+              </div>
+            </div>
+
+            <div class="pane">
+              <div class="pane-head"><strong>Agent Timeline</strong><span>wall clock 38m 24s</span></div>
+              <div class="timeline" aria-label="Agent 时间线">
+                <div class="time-axis"><span>Agent</span><span>09:00</span><span>09:05</span><span>09:10</span><span>09:15</span><span>09:20</span><span>09:25</span><span>09:30</span><span>09:38</span></div>
+                <div class="lane"><div class="lane-label"><b>general</b><small>root session</small></div><div class="track"><span class="bar root"></span></div></div>
+                <div class="lane"><div class="lane-label"><b>planner</b><small>child session</small></div><div class="track"><span class="bar plan plan-range"></span></div></div>
+                <div class="lane"><div class="lane-label"><b>ui-migrator</b><small>child session</small></div><div class="track"><span class="bar build-range"></span><span class="event-pin pin-build" data-label="build failed"></span></div></div>
+                <div class="lane"><div class="lane-label"><b>test-runner</b><small>child session</small></div><div class="track"><span class="bar verify verify-range"></span></div></div>
+              </div>
+            </div>
+
+            <aside class="pane evidence-pane" aria-label="证据检查器">
+              <div class="pane-head"><strong>Evidence Inspector</strong><span id="evidence-turn">TURN #01</span></div>
+              <div class="evidence-body">
+                <span class="evidence-kicker" id="evidence-kind">SOURCE · USER INPUT</span>
+                <h3 id="evidence-title">迁移目标进入审计链</h3>
+                <p id="evidence-summary">原始目标、目录与验收条件被记录为本次执行的来源证据。</p>
+                <dl class="evidence-fields">
+                  <div><dt>Input</dt><dd id="evidence-input">modules/user-center · 12 acceptance checks</dd></div>
+                  <div><dt>Action</dt><dd id="evidence-action">session.created → message.received</dd></div>
+                  <div><dt>Result</dt><dd id="evidence-result">trace_id=tf_042 · immutable event</dd></div>
+                  <div><dt>Attribution</dt><dd id="evidence-attribution">source=user · owner=general</dd></div>
+                </dl>
+                <div class="evidence-chain" aria-label="可信证据链"><span>来源可信</span><span>过程可信</span><span>证据可信</span><span>归因可信</span></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+        <section class="panel" id="panel-workflow" role="tabpanel" aria-labelledby="tab-workflow" hidden>
+          <div class="panel-heading">
+            <div><h2>Workflow：把执行轨迹还原成工程阶段</h2><p>阶段、工具、错误和验证信号处于同一时间轴，失败位置一目了然。</p></div>
+            <span class="panel-note">5 PHASES · 1 RECOVERY</span>
+          </div>
+          <div class="workflow-map">
+            <article class="phase"><span>PHASE 01</span><h3>Scope</h3><p>目标、边界、验收条件</p><ul><li>read · glob</li><li>2.8K tokens</li></ul></article>
+            <article class="phase"><span>PHASE 02</span><h3>Plan</h3><p>拆解模块与依赖顺序</p><ul><li>planning skill</li><li>1 child session</li></ul></article>
+            <article class="phase" data-kind="error"><span>PHASE 03 · ERROR</span><h3>Execute</h3><p>迁移代码，首次构建失败</p><ul><li>bash · edit</li><li>NavState mismatch</li></ul></article>
+            <article class="phase" data-kind="verify"><span>PHASE 04</span><h3>Verify &amp; Fix</h3><p>归因、修复、回归验证</p><ul><li>12 checks passed</li><li>2 iterations</li></ul></article>
+            <article class="phase" data-kind="done"><span>PHASE 05</span><h3>Retrospect</h3><p>归档证据与错误模式</p><ul><li>NAV-LIFE-003</li><li>Benchmark +1</li></ul></article>
+          </div>
+          <div class="workflow-callout"><b>可审计的关键：</b>每个阶段都能下钻到原始 Turn、工具输入输出、Subagent 会话和验证结果；“完成”由证据链支撑。</div>
+        </section>
+
+        <section class="panel" id="panel-context" role="tabpanel" aria-labelledby="tab-context" hidden>
+          <div class="panel-heading">
+            <div><h2>Context：观察主会话与 Subagent 的上下文增长</h2><p>独立 Session 分轨统计，定位上下文膨胀、压缩边界与高消耗阶段。</p></div>
+            <span class="panel-note">MODEL WINDOW · 200K</span>
+          </div>
+          <div class="context-layout">
+            <div class="chart-card">
+              <h3>Context Window Replay</h3><p>输入上下文占比 · 演示数据</p>
+              <svg class="context-chart" viewBox="0 0 760 260" role="img" aria-labelledby="context-title context-desc">
+                <title id="context-title">上下文窗口增长折线图</title>
+                <desc id="context-desc">主会话从百分之十二增长到百分之七十四，在 compact 后下降；两个 Subagent 独立增长并结束。</desc>
+                <line class="grid" x1="48" y1="220" x2="730" y2="220"></line><line class="grid" x1="48" y1="170" x2="730" y2="170"></line><line class="grid" x1="48" y1="120" x2="730" y2="120"></line><line class="grid" x1="48" y1="70" x2="730" y2="70"></line><line class="grid" x1="48" y1="20" x2="730" y2="20"></line>
+                <text x="8" y="224">0%</text><text x="3" y="174">25%</text><text x="3" y="124">50%</text><text x="3" y="74">75%</text><text x="0" y="24">100%</text>
+                <path class="limit" d="M48 60 H730"></path><text x="640" y="54">80% warning</text>
+                <polyline class="root-line" points="48,196 125,185 202,168 280,151 357,129 435,88 512,142 590,121 668,94 730,72"></polyline>
+                <polyline class="sub-line" points="202,210 280,184 357,160 435,154"></polyline>
+                <polyline class="sub-line" points="512,212 590,188 668,167"></polyline>
+                <line class="compact" x1="500" y1="75" x2="500" y2="220"></line><text x="507" y="212">/compact</text>
+                <text x="48" y="244">09:00</text><text x="208" y="244">09:10</text><text x="370" y="244">09:20</text><text x="532" y="244">09:30</text><text x="684" y="244">09:38</text>
+              </svg>
+            </div>
+            <div class="agent-stats" aria-label="Agent 上下文统计">
+              <div class="agent-stat"><div class="agent-stat-head"><b>general · root</b><span>peak 74%</span></div><div class="progress"><i class="p74"></i></div><span>27 turns · compact ×1</span></div>
+              <div class="agent-stat sub"><div class="agent-stat-head"><b>planner · child</b><span>peak 46%</span></div><div class="progress"><i class="p46"></i></div><span>6 turns · completed</span></div>
+              <div class="agent-stat sub"><div class="agent-stat-head"><b>ui-migrator · child</b><span>peak 31%</span></div><div class="progress"><i class="p31"></i></div><span>8 turns · 1 error</span></div>
+              <div class="agent-stat sub"><div class="agent-stat-head"><b>test-runner · child</b><span>peak 31%</span></div><div class="progress"><i class="p31"></i></div><span>4 turns · verified</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="panel" id="panel-assets" role="tabpanel" aria-labelledby="tab-assets" hidden>
+          <div class="panel-heading">
+            <div><h2>Evidence Assets：把一次故障变成可复用能力</h2><p>Trace 经清洗、归因和验证后，形成下一轮工具改进的结构化输入。</p></div>
+            <span class="panel-note">SAMPLE · BENCHMARK · SKILL</span>
+          </div>
+          <div class="asset-grid">
+            <article class="asset-card"><span>FAILURE SAMPLE</span><h3>NAV-LIFE-003</h3><p>页面生命周期与路由状态映射不一致，包含输入、错误栈和最小复现。</p></article>
+            <article class="asset-card"><span>VERIFICATION</span><h3>12 项回归证据</h3><p>构建结果、契约测试与关键交互截图共同证明修复有效。</p></article>
+            <article class="asset-card"><span>BENCHMARK</span><h3>导航适配评测集</h3><p>把本次失败模式加入跨项目基准，后续版本持续复测。</p></article>
+            <article class="asset-card"><span>CAPABILITY UPDATE</span><h3>Skill + Harness</h3><p>更新迁移规则、Reviewer 检查项和自动化验证器。</p></article>
+          </div>
+          <div class="pipeline" aria-label="能力增长 Pipeline">
+            <div><b>事件采集</b><small>消息 · 工具 · 状态</small></div>
+            <div><b>Trace 存储</b><small>Turn · Session · Bridge</small></div>
+            <div><b>指标建模</b><small>Token · Error · Context</small></div>
+            <div><b>归因分析</b><small>根因 · 责任源 · 聚类</small></div>
+            <div><b>样本入库</b><small>失败 · 修复 · 验证</small></div>
+            <div><b>资产沉淀</b><small>Dataset · Benchmark · Skill</small></div>
+          </div>
+        </section>
+
+        <section class="panel" id="panel-flywheel" role="tabpanel" aria-labelledby="tab-flywheel" hidden>
+          <div class="panel-heading">
+            <div><h2>数据飞轮双环：外环创造客户价值，内环保证工程收敛</h2><p>同一套可信 Trace 同时服务交付迭代与问题验证。</p></div>
+            <span class="panel-note">2 LOOPS · 1 DATA ENGINE</span>
+          </div>
+          <div class="flywheel-layout">
+            <article class="loop-card outer"><h3>外环 · 客户价值环</h3><p>把客户现场反馈转化为工具能力升级。</p><div class="loop-flow"><div class="loop-node">客户问题</div><div class="loop-node">看板整理</div><div class="loop-node">能力改进</div><div class="loop-node">版本交付</div><div class="loop-node">反馈回流</div></div></article>
+            <article class="loop-card inner"><h3>内环 · 工程验证环</h3><p>让每个问题都经过归因、修复与复测。</p><div class="loop-flow"><div class="loop-node">发现异常</div><div class="loop-node">根因定位</div><div class="loop-node">实现修复</div><div class="loop-node">独立验证</div><div class="loop-node">确认收敛</div></div></article>
+          </div>
+          <div class="flywheel-thesis"><b>透明可审计</b>让数据来源、执行过程、验证证据和责任归因都可核查；可信样本继续进入工具、Skill、Harness、Benchmark 与知识资产，驱动下一轮能力增长。</div>
+        </section>
+      </div>
+    </section>
+
+    <section class="migbot-board" aria-labelledby="migbot-title">
+      <header class="board-head">
+        <div>
+          <p class="board-label">05 · MIGBOT DASHBOARD</p>
+          <h2 id="migbot-title">从单次 Trace 到全局问题收敛</h2>
+        </div>
+        <p class="board-head-copy">MigBot 看板汇总来自不同项目的可信执行样本，跟踪数据处理、需求形成、交付验证与能力沉淀，让数据飞轮的运行状态可度量、可追责。</p>
+      </header>
+      <div class="board-kpis" aria-label="数据飞轮目标口径">
+        <div class="board-kpi"><span>客户现场数据</span><b>≥ 5,000</b><small>目标口径 · 每周</small></div>
+        <div class="board-kpi"><span>有效样本处理</span><b>≥ 1,000</b><small>目标口径 · 每周</small></div>
+        <div class="board-kpi"><span>改进需求形成</span><b>≥ 20</b><small>目标口径 · 每周</small></div>
+        <div class="board-kpi"><span>数据消费率</span><b>≥ 85%</b><small>目标口径</small></div>
+        <div class="board-kpi"><span>问题收敛率</span><b>≥ 70%</b><small>目标口径</small></div>
+      </div>
+      <div class="board-pipeline" aria-label="数据飞轮七阶段">
+        <div class="board-stage"><span>01</span><b>现场采集</b></div>
+        <div class="board-stage"><span>02</span><b>归因处理</b></div>
+        <div class="board-stage"><span>03</span><b>需求形成</b></div>
+        <div class="board-stage"><span>04</span><b>需求排期</b></div>
+        <div class="board-stage"><span>05</span><b>能力改进</b></div>
+        <div class="board-stage"><span>06</span><b>交付验证</b></div>
+        <div class="board-stage"><span>07</span><b>能力沉淀</b></div>
+      </div>
+      <div class="board-body">
+        <article class="board-panel">
+          <h3>问题收敛趋势</h3>
+          <p>演示数据 · 最近三个迭代周期</p>
+          <div class="trend-list">
+            <div class="trend-row"><span>Iteration 01</span><div class="trend-track"><i class="trend-bar w68"></i></div><b>68%</b></div>
+            <div class="trend-row"><span>Iteration 02</span><div class="trend-track"><i class="trend-bar green w82"></i></div><b>82%</b></div>
+            <div class="trend-row"><span>Iteration 03</span><div class="trend-track"><i class="trend-bar green w91"></i></div><b>91%</b></div>
+          </div>
+        </article>
+        <article class="board-panel">
+          <h3>本周问题闭环</h3>
+          <p>演示数据 · Trace、根因、改进资产和验证状态保持关联</p>
+          <div class="closure-wrap">
+            <table class="closure-table">
+              <thead><tr><th>ISSUE</th><th>归因结果</th><th>能力沉淀</th><th>状态</th></tr></thead>
+              <tbody>
+                <tr><td><code>NAV-LIFE-003</code></td><td>生命周期映射遗漏</td><td>Skill + Harness</td><td><span class="closure-status">已收敛</span></td></tr>
+                <tr><td><code>API-CONTRACT-017</code></td><td>接口参数契约漂移</td><td>规则 + Benchmark</td><td><span class="closure-status pending">验证中</span></td></tr>
+                <tr><td><code>CTX-GROWTH-006</code></td><td>上下文重复读取</td><td>Context Rule</td><td><span class="closure-status">已入库</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+      <p class="board-note">目标口径来自《数据飞轮工程1.4》；趋势与问题条目为工具展示用演示数据。</p>
+    </section>
+
+    <section class="source-strip" aria-labelledby="real-data-title">
+      <h2 id="real-data-title">接入真实 CANNBot Insight</h2>
+      <ol>
+        <li>在工具目录运行 <code>./start.sh</code>，服务默认从 <code>21025</code> 端口启动。</li>
+        <li>导入 opencode <code>sessions.db</code> 或 Claude Code JSONL，完成 Session 级归一化。</li>
+        <li>在 Overview、Turns、Workflow、Trace、Subagents、Skills、Interactions、AI Workflow 与 Context 中逐层审计。</li>
+      </ol>
+    </section>
+    <p class="sources">内容依据《数据飞轮工程1.4》中的 General 数据飞轮、透明可审计与双环模型整理；工具能力依据 <a href="https://gitcode.com/cann/cannbot-skills/tree/master/plugins-community/cannbot-insight" target="_blank" rel="noopener noreferrer">cannbot-insight 官方仓库</a>。页面中的 Session 指标均为演示数据。</p>
+  </main>
+
+  <dialog id="setup-dialog" aria-labelledby="setup-title">
+    <div class="dialog-head"><div><h2 id="setup-title">连接真实数据</h2><p>三步启动 Web UI 并导入 Agent Session。</p></div><button class="btn btn-small" id="setup-close-x" type="button" aria-label="关闭">关闭</button></div>
+    <div class="dialog-body">
+      <pre class="setup-code"><code>cd plugins-community/cannbot-insight
+./start.sh
+# 浏览器打开 http://localhost:21025
+# 导入 ~/.local/share/opencode/sessions.db
+# 或 Claude Code 的 session JSONL</code></pre>
+      <ul class="setup-notes"><li>运行环境需要 Node.js 20 或更高版本。</li><li>导入后可查看 Token、费用、上下文增长、Subagent、Skill、Workflow、Trace 与 Session 对比。</li></ul>
+    </div>
+    <div class="dialog-actions"><button class="btn btn-primary" id="setup-close" type="button">知道了</button></div>
+  </dialog>
+  <div id="live-region" class="sr-only" aria-live="polite"></div>
+  <script>
+    const evidenceByTurn = {
+      goal: {
+        turn: "TURN #01", kind: "SOURCE · USER INPUT", title: "迁移目标进入审计链",
+        summary: "原始目标、目录与验收条件被记录为本次执行的来源证据。",
+        input: "modules/user-center · 12 acceptance checks",
+        action: "session.created → message.received",
+        result: "trace_id=tf_042 · immutable event",
+        attribution: "source=user · owner=general"
+      },
+      plan: {
+        turn: "TURN #05", kind: "PROCESS · PLAN", title: "计划成为后续执行的对照基线",
+        summary: "每个阶段都绑定输入、输出和验收信号，便于判断偏离发生在哪里。",
+        input: "goal + repository map + acceptance checks",
+        action: "planning skill → 5 ordered phases",
+        result: "plan_id=plan_042 · checkpoints=5",
+        attribution: "agent=planner · parent=general"
+      },
+      dispatch: {
+        turn: "TURN #09", kind: "PROCESS · SUBAGENT", title: "父子 Session 关系被完整保留",
+        summary: "派发指令、Child Session、返回消息与 Token 消耗通过 Bridge 串联。",
+        input: "task=adapt user-center pages to ArkTS",
+        action: "task dispatch → child session created",
+        result: "bridge=br_09 · child=ui-migrator",
+        attribution: "parent=general · owner=ui-migrator"
+      },
+      error: {
+        turn: "TURN #12", kind: "EVIDENCE · TOOL ERROR", title: "构建失败可复现、可定位",
+        summary: "错误命令、退出码、文件位置和调用上下文共同构成失败证据。",
+        input: "./hvigorw assembleHap --mode module",
+        action: "bash · duration=46.2s · exit=1",
+        result: "NavState.router is undefined at UserCenter.ets:84",
+        attribution: "phase=execute · agent=ui-migrator"
+      },
+      rootcause: {
+        turn: "TURN #14", kind: "ATTRIBUTION · ROOT CAUSE", title: "Reviewer 把错误归因到责任源",
+        summary: "通过 diff、调用链和平台契约交叉验证，排除环境与测试数据问题。",
+        input: "error stack + git diff + navigation contract",
+        action: "review → classify → locate responsible adapter",
+        result: "root_cause=lifecycle mapping omitted",
+        attribution: "owner=navigation adapter · confidence=high"
+      },
+      fix: {
+        turn: "TURN #18", kind: "PROCESS · PATCH", title: "修复与根因建立显式关联",
+        summary: "Patch 只修改责任模块，并保留对应错误模式 ID。",
+        input: "root_cause=NAV-LIFE-003",
+        action: "edit 3 files · add lifecycle mapping",
+        result: "commit=8e41c2a · +41 / -12",
+        attribution: "agent=ui-migrator · reviewer=requested"
+      },
+      verify: {
+        turn: "TURN #21", kind: "EVIDENCE · VERIFICATION", title: "机器验证证明问题已经收敛",
+        summary: "编译、契约和关键交互回归全部通过，原错误信号消失。",
+        input: "patched workspace + hidden acceptance suite",
+        action: "build + contract tests + screenshot checks",
+        result: "12 / 12 passed · original error frequency=0",
+        attribution: "agent=test-runner · independent=true"
+      },
+      review: {
+        turn: "TURN #24", kind: "VERDICT · REVIEWER", title: "独立 Reviewer 批准完成",
+        summary: "Reviewer 核对目标、代码与验证报告，完成声称得到独立裁决。",
+        input: "goal + diff + verification report",
+        action: "read-only review → DONE",
+        result: "verdict=approved · blockers=0",
+        attribution: "reviewer session · isolated from worker"
+      },
+      asset: {
+        turn: "TURN #27", kind: "ASSET · COMPOUND", title: "现场问题转化为长期能力资产",
+        summary: "失败样本、根因标签、修复 Patch 和验证用例共同进入能力库。",
+        input: "trace=tf_042 · verdict=approved",
+        action: "normalize → label → benchmark → skill update",
+        result: "sample=NAV-LIFE-003 · benchmark +1",
+        attribution: "asset pipeline · reusable across projects"
+      }
+    };
+
+    const tabs = [...document.querySelectorAll('[role="tab"]')];
+    const panels = [...document.querySelectorAll('[role="tabpanel"]')];
+    const turns = [...document.querySelectorAll('.turn')];
+    const steps = [...document.querySelectorAll('.tour-step')];
+    const liveRegion = document.querySelector('#live-region');
+    const tourToggle = document.querySelector('#tour-toggle');
+    const setupDialog = document.querySelector('#setup-dialog');
+    let tourTimer = null;
+    let activeStep = 0;
+
+    function announce(message) {
+      liveRegion.textContent = "";
+      window.setTimeout(() => { liveRegion.textContent = message; }, 20);
+    }
+
+    function selectTab(name, moveFocus = false) {
+      tabs.forEach((tab) => {
+        const selected = tab.dataset.tab === name;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        if (selected && moveFocus) tab.focus();
+      });
+      panels.forEach((panel) => { panel.hidden = panel.id !== `panel-${name}`; });
+      announce(`已切换到 ${tabs.find((tab) => tab.dataset.tab === name)?.textContent} 视图`);
+    }
+
+    function selectTurn(key) {
+      const data = evidenceByTurn[key];
+      if (!data) return;
+      turns.forEach((turn) => turn.setAttribute('aria-current', String(turn.dataset.turn === key)));
+      document.querySelector('#evidence-turn').textContent = data.turn;
+      document.querySelector('#evidence-kind').textContent = data.kind;
+      document.querySelector('#evidence-title').textContent = data.title;
+      document.querySelector('#evidence-summary').textContent = data.summary;
+      document.querySelector('#evidence-input').textContent = data.input;
+      document.querySelector('#evidence-action').textContent = data.action;
+      document.querySelector('#evidence-result').textContent = data.result;
+      document.querySelector('#evidence-attribution').textContent = data.attribution;
+      announce(`${data.turn}：${data.title}`);
+    }
+
+    const stepRoutes = [
+      { tab: 'trace', turn: 'goal' },
+      { tab: 'trace', turn: 'error' },
+      { tab: 'workflow', turn: 'verify' },
+      { tab: 'flywheel', turn: 'asset' }
+    ];
+
+    function selectStep(index) {
+      activeStep = Math.max(0, Math.min(index, stepRoutes.length - 1));
+      steps.forEach((step, i) => step.setAttribute('aria-current', i === activeStep ? 'step' : 'false'));
+      const route = stepRoutes[activeStep];
+      selectTab(route.tab);
+      selectTurn(route.turn);
+    }
+
+    function stopTour(label = '继续自动演示') {
+      if (tourTimer) window.clearInterval(tourTimer);
+      tourTimer = null;
+      tourToggle.textContent = label;
+      tourToggle.setAttribute('aria-pressed', 'false');
+    }
+
+    function startTour() {
+      if (activeStep >= stepRoutes.length - 1) selectStep(0);
+      tourToggle.textContent = '暂停自动演示';
+      tourToggle.setAttribute('aria-pressed', 'true');
+      tourTimer = window.setInterval(() => {
+        if (activeStep >= stepRoutes.length - 1) {
+          stopTour('重新演示');
+          return;
+        }
+        selectStep(activeStep + 1);
+      }, 3200);
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab.dataset.tab));
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const delta = event.key === 'ArrowRight' ? 1 : -1;
+        const next = (index + delta + tabs.length) % tabs.length;
+        selectTab(tabs[next].dataset.tab, true);
+      });
+    });
+    turns.forEach((turn) => turn.addEventListener('click', () => selectTurn(turn.dataset.turn)));
+    steps.forEach((step) => step.addEventListener('click', () => {
+      stopTour('开始自动演示');
+      selectStep(Number(step.dataset.step));
+    }));
+    tourToggle.addEventListener('click', () => tourTimer ? stopTour() : startTour());
+    document.querySelector('#setup-open').addEventListener('click', () => setupDialog.showModal());
+    document.querySelector('#setup-close').addEventListener('click', () => setupDialog.close());
+    document.querySelector('#setup-close-x').addEventListener('click', () => setupDialog.close());
+  </script>
+</body>
+</html>

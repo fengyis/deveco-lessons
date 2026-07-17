@@ -20,3 +20,10 @@ lesson2-ralph-loop/experiments/experiment1/deveco.jsonc
 
 # Python 编译缓存
 __pycache__/
+
+# 课件与 Office 临时文件,不入库
+*.pptx
+~$*
+
+# 演讲提纲(本地稿,不入库)
+docs/presentation-speaking-outline.md
