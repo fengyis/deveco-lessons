@@ -24,6 +24,13 @@ import threading
 import time
 import urllib.request
 
+# 中文 Windows 的 locale 编码是 GBK:subprocess 解码 deveco 的 UTF-8 输出会在读线程里
+# 炸掉(stdout 变 None),read_text/write_text 读写中文模板同样遭殃。整个进程切到
+# UTF-8 模式重跑自己;PYTHONUTF8 会传给 run_qa.py 等所有子进程。
+if sys.platform == "win32" and not sys.flags.utf8_mode:
+    os.environ["PYTHONUTF8"] = "1"
+    sys.exit(subprocess.call([sys.executable] + sys.argv))
+
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 WORK = pathlib.Path(os.environ.get("RALPH_EXP1_DIR", str(pathlib.Path.home() / "ralph-experiment1")))
@@ -51,7 +58,10 @@ def die(msg):
 
 
 def sh(cmd, cwd=None, **kw):
-    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, **kw)
+    # 编码必须锁死 UTF-8:交给 locale 的话,GBK 解不动 deveco/git 的输出;
+    # errors="replace" 保证个别脏字节也不会把 stdout 炸成 None。
+    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
+                          encoding="utf-8", errors="replace", **kw)
 
 
 def deveco_bin():

@@ -10,6 +10,10 @@ import pathlib
 import subprocess
 import sys
 
+if sys.platform == "win32":
+    # 中文 Windows 默认 GBK:向量里的非 ASCII 样例打到控制台/管道会炸,打不出的字符降级即可
+    sys.stdout.reconfigure(errors="replace")
+
 HERE = pathlib.Path(__file__).resolve().parent          # <project>/.ralph
 PROJECT = HERE.parent
 VECTORS = HERE / "vectors.jsonl"
@@ -20,6 +24,7 @@ def main() -> int:
     build = subprocess.run(
         ["cargo", "build", "--release", "--quiet"],
         cwd=PROJECT, capture_output=True, text=True,
+        encoding="utf-8", errors="replace",
     )
     if build.returncode != 0:
         print("QA SCORE: 0/? (BUILD FAILED)")
@@ -29,7 +34,7 @@ def main() -> int:
     exe = "rustwrap.exe" if sys.platform == "win32" else "rustwrap"
     binary = PROJECT / "target" / "release" / exe
     vectors = []
-    with open(VECTORS) as f:
+    with open(VECTORS, encoding="utf-8") as f:
         for line in f:
             v = json.loads(line)
             if "_meta" not in v:
@@ -40,7 +45,9 @@ def main() -> int:
                    ensure_ascii=False) + "\n"
         for v in vectors
     )
-    run = subprocess.run([str(binary)], input=requests, capture_output=True, text=True)
+    # 协议两端都是 UTF-8:GBK locale 下不锁编码,喂进去的请求就是废字节
+    run = subprocess.run([str(binary)], input=requests, capture_output=True, text=True,
+                         encoding="utf-8", errors="replace")
     lines = run.stdout.splitlines()
     if len(lines) != len(vectors):
         print(f"QA SCORE: 0/{len(vectors)} (protocol broken: {len(lines)} responses for {len(vectors)} requests)")
