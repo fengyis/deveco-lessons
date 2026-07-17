@@ -26,7 +26,8 @@ def main() -> int:
         print(build.stderr[-3000:])
         return 1
 
-    binary = PROJECT / "target" / "release" / "rustwrap"
+    exe = "rustwrap.exe" if sys.platform == "win32" else "rustwrap"
+    binary = PROJECT / "target" / "release" / exe
     vectors = []
     with open(VECTORS) as f:
         for line in f:

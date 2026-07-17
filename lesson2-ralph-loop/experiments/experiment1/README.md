@@ -31,17 +31,31 @@ loop engineering 的经济学卖点。
 
 ## 步骤
 
+**跨平台入口(Windows 原生 / macOS / Linux / WSL 都用它)**:
+
 ```bash
 cd experiments/experiment1
 
-./run_experiment.sh prepare   # 环境体检 + 建双臂(~/ralph-experiment1/{once,loop})
-./run_experiment.sh once      # 跑 A 组,收工后自动打分
-./run_experiment.sh loop      # 跑 B 组(建议 A 组结束后再跑,避免抢限流)
-./run_experiment.sh report    # 对比表 + 两组偷看审计 + 曲线文件位置
+python run_experiment.py prepare   # 环境体检 + 建双臂(~/ralph-experiment1/{once,loop})
+python run_experiment.py once      # 跑 A 组,收工后自动打分
+python run_experiment.py loop      # 跑 B 组(建议 A 组结束后再跑,避免抢限流)
+python run_experiment.py report    # 对比表 + 两组偷看审计 + 曲线文件位置
 ```
 
-嫌分步麻烦就 `./run_experiment.sh all`。每步都幂等提示,断了从对应步骤重来即可;
-**重做实验请先 `rm -rf ~/ralph-experiment1`,不要复用半成品**。
+嫌分步麻烦就 `python run_experiment.py all`。断了从对应步骤重来即可;
+**重做实验请先删掉 `~/ralph-experiment1`,不要复用半成品**。
+(mac/linux 也可以用等价的 `./run_experiment.sh`,unix 老习惯二选一。)
+
+### Windows 说明
+
+- 需要:`deveco` 在 PATH(装好后自带 Windows 原生二进制)、
+  [rustup](https://rustup.rs)、Python 3.8+、Git。**不需要** WSL/bash/lsof/sqlite3。
+- 驱动会自动处理平台差异:二进制名(`rustwrap.exe`)、进程回收(`taskkill /T`)、
+  会话库路径(`%LOCALAPPDATA%`,不对就用 `DEVECO_DB` 环境变量指)。
+- **挂代理的同学注意**:驱动对 `127.0.0.1` 的控制面请求强制直连(不走系统代理),
+  这是实测踩过的坑——代理会把 localhost 请求掐断。
+- Windows 路径尚未在真机回归过(mac 上开发验证);第一次跑遇到问题,`.ralph/serve.log`
+  和报错原文发给助教。
 
 实时围观(可选,另开终端):
 
