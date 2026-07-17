@@ -20,19 +20,22 @@ ok "deveco $(deveco --version 2>/dev/null | head -1)"
 IS_WINDOWS=0
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;; esac
 
-# ---- 2. node 20 -------------------------------------------------------------
-# cannbot 的原生依赖 better-sqlite3 需要 node 20(macOS 上 node 26 编不过 V8,
-# homebrew 的 node@22 还有 dylib 问题)。
-if [ "$IS_WINDOWS" = "1" ]; then
-  # Windows(Git Bash):nvm 不可用,node 由用户自装,这里只检测版本。
-  # 必须是 20.x:better-sqlite3(11.10.0)只对 node 20/22 提供 Windows 预编译包,
-  # 更新的 node(24/25)会回退源码编译,而那需要 VS Build Tools,学员机器一般没有。
-  command -v node >/dev/null 2>&1 || die "没找到 node。请先安装 Node.js 20 LTS:https://nodejs.org"
-  NODE_MAJOR="$(node -e "console.log(process.versions.node.split('.')[0])" 2>/dev/null || echo 0)"
-  if [ "$NODE_MAJOR" -ne 20 ]; then
-    die "需要 node 20.x(当前 $(node -v))。请安装 Node.js 20 LTS——不是越新越好:更新版本没有 better-sqlite3 预编译包,会在本机触发 C++ 编译然后失败。多版本共存可用 nvm-windows:https://github.com/coreybutler/nvm-windows"
-  fi
-  ok "node $(node -v)(系统安装)"
+# ---- 2. node(20/22/23 任一)------------------------------------------------
+# cannbot 的原生依赖 better-sqlite3(11.10.0)官方预编译覆盖 node 18/20/22/23
+# (mac/linux/win 三平台全);cannbot 本体要求 >=20,所以 20/22/23 都能免编译直装。
+# 没有预编译包的版本(24+,如 26)会回退源码编译,学员机器一般编不过——
+# 当前 node 受支持就直接用,不受支持才回退 nvm 装 20(Windows 无 nvm,只检测)。
+_node_supported() {
+  command -v node >/dev/null 2>&1 || return 1
+  case "$(node -e "console.log(process.versions.node.split('.')[0])" 2>/dev/null)" in
+    20|22|23) return 0 ;;
+  esac
+  return 1
+}
+if _node_supported; then
+  ok "node $(node -v)(已安装,better-sqlite3 有对应预编译包)"
+elif [ "$IS_WINDOWS" = "1" ]; then
+  die "需要 node 20 或 22(当前 $(node -v 2>/dev/null || echo 未安装))。推荐 20 LTS——仓库自带的离线预编译包只覆盖 node 20,22 需要能联网取包;24+ 没有预编译包,会在本机触发 C++ 编译然后失败。多版本共存可用 nvm-windows:https://github.com/coreybutler/nvm-windows"
 else
   if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
     say "→ 安装 nvm ${NVM_VERSION} ..."
@@ -120,7 +123,7 @@ if [ -f .next/BUILD_ID ]; then
   ok "cannbot 生产构建已存在(跳过 next build)"
 else
   say "→ next build(一次性,约 1-3 分钟)..."
-  NEXT_PUBLIC_SHOW_ADVANCED_TABS=true npx next build
+  NEXT_PUBLIC_SHOW_ADVANCED_TABS=true NEXT_TELEMETRY_DISABLED=1 npx next build
 fi
 
 # ---- 7. 自检收尾 -----------------------------------------------------------
@@ -129,7 +132,7 @@ say "环境自检:"
 ok "deveco:$(deveco --version 2>/dev/null | head -1)"
 node -e "require('better-sqlite3')" >/dev/null 2>&1 \
   && ok "better-sqlite3 可加载(node $(node -v))" \
-  || die "better-sqlite3 加载失败——确认在 node 20 下重跑一次 ./setup.sh"
+  || die "better-sqlite3 加载失败——确认在 node 20/22 下重跑一次 ./setup.sh"
 ok "bun:$(bun --version)"
 [ -f "$VENDOR/prisma/dev.db" ] && ok "cannbot 数据库就绪" || die "prisma/dev.db 没生成"
 [ -f "$VENDOR/.next/BUILD_ID" ] && ok "cannbot 生产构建就绪" || die ".next/BUILD_ID 没生成"

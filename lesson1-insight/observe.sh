@@ -35,9 +35,11 @@ if [ ! -f "$DEVECO_DB" ] && [ -n "${LOCALAPPDATA:-}" ] && [ -f "$LOCALAPPDATA/de
   DEVECO_DB="$LOCALAPPDATA/deveco/deveco.db"
 fi
 
-# cannbot 的原生依赖(better-sqlite3)只在 node 20 装得起来、跑得动;node 26 编不过。
-# 有 nvm 就切到 20,切不了就照当前 node 硬试(大概率失败,但不拦着)。
-_cannbot_node20() {
+# cannbot 的原生依赖(better-sqlite3)是按 setup.sh 当时的 node ABI 编译的,
+# 20/22/23 都可能。当前 node 能加载就直接用;加载不了(比如默认 node 26,
+# 没有对应预编译包)再退回 nvm 的 20,还不行就照当前 node 硬试(不拦着)。
+_cannbot_node() {
+  (cd "$CANNBOT_INSIGHT_DIR" && node -e "require('better-sqlite3')") >/dev/null 2>&1 && return 0
   if [ -s "$HOME/.nvm/nvm.sh" ]; then
     set +u
     . "$HOME/.nvm/nvm.sh"
@@ -88,9 +90,9 @@ cmd_observe() {
   [ -d "$CANNBOT_INSIGHT_DIR/node_modules" ] || { say "ℹ️  cannbot-insight 依赖还没装(${CANNBOT_INSIGHT_DIR}/node_modules 不存在),先跑仓库根的 ./setup.sh。跳过观测。"; return 0; }
   [ -f "$DEVECO_DB" ] || { say "ℹ️  没找到 deveco.db(${DEVECO_DB}),跳过观测。"; return 0; }
 
-  # 必须先切 node 20:下面的兜底查询和后面的导入都会加载 better-sqlite3,
-  # 它是按 node 20 编译的,默认 node(如 26)加载会 ERR_DLOPEN_FAILED
-  _cannbot_node20
+  # 先确保 node 能加载 better-sqlite3:下面的兜底查询和后面的导入都要用它,
+  # ABI 不匹配(如默认 node 26)加载会 ERR_DLOPEN_FAILED
+  _cannbot_node
 
   # Windows(Git Bash)上 deveco.db 里存的是原生路径(C:\... 或 C:/...),
   # 用 /c/... 查永远查不着;把三种形式都当候选,命中哪个算哪个

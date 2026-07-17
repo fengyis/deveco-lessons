@@ -8,19 +8,11 @@
 
 import { BRAND_NAME, BRAND_SLUG } from "@/lib/branding";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// 不用 next/font/google:它在 build 期联网下载字体,内网构建必挂。
+// 字体变量改在 globals.css 里用系统字体栈定义。
 
 export const metadata: Metadata = {
   title: BRAND_SLUG,
@@ -33,10 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         {children}
         <Toaster position="bottom-right" richColors closeButton />

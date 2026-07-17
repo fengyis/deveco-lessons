@@ -4,6 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* 原 next/font/google 的 Geist 变量改为系统字体栈(内网 build 期不能联网下载字体) */
+:root {
+  --font-geist-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-geist-mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

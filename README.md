@@ -15,7 +15,7 @@
 
 ```bash
 git clone <本仓库> && cd deveco-lessons
-./setup.sh            # 一键环境:node20/bun/cannbot 依赖与数据库,幂等可重跑
+./setup.sh            # 一键环境:node/bun/cannbot 依赖与数据库,幂等可重跑
 deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 ```
 
@@ -24,9 +24,10 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 `setup.sh` 就地装好,不需要手工配置。
 
 **Windows 用户(Git Bash)**:三个脚本都适配了 Git Bash,额外前置只有一条——
-自己装好 **Node.js 20 LTS**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node)。
-注意必须是 20.x、不是越新越好:观测器的原生依赖 better-sqlite3 只对 node 20/22 提供
-Windows 预编译包,装 24/25 会在本机触发 C++ 编译(需要 VS Build Tools)然后失败。
+自己装好 **Node.js 20 或 22 LTS**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node)。
+不是越新越好:观测器的原生依赖 better-sqlite3 只对 node 18/20/22/23 提供
+Windows 预编译包,装 24+ 会在本机触发 C++ 编译(需要 VS Build Tools)然后失败。
+公司网络挡 GitHub 时推荐 20:仓库自带的离线预编译包只覆盖 node 20。
 
 常见报错:
 - `EINTEGRITY`(npm ci 校验和不匹配):先 `npm cache clean --force` 重试;仍失败则
