@@ -357,6 +357,25 @@ def run_arm(arm):
     say("\n".join((r.stdout + r.stderr).splitlines()[:8]))
     say(f"曲线: {ralph}/score_curve.csv")
     say(f"审计: {sys.executable} {sys.argv[0]} audit {arm_dir}")
+    try_observe(arm_dir)
+
+
+def try_observe(arm_dir):
+    """收工自动把会话导进 cannbot-insight 回放(对齐 ralph.sh 主线;
+    旁路:cannbot 没装好/bash 不在都只提示,绝不影响跑分结论)。"""
+    observe = ROOT.parent / "lesson1-insight" / "observe.sh"
+    bash = shutil.which("bash")
+    hint = f"bash {observe} {arm_dir}"
+    if not (bash and observe.is_file()):
+        say(f"→ 事后回放(可选,Git Bash 里执行): {hint}")
+        return
+    say("=== 导入 cannbot-insight 回放(旁路,失败不影响成绩)===")
+    try:
+        r = sh([bash, str(observe), str(arm_dir)], timeout=600)
+        for l in (r.stdout + r.stderr).strip().splitlines()[-3:]:
+            say("   " + l)
+    except Exception as e:
+        say(f"⚠️  观测导入没成功({e});手动补: {hint}")
 
 
 # ---------------------------------------------------------------- audit / report

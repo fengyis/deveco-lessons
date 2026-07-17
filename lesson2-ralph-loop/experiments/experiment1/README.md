@@ -116,6 +116,20 @@ cd ~/ralph-experiment1/loop && python3 .ralph/run_qa.py
 4. 如果把 worker 换成 `deepseek/deepseek-chat` 重跑 A 组,预测会发生什么?为什么?
    (答案在 `examples/rustwrap/README.md`,先预测再看)
 
+## 事后回放(cannbot-insight)
+
+once/loop 收工时驱动会**自动**把该臂的会话导入 cannbot-insight(旁路:cannbot 没装好
+只提示一句,不影响成绩)。想手动补导或重导(幂等):
+
+```bash
+# 仓库根执行;Windows 在 Git Bash 里跑。loop 臂同理
+./lesson1-insight/observe.sh ~/ralph-experiment1/once
+```
+
+浏览器开 http://localhost:21025,turn-by-turn 看每轮 token/上下文/工具调用。
+前置:仓库根跑过 `./setup.sh`(装 cannbot-insight 依赖,见 lesson1)。
+4121/4122 的 server 是跑臂期间临时的,回放**不需要**它——会话永久存在 deveco.db。
+
 ## 常见坑
 
 - **cargo 拉不到 crates.io**(`failed to get 'serde' as a dependency ...`):正常不该遇到——
