@@ -29,6 +29,21 @@ deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 Windows 预编译包,装 24+ 会在本机触发 C++ 编译(需要 VS Build Tools)然后失败。
 公司网络挡 GitHub 时推荐 20:仓库自带的离线预编译包只覆盖 node 20。
 
+**必须用 node 24+?** 有编译工具链(VS Build Tools + Python)的机器可以自编预编译包
+供全班离线复用——在装好依赖的 `vendor/cannbot-insight/node_modules/better-sqlite3`
+里(此时 npm 已现场编译成功),把产物按官方资产名打包并放进 `vendor/prebuilds/`:
+
+```bash
+cd vendor/cannbot-insight/node_modules/better-sqlite3
+ABI=$(node -e "console.log(process.versions.modules)")          # node 24 是 137
+PLAT=$(node -e "console.log(process.platform + '-' + process.arch)")
+tar -czf ../../../prebuilds/better-sqlite3-v11.10.0-node-v${ABI}-${PLAT}.tar.gz \
+    build/Release/better_sqlite3.node
+```
+
+setup.sh 检测到当前 node 的 ABI 在 `vendor/prebuilds/` 里有对应包时,会放行该版本;
+其他没有工具链的机器装依赖时也会直接命中这个包,不再触发本机编译。
+
 常见报错:
 - `EINTEGRITY`(npm ci 校验和不匹配):先 `npm cache clean --force` 重试;仍失败则
   `npm config get registry` 看源——lockfile 钉的是官方源,公司内部源重新打包过的

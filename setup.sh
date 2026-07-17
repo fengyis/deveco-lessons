@@ -30,12 +30,17 @@ _node_supported() {
   case "$(node -e "console.log(process.versions.node.split('.')[0])" 2>/dev/null)" in
     20|22|23) return 0 ;;
   esac
-  return 1
+  # 24+ 官方没有 11.10.0 的预编译包,但认自编包:按官方资产名放进 vendor/prebuilds/
+  # 就放行(better-sqlite3-v<版本>-node-v<ABI>-<platform>-<arch>.tar.gz,见 README)
+  local abi plat
+  abi="$(node -e "console.log(process.versions.modules)" 2>/dev/null)"
+  plat="$(node -e "console.log(process.platform + '-' + process.arch)" 2>/dev/null)"
+  ls "$HERE/vendor/prebuilds/better-sqlite3-v"*"-node-v${abi}-${plat}.tar.gz" >/dev/null 2>&1
 }
 if _node_supported; then
   ok "node $(node -v)(已安装,better-sqlite3 有对应预编译包)"
 elif [ "$IS_WINDOWS" = "1" ]; then
-  die "需要 node 20 或 22(当前 $(node -v 2>/dev/null || echo 未安装))。推荐 20 LTS——仓库自带的离线预编译包只覆盖 node 20,22 需要能联网取包;24+ 没有预编译包,会在本机触发 C++ 编译然后失败。多版本共存可用 nvm-windows:https://github.com/coreybutler/nvm-windows"
+  die "需要 node 20 或 22(当前 $(node -v 2>/dev/null || echo 未安装))。推荐 20 LTS——仓库自带的离线预编译包只覆盖 node 20,22 需要能联网取包;24+ 没有官方预编译包,会在本机触发 C++ 编译然后失败(有编译工具链的话可以自编包放进 vendor/prebuilds/,见 README)。多版本共存可用 nvm-windows:https://github.com/coreybutler/nvm-windows"
 else
   if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
     say "→ 安装 nvm ${NVM_VERSION} ..."
