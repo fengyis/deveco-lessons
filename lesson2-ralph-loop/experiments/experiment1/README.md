@@ -140,6 +140,10 @@ cd ~/ralph-experiment1/loop && python3 .ralph/run_qa.py
 
   验证方法:进 `~/ralph-experiment1/once` 跑
   `python .ralph/run_qa.py --samples 0`,看到 `QA SCORE: 0/816` 就说明编译链路是通的。
+- **浏览器打开 http://127.0.0.1:412x 看不到会话**:deveco 的默认会话列表按
+  「serve 工作目录对应的项目」过滤。驱动已把 serve 的 cwd 定在臂目录,运行期间直接
+  能看到;但 server 是驱动临时起的,**跑完即杀**——事后回放用 lesson1 观测器
+  (直接读 deveco.db,不依赖在跑的 server),或手动到臂目录里 `deveco serve` 再开浏览器。
 - **端口被旧进程占着**:`deveco serve` 只能按端口杀:`lsof -ti:4121 | xargs kill -9`
 - **worker 用 GLM-5.1 会在读大文件后挂死**(deveco 端点吃不下大 payload 的请求),
   所以本实验默认 deepseek;换模型用 `RALPH_EXP1_WORKER`/`RALPH_EXP1_REVIEWER` 环境变量,

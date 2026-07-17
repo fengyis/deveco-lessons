@@ -300,7 +300,9 @@ def run_arm(arm):
         kw["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
     else:
         kw["start_new_session"] = True
-    server = subprocess.Popen([deveco_bin(), "serve", "--port", str(port)],
+    # cwd 定在臂目录:deveco 的默认会话列表按 serve 工作目录对应的项目过滤,
+    # 不这样做的话浏览器打开 http://127.0.0.1:<port> 会是空列表(实测踩过)
+    server = subprocess.Popen([deveco_bin(), "serve", "--port", str(port)], cwd=arm_dir,
                               stdout=serve_log, stderr=subprocess.STDOUT, env=env, **kw)
     try:
         for _ in range(50):
@@ -332,6 +334,8 @@ def run_arm(arm):
         start_sampler(arm_dir, sentinels)
         say("→ 运行中(哨兵: " + "/".join(sentinels) + ";实时围观: deveco attach "
             f"http://127.0.0.1:{port} --session {sid})")
+        say(f"→ 浏览器围观: http://127.0.0.1:{port} (仅运行期间有效,跑完 server 即销毁;"
+            "事后回放用 lesson1 观测器)")
         seen = 0
         while not any((ralph / s).exists() for s in sentinels):
             log = ralph / "plugin.log"
