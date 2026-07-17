@@ -211,6 +211,11 @@ def cmd_prepare():
     say("=== 校准:种子基线应为 0/816(首次要编译依赖,约 1 分钟)===")
     r = sh([sys.executable, ".ralph/run_qa.py", "--samples", "0"], cwd=WORK / "once")
     say("\n".join((r.stdout + r.stderr).splitlines()[:2]))
+    # 校准是硬门:基线不是 0/816 就不许开跑,否则带着坏环境烧完 token 才发现
+    if "QA SCORE: 0/816" not in r.stdout:
+        say((r.stdout + r.stderr).strip()[-1500:])
+        die("校准失败:种子基线必须是 0/816。BUILD FAILED 多半是 vendor 被换行转换"
+            "污染(见 README 常见坑「cargo 拉不到 crates.io」一条的重新检出步骤)")
     say(f"✅ prepare 完成。下一步: {sys.executable} {sys.argv[0]} once")
 
 
