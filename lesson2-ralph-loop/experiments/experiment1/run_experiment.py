@@ -137,8 +137,14 @@ def cmd_prepare():
     for tool in ("cargo", "git"):
         shutil.which(tool) or die(f"缺 {tool}(cargo 装 rustup: https://rustup.rs)")
     dv = deveco_bin()
-    auth = sh([dv, "auth", "list"])
-    "deepseek" in (auth.stdout + auth.stderr).lower() or die("deveco 里没配 DeepSeek 凭证;先 deveco auth login")
+    # 不写死 provider:worker/reviewer 可以通过 RALPH_EXP1_WORKER/REVIEWER 换成任意
+    # deveco 认识的模型(auth login 配的,或 deveco.jsonc 里自定义的 openai 兼容网关)
+    models = sh([dv, "models"])
+    available = models.stdout + models.stderr
+    for spec in dict.fromkeys((WORKER, REVIEWER)):
+        spec in available or die(
+            f"deveco 里没有模型 {spec}(deveco models 看不到);"
+            "先 deveco auth login 配凭证,自定义网关则在 ~/.config/deveco/deveco.jsonc 配 provider")
     if os.environ.get("DEVECO_SERVER_PASSWORD"):
         say("⚠️  检测到 DEVECO_SERVER_PASSWORD,运行时会剔除(否则插件调不动自己的 server)")
     say(f"✅ 依赖齐全  worker={WORKER}  reviewer={REVIEWER}")
