@@ -118,9 +118,11 @@ cd ~/ralph-experiment1/loop && python3 .ralph/run_qa.py
 
 ## 常见坑
 
-- **cargo 拉不到 crates.io**(`failed to get 'serde' as a dependency ...`):内网/代理环境
-  的经典问题——git 配了代理能通 GitHub,但 **cargo 不读 git 的代理配置**。任选其一,写进
-  `~/.cargo/config.toml`(Windows: `%USERPROFILE%\.cargo\config.toml`):
+- **cargo 拉不到 crates.io**(`failed to get 'serde' as a dependency ...`):正常不该遇到——
+  种子项目的依赖已 `cargo vendor` 进仓库(`seed/vendor/`,连 `.cargo/config.toml` 一起
+  随 prepare 进入两臂),编译全程离线。还报这个错说明仓库是旧版本,`git pull` 后删掉
+  `~/ralph-experiment1` 重跑 prepare。只有想**新增**依赖时才需要网络,那时再任选其一,
+  写进 `~/.cargo/config.toml`(Windows: `%USERPROFILE%\.cargo\config.toml`):
 
   ```toml
   # ① 给 cargo 配上你 git 在用的代理(git config --get http.proxy 能查到)
@@ -136,8 +138,8 @@ cd ~/ralph-experiment1/loop && python3 .ralph/run_qa.py
   registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
   ```
 
-  配完**不用重建双臂**:进 `~/ralph-experiment1/once` 跑
-  `python .ralph/run_qa.py --samples 0`,看到 `QA SCORE: 0/816` 就可以直接继续 `once`。
+  验证方法:进 `~/ralph-experiment1/once` 跑
+  `python .ralph/run_qa.py --samples 0`,看到 `QA SCORE: 0/816` 就说明编译链路是通的。
 - **端口被旧进程占着**:`deveco serve` 只能按端口杀:`lsof -ti:4121 | xargs kill -9`
 - **worker 用 GLM-5.1 会在读大文件后挂死**(deveco 端点吃不下大 payload 的请求),
   所以本实验默认 deepseek;换模型用 `RALPH_EXP1_WORKER`/`RALPH_EXP1_REVIEWER` 环境变量,

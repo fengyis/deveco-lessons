@@ -1,0 +1,7 @@
+# 依赖已 vendor 进仓库(cargo vendor),编译只用本地 vendor/ 目录,不联网。
+# 内网学员机器拉不到 crates.io 也能跑;要新增依赖才需要网络(见 experiment1 README 常见坑)。
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
