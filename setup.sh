@@ -41,7 +41,7 @@ if ! command -v node >/dev/null 2>&1; then
 fi
 ok "node $(node -v)"
 
-# ---- 3. bun(lesson2 的测试与独立验收测试用)-----------------------------
+# ---- 3. bun(lesson3 的测试与独立验收测试用)-----------------------------
 if ! command -v bun >/dev/null 2>&1; then
   say "→ 安装 bun ..."
   if [ "$IS_WINDOWS" = "1" ]; then

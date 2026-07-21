@@ -145,6 +145,13 @@
     .audit-questions div { padding: 12px 14px; background: var(--blue-soft); }
     .audit-questions dt { color: #3566aa; font: 700 9px/1.4 var(--mono); letter-spacing: .08em; }
     .audit-questions dd { margin: 3px 0 0; font-size: 11px; font-weight: 700; }
+    .term-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+    .term-card { padding: 14px 16px; border: 1px solid var(--line); border-left: 3px solid #3566aa; border-radius: 8px; background: var(--blue-soft); }
+    .term-card.audit { border-left-color: var(--green); background: var(--green-soft); }
+    .term-card .term-tag { font: 700 9px/1.4 var(--mono); letter-spacing: .08em; color: #3566aa; }
+    .term-card.audit .term-tag { color: var(--green); }
+    .term-card b { display: block; margin-top: 4px; font-size: 13px; }
+    .term-card p { margin: 5px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.6; }
     .risk-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
     .risk-item { padding: 13px 15px; border-left: 3px solid var(--red); background: var(--red-soft); }
     .risk-item b { display: block; font-size: 12px; }
@@ -466,6 +473,7 @@
       .board-kpi:nth-child(n+3) { border-top: 1px solid #2e3c50; }
       .board-body { grid-template-columns: 1fr; }
       .source-strip ol { grid-template-columns: 1fr; }
+      .term-split { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .topbar { padding-inline: 12px; }
@@ -515,46 +523,55 @@
   <main>
     <section class="hero" aria-labelledby="page-title">
       <p class="eyebrow">General Data Flywheel · Auditable by Design</p>
-      <h1 id="page-title">让每一次 Agent 执行，都成为可追溯、可归因、可复用的能力样本</h1>
-      <p class="lede">透明可审计把 Agent 的每一步执行变成可复现的工程现场：每个结论都有来源、过程、证据与归因，失败可定位，完成可验证，经验可复用。</p>
+      <h1 id="page-title">看见过程，核查结论，复用经验</h1>
+      <p class="lede">一次执行，一条完整证据链。</p>
     </section>
 
     <section class="audit-story" aria-label="透明可审计介绍">
       <article class="story-block">
-        <div class="story-index"><span>01 · DEFINITION</span><b>什么是透明可审计</b></div>
+        <div class="story-index"><span>01 · DEFINITION</span><b>什么是透明，什么是可审计</b></div>
         <div class="story-content">
-          <h2>任何执行结论，都能回到原始事实并被重新核查</h2>
-          <p>透明可审计为 Agent 全流程建立可追溯记录，把目标、上下文、模型输出、工具调用、代码变更、验证结果和责任主体串成完整证据链。</p>
+          <h2>透明看过程，审计查结论</h2>
+          <div class="term-split">
+            <section class="term-card">
+              <span class="term-tag">透明 · TRANSPARENT</span>
+              <b>过程看得见</b>
+              <p>目标 · 上下文 · 工具 · 代码变更</p>
+            </section>
+            <section class="term-card audit">
+              <span class="term-tag">可审计 · AUDITABLE</span>
+              <b>结论可核查</b>
+              <p>原始证据 · 独立复查 · 责任归因</p>
+            </section>
+          </div>
           <dl class="audit-questions">
-            <div><dt>WHAT</dt><dd>实际发生了什么</dd></div>
-            <div><dt>WHY</dt><dd>为什么这样决策</dd></div>
-            <div><dt>EVIDENCE</dt><dd>什么证据支持结论</dd></div>
-            <div><dt>OWNER</dt><dd>问题与改进归属哪里</dd></div>
+            <div><dt>WHAT</dt><dd>实际发生了什么 · 透明</dd></div>
+            <div><dt>WHY</dt><dd>为什么这样决策 · 透明</dd></div>
+            <div><dt>EVIDENCE</dt><dd>什么证据支持结论 · 可审计</dd></div>
+            <div><dt>EVOLUTION</dt><dd>经验如何进入下一轮 · 演进</dd></div>
           </dl>
         </div>
       </article>
       <article class="story-block">
         <div class="story-index"><span>02 · NECESSITY</span><b>为什么需要</b></div>
         <div class="story-content">
-          <h3>长程 Agent 的风险来自不可见、不可证和不可复用</h3>
-          <p>任务跨越多轮、多工具与多个 Session 后，只有最终结果无法判断过程是否偏离，也无法证明完成质量。</p>
+          <h3>三个风险</h3>
           <div class="risk-list">
-            <div class="risk-item"><b>过程不可见</b><p>失败发生在哪一轮、哪个工具或哪个 Child Session 无法快速定位。</p></div>
-            <div class="risk-item"><b>完成不可证</b><p>Agent 可以声明完成，但缺少独立验证与原始证据支撑。</p></div>
-            <div class="risk-item"><b>经验不可复用</b><p>失败、修复和验证没有结构化归因，下一次仍会重复踩坑。</p></div>
+            <div class="risk-item"><b>过程不可见</b><p>失败位置不明</p></div>
+            <div class="risk-item"><b>完成不可证</b><p>缺少独立验证</p></div>
+            <div class="risk-item"><b>经验不可复用</b><p>同类问题重演</p></div>
           </div>
         </div>
       </article>
       <article class="story-block">
         <div class="story-index"><span>03 · ENGINEERING</span><b>怎么做到</b></div>
         <div class="story-content">
-          <h3>用事件、Trace、指标、归因和验证建立可信链路</h3>
-          <p>先完整采集执行现场，再重建跨 Agent 轨迹，将异常关联到责任源与修复，最后用独立验证确认收敛并沉淀能力资产。</p>
+          <h3>四步形成飞轮</h3>
           <ol class="intro-route" aria-label="数据进入能力飞轮的路径">
-            <li><span>01 · CAPTURE</span><b>采集执行事件</b><p>记录消息、工具、状态、Token 与会话关系。</p></li>
-            <li><span>02 · RECONSTRUCT</span><b>重建完整 Trace</b><p>按时间、Turn、Agent 和阶段还原执行过程。</p></li>
-            <li><span>03 · ATTRIBUTE</span><b>定位问题根因</b><p>把失败信号关联到责任源、修改与验证结果。</p></li>
-            <li><span>04 · COMPOUND</span><b>沉淀能力资产</b><p>形成样本、Benchmark、Skill、Harness 与知识。</p></li>
+            <li><span>01 · CAPTURE</span><b>采集</b><p>消息 · 工具 · 状态</p></li>
+            <li><span>02 · RECONSTRUCT</span><b>还原</b><p>Turn · Agent · 阶段</p></li>
+            <li><span>03 · ATTRIBUTE</span><b>归因</b><p>失败 · 根因 · 责任源</p></li>
+            <li><span>04 · COMPOUND</span><b>复用</b><p>样本 · Benchmark · Skill</p></li>
           </ol>
           <dl class="audit-band" aria-label="透明可审计的四项可信度">
             <div><dt>SOURCE</dt><dd>来源可信</dd></div>
@@ -569,8 +586,8 @@
     <section class="tool-entry" aria-labelledby="tool-entry-title">
       <div class="tool-entry-copy">
         <p class="tool-entry-label">04 · TOOL DEMO</p>
-        <h2 id="tool-entry-title">用 CANNBot Insight 打开 Agent 执行黑盒</h2>
-        <p>CANNBot Insight 把 Session 拆成 Turn，并关联工具、Child Session、Skill、Token 与上下文变化。下面沿一条迁移 Trace 演示从现场采集到能力沉淀。</p>
+        <h2 id="tool-entry-title">从 Trace 到能力资产</h2>
+        <p>采集 → 归因 → 验证 → 复用</p>
       </div>
       <div class="tool-controls">
         <div class="hero-actions">
@@ -622,7 +639,7 @@
 
         <section class="panel" id="panel-trace" role="tabpanel" aria-labelledby="tab-trace">
           <div class="panel-heading">
-            <div><h2>逐轮 Trace：从异常信号回到原始证据</h2><p>选择任意 Turn，查看输入、工具、结果与归因链。</p></div>
+            <div><h2>逐轮 Trace</h2><p>输入 · 工具 · 结果 · 归因</p></div>
             <span class="panel-note">SYNTHETIC TRACE · 27 TURNS</span>
           </div>
           <div class="trace-grid">
@@ -657,7 +674,7 @@
               <div class="evidence-body">
                 <span class="evidence-kicker" id="evidence-kind">SOURCE · USER INPUT</span>
                 <h3 id="evidence-title">迁移目标进入审计链</h3>
-                <p id="evidence-summary">原始目标、目录与验收条件被记录为本次执行的来源证据。</p>
+                <p id="evidence-summary">目标、目录、验收条件已记录。</p>
                 <dl class="evidence-fields">
                   <div><dt>Input</dt><dd id="evidence-input">modules/user-center · 12 acceptance checks</dd></div>
                   <div><dt>Action</dt><dd id="evidence-action">session.created → message.received</dd></div>
@@ -671,7 +688,7 @@
         </section>
         <section class="panel" id="panel-workflow" role="tabpanel" aria-labelledby="tab-workflow" hidden>
           <div class="panel-heading">
-            <div><h2>Workflow：把执行轨迹还原成工程阶段</h2><p>阶段、工具、错误和验证信号处于同一时间轴，失败位置一目了然。</p></div>
+            <div><h2>Workflow</h2><p>阶段 · 工具 · 错误 · 验证</p></div>
             <span class="panel-note">5 PHASES · 1 RECOVERY</span>
           </div>
           <div class="workflow-map">
@@ -681,12 +698,12 @@
             <article class="phase" data-kind="verify"><span>PHASE 04</span><h3>Verify &amp; Fix</h3><p>归因、修复、回归验证</p><ul><li>12 checks passed</li><li>2 iterations</li></ul></article>
             <article class="phase" data-kind="done"><span>PHASE 05</span><h3>Retrospect</h3><p>归档证据与错误模式</p><ul><li>NAV-LIFE-003</li><li>Benchmark +1</li></ul></article>
           </div>
-          <div class="workflow-callout"><b>可审计的关键：</b>每个阶段都能下钻到原始 Turn、工具输入输出、Subagent 会话和验证结果；“完成”由证据链支撑。</div>
+          <div class="workflow-callout"><b>下钻：</b>Turn · 工具输入输出 · Subagent · 验证结果</div>
         </section>
 
         <section class="panel" id="panel-context" role="tabpanel" aria-labelledby="tab-context" hidden>
           <div class="panel-heading">
-            <div><h2>Context：观察主会话与 Subagent 的上下文增长</h2><p>独立 Session 分轨统计，定位上下文膨胀、压缩边界与高消耗阶段。</p></div>
+            <div><h2>Context</h2><p>增长 · 峰值 · 压缩 · 消耗</p></div>
             <span class="panel-note">MODEL WINDOW · 200K</span>
           </div>
           <div class="context-layout">
@@ -715,14 +732,14 @@
         </section>
         <section class="panel" id="panel-assets" role="tabpanel" aria-labelledby="tab-assets" hidden>
           <div class="panel-heading">
-            <div><h2>Evidence Assets：把一次故障变成可复用能力</h2><p>Trace 经清洗、归因和验证后，形成下一轮工具改进的结构化输入。</p></div>
+            <div><h2>Evidence Assets</h2><p>故障 → 样本 → 评测 → 能力</p></div>
             <span class="panel-note">SAMPLE · BENCHMARK · SKILL</span>
           </div>
           <div class="asset-grid">
-            <article class="asset-card"><span>FAILURE SAMPLE</span><h3>NAV-LIFE-003</h3><p>页面生命周期与路由状态映射不一致，包含输入、错误栈和最小复现。</p></article>
-            <article class="asset-card"><span>VERIFICATION</span><h3>12 项回归证据</h3><p>构建结果、契约测试与关键交互截图共同证明修复有效。</p></article>
-            <article class="asset-card"><span>BENCHMARK</span><h3>导航适配评测集</h3><p>把本次失败模式加入跨项目基准，后续版本持续复测。</p></article>
-            <article class="asset-card"><span>CAPABILITY UPDATE</span><h3>Skill + Harness</h3><p>更新迁移规则、Reviewer 检查项和自动化验证器。</p></article>
+            <article class="asset-card"><span>FAILURE SAMPLE</span><h3>NAV-LIFE-003</h3><p>输入 · 错误栈 · 最小复现</p></article>
+            <article class="asset-card"><span>VERIFICATION</span><h3>12 项回归证据</h3><p>构建 · 契约 · 截图</p></article>
+            <article class="asset-card"><span>BENCHMARK</span><h3>导航适配评测集</h3><p>跨项目持续复测</p></article>
+            <article class="asset-card"><span>CAPABILITY UPDATE</span><h3>Skill + Harness</h3><p>规则 · Reviewer · 验证器</p></article>
           </div>
           <div class="pipeline" aria-label="能力增长 Pipeline">
             <div><b>事件采集</b><small>消息 · 工具 · 状态</small></div>
@@ -736,14 +753,14 @@
 
         <section class="panel" id="panel-flywheel" role="tabpanel" aria-labelledby="tab-flywheel" hidden>
           <div class="panel-heading">
-            <div><h2>数据飞轮双环：外环创造客户价值，内环保证工程收敛</h2><p>同一套可信 Trace 同时服务交付迭代与问题验证。</p></div>
+            <div><h2>数据飞轮双环</h2><p>外环交付，内环验证</p></div>
             <span class="panel-note">2 LOOPS · 1 DATA ENGINE</span>
           </div>
           <div class="flywheel-layout">
-            <article class="loop-card outer"><h3>外环 · 客户价值环</h3><p>把客户现场反馈转化为工具能力升级。</p><div class="loop-flow"><div class="loop-node">客户问题</div><div class="loop-node">看板整理</div><div class="loop-node">能力改进</div><div class="loop-node">版本交付</div><div class="loop-node">反馈回流</div></div></article>
-            <article class="loop-card inner"><h3>内环 · 工程验证环</h3><p>让每个问题都经过归因、修复与复测。</p><div class="loop-flow"><div class="loop-node">发现异常</div><div class="loop-node">根因定位</div><div class="loop-node">实现修复</div><div class="loop-node">独立验证</div><div class="loop-node">确认收敛</div></div></article>
+            <article class="loop-card outer"><h3>外环 · 客户价值</h3><div class="loop-flow"><div class="loop-node">客户问题</div><div class="loop-node">看板整理</div><div class="loop-node">能力改进</div><div class="loop-node">版本交付</div><div class="loop-node">反馈回流</div></div></article>
+            <article class="loop-card inner"><h3>内环 · 工程验证</h3><div class="loop-flow"><div class="loop-node">发现异常</div><div class="loop-node">根因定位</div><div class="loop-node">实现修复</div><div class="loop-node">独立验证</div><div class="loop-node">确认收敛</div></div></article>
           </div>
-          <div class="flywheel-thesis"><b>透明可审计</b>让数据来源、执行过程、验证证据和责任归因都可核查；可信样本继续进入工具、Skill、Harness、Benchmark 与知识资产，驱动下一轮能力增长。</div>
+          <div class="flywheel-thesis"><b>可信 Trace</b> → 工具 · Skill · Harness · Benchmark</div>
         </section>
       </div>
     </section>
@@ -754,7 +771,7 @@
           <p class="board-label">05 · MIGBOT DASHBOARD</p>
           <h2 id="migbot-title">从单次 Trace 到全局问题收敛</h2>
         </div>
-        <p class="board-head-copy">MigBot 看板汇总来自不同项目的可信执行样本，跟踪数据处理、需求形成、交付验证与能力沉淀，让数据飞轮的运行状态可度量、可追责。</p>
+        <p class="board-head-copy">跨项目汇总：样本、需求、交付、验证、沉淀。</p>
       </header>
       <div class="board-kpis" aria-label="数据飞轮目标口径">
         <div class="board-kpi"><span>客户现场数据</span><b>≥ 5,000</b><small>目标口径 · 每周</small></div>
@@ -784,7 +801,7 @@
         </article>
         <article class="board-panel">
           <h3>本周问题闭环</h3>
-          <p>演示数据 · Trace、根因、改进资产和验证状态保持关联</p>
+          <p>Trace · 根因 · 资产 · 状态</p>
           <div class="closure-wrap">
             <table class="closure-table">
               <thead><tr><th>ISSUE</th><th>归因结果</th><th>能力沉淀</th><th>状态</th></tr></thead>
@@ -797,29 +814,29 @@
           </div>
         </article>
       </div>
-      <p class="board-note">目标口径来自《数据飞轮工程1.4》；趋势与问题条目为工具展示用演示数据。</p>
+      <p class="board-note">目标：《数据飞轮工程1.4》 · 其余为演示数据</p>
     </section>
 
     <section class="source-strip" aria-labelledby="real-data-title">
       <h2 id="real-data-title">接入真实 CANNBot Insight</h2>
       <ol>
-        <li>在工具目录运行 <code>./start.sh</code>，服务默认从 <code>21025</code> 端口启动。</li>
-        <li>导入 opencode <code>sessions.db</code> 或 Claude Code JSONL，完成 Session 级归一化。</li>
-        <li>在 Overview、Turns、Workflow、Trace、Subagents、Skills、Interactions、AI Workflow 与 Context 中逐层审计。</li>
+        <li><code>./start.sh</code> · 端口 <code>21025</code></li>
+        <li>导入 <code>sessions.db</code> 或 Claude Code JSONL</li>
+        <li>从 Overview 下钻到 Turn、Trace 与 Context</li>
       </ol>
     </section>
-    <p class="sources">内容依据《数据飞轮工程1.4》中的 General 数据飞轮、透明可审计与双环模型整理；工具能力依据 <a href="https://gitcode.com/cann/cannbot-skills/tree/master/plugins-community/cannbot-insight" target="_blank" rel="noopener noreferrer">cannbot-insight 官方仓库</a>。页面中的 Session 指标均为演示数据。</p>
+    <p class="sources">来源：《数据飞轮工程1.4》 · <a href="https://gitcode.com/cann/cannbot-skills/tree/master/plugins-community/cannbot-insight" target="_blank" rel="noopener noreferrer">cannbot-insight</a> · 指标为演示数据</p>
   </main>
 
   <dialog id="setup-dialog" aria-labelledby="setup-title">
-    <div class="dialog-head"><div><h2 id="setup-title">连接真实数据</h2><p>三步启动 Web UI 并导入 Agent Session。</p></div><button class="btn btn-small" id="setup-close-x" type="button" aria-label="关闭">关闭</button></div>
+    <div class="dialog-head"><div><h2 id="setup-title">连接真实数据</h2><p>启动 · 导入 · 查看</p></div><button class="btn btn-small" id="setup-close-x" type="button" aria-label="关闭">关闭</button></div>
     <div class="dialog-body">
       <pre class="setup-code"><code>cd plugins-community/cannbot-insight
 ./start.sh
 # 浏览器打开 http://localhost:21025
 # 导入 ~/.local/share/opencode/sessions.db
 # 或 Claude Code 的 session JSONL</code></pre>
-      <ul class="setup-notes"><li>运行环境需要 Node.js 20 或更高版本。</li><li>导入后可查看 Token、费用、上下文增长、Subagent、Skill、Workflow、Trace 与 Session 对比。</li></ul>
+      <ul class="setup-notes"><li>Node.js 20+</li><li>Token · Context · Subagent · Skill · Trace</li></ul>
     </div>
     <div class="dialog-actions"><button class="btn btn-primary" id="setup-close" type="button">知道了</button></div>
   </dialog>
@@ -828,23 +845,23 @@
     const evidenceByTurn = {
       goal: {
         turn: "TURN #01", kind: "SOURCE · USER INPUT", title: "迁移目标进入审计链",
-        summary: "原始目标、目录与验收条件被记录为本次执行的来源证据。",
+        summary: "目标 · 目录 · 验收条件",
         input: "modules/user-center · 12 acceptance checks",
         action: "session.created → message.received",
         result: "trace_id=tf_042 · immutable event",
         attribution: "source=user · owner=general"
       },
       plan: {
-        turn: "TURN #05", kind: "PROCESS · PLAN", title: "计划成为后续执行的对照基线",
-        summary: "每个阶段都绑定输入、输出和验收信号，便于判断偏离发生在哪里。",
+        turn: "TURN #05", kind: "PROCESS · PLAN", title: "建立执行基线",
+        summary: "阶段 · 输入 · 输出 · 验收",
         input: "goal + repository map + acceptance checks",
         action: "planning skill → 5 ordered phases",
         result: "plan_id=plan_042 · checkpoints=5",
         attribution: "agent=planner · parent=general"
       },
       dispatch: {
-        turn: "TURN #09", kind: "PROCESS · SUBAGENT", title: "父子 Session 关系被完整保留",
-        summary: "派发指令、Child Session、返回消息与 Token 消耗通过 Bridge 串联。",
+        turn: "TURN #09", kind: "PROCESS · SUBAGENT", title: "关联父子 Session",
+        summary: "派发 · Child Session · 返回 · Token",
         input: "task=adapt user-center pages to ArkTS",
         action: "task dispatch → child session created",
         result: "bridge=br_09 · child=ui-migrator",
@@ -852,47 +869,47 @@
       },
       error: {
         turn: "TURN #12", kind: "EVIDENCE · TOOL ERROR", title: "构建失败可复现、可定位",
-        summary: "错误命令、退出码、文件位置和调用上下文共同构成失败证据。",
+        summary: "命令 · 退出码 · 文件 · 上下文",
         input: "./hvigorw assembleHap --mode module",
         action: "bash · duration=46.2s · exit=1",
         result: "NavState.router is undefined at UserCenter.ets:84",
         attribution: "phase=execute · agent=ui-migrator"
       },
       rootcause: {
-        turn: "TURN #14", kind: "ATTRIBUTION · ROOT CAUSE", title: "Reviewer 把错误归因到责任源",
-        summary: "通过 diff、调用链和平台契约交叉验证，排除环境与测试数据问题。",
+        turn: "TURN #14", kind: "ATTRIBUTION · ROOT CAUSE", title: "定位责任源",
+        summary: "diff · 调用链 · 平台契约",
         input: "error stack + git diff + navigation contract",
         action: "review → classify → locate responsible adapter",
         result: "root_cause=lifecycle mapping omitted",
         attribution: "owner=navigation adapter · confidence=high"
       },
       fix: {
-        turn: "TURN #18", kind: "PROCESS · PATCH", title: "修复与根因建立显式关联",
-        summary: "Patch 只修改责任模块，并保留对应错误模式 ID。",
+        turn: "TURN #18", kind: "PROCESS · PATCH", title: "按根因修复",
+        summary: "责任模块 · 错误模式 ID · Patch",
         input: "root_cause=NAV-LIFE-003",
         action: "edit 3 files · add lifecycle mapping",
         result: "commit=8e41c2a · +41 / -12",
         attribution: "agent=ui-migrator · reviewer=requested"
       },
       verify: {
-        turn: "TURN #21", kind: "EVIDENCE · VERIFICATION", title: "机器验证证明问题已经收敛",
-        summary: "编译、契约和关键交互回归全部通过，原错误信号消失。",
+        turn: "TURN #21", kind: "EVIDENCE · VERIFICATION", title: "机器验证通过",
+        summary: "编译 · 契约 · 交互回归",
         input: "patched workspace + hidden acceptance suite",
         action: "build + contract tests + screenshot checks",
         result: "12 / 12 passed · original error frequency=0",
         attribution: "agent=test-runner · independent=true"
       },
       review: {
-        turn: "TURN #24", kind: "VERDICT · REVIEWER", title: "独立 Reviewer 批准完成",
-        summary: "Reviewer 核对目标、代码与验证报告，完成声称得到独立裁决。",
+        turn: "TURN #24", kind: "VERDICT · REVIEWER", title: "Reviewer 批准完成",
+        summary: "目标 · diff · 验证报告",
         input: "goal + diff + verification report",
         action: "read-only review → DONE",
         result: "verdict=approved · blockers=0",
         attribution: "reviewer session · isolated from worker"
       },
       asset: {
-        turn: "TURN #27", kind: "ASSET · COMPOUND", title: "现场问题转化为长期能力资产",
-        summary: "失败样本、根因标签、修复 Patch 和验证用例共同进入能力库。",
+        turn: "TURN #27", kind: "ASSET · COMPOUND", title: "归档能力资产",
+        summary: "失败样本 · 根因 · Patch · 验证用例",
         input: "trace=tf_042 · verdict=approved",
         action: "normalize → label → benchmark → skill update",
         result: "sample=NAV-LIFE-003 · benchmark +1",

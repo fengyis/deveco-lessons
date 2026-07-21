@@ -5,7 +5,7 @@
 
 环境：
 - `deveco --version` → `0.1.1`（`/opt/homebrew/bin/deveco`）
-- 探针插件文件见 `lesson3-goal-plugin/docs/probe-notes.md` 本文的 Step 1 代码块，与
+- 探针插件文件见 `lesson2-goal-plugin/docs/probe-notes.md` 本文的 Step 1 代码块，与
   `/Users/fengyi/Workspace/others/deveco-lessons/.superpowers/sdd/task-2-brief.md` 中给出的一致
 - server: `deveco serve --port 4098`（`unset DEVECO_SERVER_PASSWORD` 后启动，未设密码，日志打印
   `Warning: DEVECO_SERVER_PASSWORD is not set; server is unsecured.`）
@@ -243,7 +243,7 @@ query.directory"。
 
 ## 文件变更
 
-- 新增：`lesson3-goal-plugin/docs/probe-notes.md`（本文件）
+- 新增：`lesson2-goal-plugin/docs/probe-notes.md`（本文件）
 - 临时未提交：`/tmp/goal-probe/`（含 `deveco.json`、`.deveco/plugin/probe.ts`、`serve.log`、
   `.probe.log`，按任务要求保留在本机供后续调试参考，不纳入 git）
 - 补充证据来源（Fix Round 1，回应 review Important #1/#2）：本机 `~/.local/share/deveco/deveco.db`

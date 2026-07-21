@@ -1,7 +1,7 @@
-# Lesson 3:把 opencode-goal-plugin 移植成 devecocode-goal-plugin
+# Lesson 2:把 opencode-goal-plugin 移植成 devecocode-goal-plugin
 
 会话内 `/goal <目标>` 设一个目标,插件挂在 `session.idle` 上自己续着往下推,直到证据门控判定完成——
-不用你手动喊「继续」。跟 [Lesson 2](../lesson2-ralph-loop/README.md) 的 ralph loop 形态不一样:
+不用你手动喊「继续」。跟 [Lesson 3](../lesson3-ralph-loop/README.md) 的 ralph loop 形态不一样:
 ralph loop 靠外部 shell 起 server、点火、拉 worker/reviewer 两个独立会话;这一课**不点火、单会话**,
 裁决也不是独立 reviewer 会话说了算,而是插件自己按 evidence(工具调用记录、turn/token/时长上限)门控。
 
@@ -25,17 +25,17 @@ token 消耗——去卡完成条件,不看模型嘴上怎么说。
 
 ## 前置条件
 
-- 完成 [Lesson 1](../lesson1-insight/README.md) 和 [Lesson 2](../lesson2-ralph-loop/README.md)。
+- 完成 [Lesson 1](../lesson1-insight/README.md);[Lesson 3](../lesson3-ralph-loop/README.md) 的 ralph loop 经验有帮助,但不是必需。
 - `deveco auth login` 已配好模型。
 - node ≥18(跑本课的 `node --test`)。
-- shell 里**不能有** `DEVECO_SERVER_PASSWORD`(同 [Lesson 2 坑 #4](../lesson2-ralph-loop/README.md#适配-deveco-时踩到的四个坑):一设,插件内 `client` 调自己 server 会吃 401)。
+- shell 里**不能有** `DEVECO_SERVER_PASSWORD`(同 [Lesson 3 坑 #4](../lesson3-ralph-loop/README.md#适配-deveco-时踩到的四个坑):一设,插件内 `client` 调自己 server 会吃 401)。
 - **Windows 用户**走 Git Bash,对齐根 [README 快速开始里的 Windows(Git Bash) 前置说明](../README.md#快速开始):
   node ≥20(`better-sqlite3` 只对 20/22 有 Windows 预编译包),自己装好,`setup.sh` 不代装。
 
 ## 用法
 
 ```bash
-cd lesson3-goal-plugin
+cd lesson2-goal-plugin
 ./goal.sh init ~/my-project        # 装:插件 + /goal 命令(merge 进 deveco.json,已有字段不覆盖)
 cd ~/my-project && deveco          # 起一个交互会话
 ```
@@ -104,7 +104,7 @@ host *实际*怎么执行这些 hook——尤其是 `output.parts` 这种"写了
 
 1. **状态目录 `.opencode/` → `.deveco/`**(Task 3,`goal-plugin.js:27` 的
    `PROJECT_LOCAL_STATE_SUBPATH`)。deveco 只认 `.deveco/` 下的插件和配置(跟
-   [Lesson 2 坑 #1](../lesson2-ralph-loop/README.md#适配-deveco-时踩到的四个坑)同一个原因),状态文件
+   [Lesson 3 坑 #1](../lesson3-ralph-loop/README.md#适配-deveco-时踩到的四个坑)同一个原因),状态文件
    路径跟着改,否则装完插件也找不到自己的状态。
 2. **新增 `DEVECO_GOAL_STATE_PATH` 环境变量,优先于上游原有的 `OPENCODE_GOAL_STATE_PATH`**
    (Task 3,`goal-plugin.js` `resolveStateFilePath`)。给用惯 deveco 命名习惯的用户一个对齐的入口,
@@ -117,7 +117,7 @@ host *实际*怎么执行这些 hook——尤其是 `output.parts` 这种"写了
    `query.directory`,flat 入参不受影响。
 4. **入口壳 `devecocode-goal-plugin.ts`**(Task 5)。deveco 的插件发现机制要求 `.deveco/plugin/*.ts`
    下有个入口文件,这个壳做两件事:一是把加载信号写进 `.deveco/goals/plugin.log`(判断插件到底有没有
-   被发现的唯一依据,同 Lesson 2 `.ralph/plugin.log` 的经验);二是读可选的
+   被发现的唯一依据,同 Lesson 3 `.ralph/plugin.log` 的经验);二是读可选的
    `.deveco/goal-plugin.json` 当 pluginOptions 传给上游 `GoalPlugin` 工厂函数。
 5. **品牌文案 5 处**(Task 8,含一次评审补漏)。只改用户/模型可见的叙述文案:`goal-plugin.js` 里
    `history` 字段的 3 处暂停原因描述、`buildCompactionContext` 里的 1 行压缩上下文提示(连带冠词
@@ -150,7 +150,7 @@ host *实际*怎么执行这些 hook——尤其是 `output.parts` 这种"写了
    冒烟脚本要为此预留超时和轮询时间。
 4. **macOS bash 3.2 的 `${VAR}` 花括号紧跟中文/全角字符,连咬两口。** `goal.sh` 的
    `install_file()` 里 `${f}` 后面紧跟中文字符,`scripts/smoke.sh` 里 `${SID}` 后面紧跟全角右括号
-   `）`、`${MATCH_SOURCE}` 同样紧跟全角右括号——一处提前按经验写对、两处真的炸了 `unbound variable`。[Lesson 2](../lesson2-ralph-loop/README.md) 已经记过一次同款坑,这一课又踩了
+   `）`、`${MATCH_SOURCE}` 同样紧跟全角右括号——一处提前按经验写对、两处真的炸了 `unbound variable`。[Lesson 3](../lesson3-ralph-loop/README.md) 已经记过一次同款坑,这一课又踩了
    两次,说明这不是运气问题而是习惯问题:**变量后面紧跟非 ASCII 字符,花括号必须写**,写代码时的
    第一直觉常常漏掉这条。
 5. **`set -euo pipefail` 下 `VAR=$(curl ...)` 在循环里会整个杀死脚本。** `smoke.sh` 的轮询循环里,
@@ -190,7 +190,7 @@ host *实际*怎么执行这些 hook——尤其是 `output.parts` 这种"写了
 ```
 
 把这个会话导进 cannbot-insight,turn-by-turn 回看 `/goal` 每一轮续推烧了多少 token、工具调了什么。
-旁路语义同 [Lesson 2](../lesson2-ralph-loop/README.md#观测这个-loop复用-lesson-1):lesson1 脚本不在、
+旁路语义同 [Lesson 2](../lesson3-ralph-loop/README.md#观测这个-loop复用-lesson-1):lesson1 脚本不在、
 cannbot 没装好,都只是跳过并提示一句,不影响 `/goal` 本身的结论。
 
 ## 测试

@@ -1,7 +1,7 @@
 # cargo vendor 的源码校验和对字节负责:Windows 上 autocrlf 检出时把 LF 换成 CRLF
 # 会直接触发 "the listed checksum of ... has changed"。vendor 一律按原始字节检出。
-lesson2-ralph-loop/examples/rustwrap/seed/vendor/** -text
-lesson2-ralph-loop/examples/rustwrap/seed/Cargo.lock -text
+lesson3-ralph-loop/examples/rustwrap/seed/vendor/** -text
+lesson3-ralph-loop/examples/rustwrap/seed/Cargo.lock -text
 
 # shell 脚本在 Git Bash 下必须是 LF(CRLF 会报 $'\r': command not found)
 *.sh text eol=lf

@@ -14,9 +14,9 @@ vendor/cannbot-insight/prisma/dev.db*
 .omc/
 
 # experiment1 本机网关配置(含密钥/内网地址,不入库;deveco.json 由 prepare 生成)
-lesson2-ralph-loop/experiments/experiment1/local.env
-lesson2-ralph-loop/experiments/experiment1/deveco.json
-lesson2-ralph-loop/experiments/experiment1/deveco.jsonc
+lesson3-ralph-loop/experiments/experiment1/local.env
+lesson3-ralph-loop/experiments/experiment1/deveco.json
+lesson3-ralph-loop/experiments/experiment1/deveco.jsonc
 
 # Python 编译缓存
 __pycache__/

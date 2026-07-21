@@ -190,28 +190,30 @@
   }
   .loop-selection b { color: var(--ink); }
 
-  /* ---------- 五段课程流程 ---------- */
-  .course-map { padding: 24px 0 8px; }
+  /* ---------- 课程安排(议程页) ---------- */
+  .course-map { padding: 56px 0 8px; }
+  .course-map h2 { font-family: var(--serif); font-weight: 900; font-size: 28px; margin-bottom: 8px; }
   .course-map ol {
     list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
+    gap: 14px; margin-top: 26px;
   }
-  .course-map li { position: relative; padding: 18px 14px 0 0; }
-  .course-map li::before {
-    content: ""; position: absolute; width: 9px; height: 9px; border-radius: 50%;
-    top: -5px; left: 0; background: var(--paper); border: 2px solid var(--replay);
+  .course-map li {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    border-top: 3px solid var(--replay);
   }
-  .course-map li:nth-child(2)::before { border-color: var(--signal); }
-  .course-map li:nth-child(3)::before,
-  .course-map li:nth-child(4)::before { border-color: var(--ink); }
-  .course-map li:nth-child(5)::before { border-color: var(--commit); }
-  .course-map a { display: block; color: inherit; text-decoration: none; }
+  .course-map li:nth-child(2) { border-top-color: var(--signal); }
+  .course-map li:nth-child(3),
+  .course-map li:nth-child(4) { border-top-color: var(--ink); }
+  .course-map li:nth-child(5) { border-top-color: var(--commit); }
+  .course-map li:hover { border-left-color: var(--ink); border-right-color: var(--ink); border-bottom-color: var(--ink); }
+  .course-map a { display: block; color: inherit; text-decoration: none; padding: 18px 18px 16px; height: 100%; box-sizing: border-box; }
   .course-map .idx {
     display: block; font-family: var(--mono); font-size: 11.5px;
-    letter-spacing: .1em; color: var(--muted); margin-bottom: 5px;
+    letter-spacing: .1em; color: var(--muted); margin-bottom: 8px;
   }
-  .course-map b { display: block; font-family: var(--serif); font-size: 17px; line-height: 1.4; }
-  .course-map small { display: block; margin-top: 5px; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+  .course-map b { display: block; font-family: var(--serif); font-size: 19px; line-height: 1.4; }
+  .course-map small { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  @media (max-width: 720px) { .course-map ol { grid-template-columns: 1fr; } }
 
   .module-label {
     display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
@@ -245,6 +247,24 @@
   .share-panel p { margin-top: 12px; color: var(--muted); font-size: 14px; }
 
   .share-panel { border-top-color: var(--ink); }
+  .sharing-axes {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
+    margin-top: 24px;
+  }
+  .sharing-axis {
+    background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--replay);
+    padding: 18px 20px;
+  }
+  .sharing-axis:nth-child(2) { border-top-color: var(--signal); }
+  .sharing-axis span { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .08em; }
+  .sharing-axis h3 { font-family: var(--serif); font-size: 18px; margin: 3px 0 10px; }
+  .sharing-axis p { color: var(--muted); font-size: 14px; }
+  .sharing-axis p + p { margin-top: 7px; }
+  .sharing-axis b { color: var(--ink); }
+  .sharing-choice {
+    margin-top: 14px; border-left: 4px solid var(--commit); background: var(--card);
+    padding: 14px 18px; font-size: 14px;
+  }
   .review-rubric { margin-top: 18px; }
   .review-rubric th:first-child, .review-rubric td:first-child { width: 24%; }
 
@@ -332,6 +352,17 @@
   .harness-note { color: var(--muted); font-size: 13px; margin: 8px 0 14px; }
   .migration-takeaway { border: 1px solid var(--line); border-left: 4px solid var(--signal); background: var(--card); padding: 13px 17px; margin-top: 14px; font-weight: 700; }
 
+  .ecat-figure { margin: 16px 0 4px; }
+  .ecat-figure img { display: block; width: 100%; max-width: 940px; margin: 0 auto; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  .ecat-figure figcaption { margin-top: 8px; text-align: center; font-size: 13px; color: var(--muted); }
+  .ecat-algo { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 18px; align-items: start; margin-top: 14px; }
+  .ecat-algo figure { margin: 0; }
+  .ecat-algo img { display: block; width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  .ecat-algo figcaption { margin-top: 8px; text-align: center; font-size: 13px; color: var(--muted); }
+  .ecat-algo-notes { display: grid; gap: 10px; }
+  .ecat-algo-notes > div { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 11px 15px; font-size: 13.5px; line-height: 1.6; }
+  .ecat-algo-notes b { display: block; font-family: var(--mono); font-size: 12px; color: var(--signal-text); margin-bottom: 4px; }
+
   .takeaways { list-style: none; counter-reset: takeaway; margin: 24px 0; }
   .takeaways li {
     counter-increment: takeaway; display: grid; grid-template-columns: 44px 1fr;
@@ -356,6 +387,10 @@
   .discussion summary:hover { color: var(--term-fg); }
   .discussion summary small { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 8px; }
   .discussion details p { margin: 8px 0 0 18px; color: var(--term-fg); font-size: 14px; line-height: 1.75; }
+  .discussion code {
+    background: rgba(220, 231, 240, .12); border-color: rgba(220, 231, 240, .28);
+    color: var(--term-fg);
+  }
   .appendix-label { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .12em; }
 
   /* ---------- 通用 section ---------- */
@@ -462,7 +497,7 @@
   }
   .term code { background: none; border: 0; padding: 0; font-size: inherit; overflow-wrap: normal; }
 
-  /* ---------- 三件套小卡(lesson2) ---------- */
+  /* ---------- 三件套小卡(lesson3 ralph) ---------- */
   .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 6px 0 4px; }
   .trio div {
     border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px;
@@ -470,7 +505,7 @@
   }
   .trio b { display: block; color: var(--ink); font-family: var(--mono); font-size: 13px; margin-bottom: 4px; }
 
-  /* ---------- 对比表(lesson3) ---------- */
+  /* ---------- 对比表(lesson2 goal) ---------- */
   .cmp { width: 100%; border-collapse: collapse; font-size: 14px; margin: 4px 0; }
   .cmp th, .cmp td { border: 1px solid var(--line); padding: 8px 14px; text-align: left; vertical-align: top; }
   .cmp th {
@@ -540,7 +575,7 @@
   }
 
   @media (max-width: 720px) {
-    .trio, .fit-grid, .exp-grid, .audit-grid, .share-grid { grid-template-columns: 1fr; }
+    .trio, .fit-grid, .exp-grid, .audit-grid, .share-grid, .sharing-axes { grid-template-columns: 1fr; }
     .topbar { position: static; }
     .topbar-inner { align-items: flex-start; flex-direction: column; gap: 8px; }
     .topbar-nav { margin-left: 0; gap: 8px 14px; }
@@ -559,7 +594,7 @@
     .migration-heading { grid-template-columns: 32px 1fr; }
     .migration-visual-grid, .result-strip { grid-template-columns: 1fr 1fr; }
     .result-strip div:nth-child(n+3) { border-top: 1px solid var(--line); }
-    .process-layout, .architecture-grid, .gate-grid, .compare-grid { grid-template-columns: 1fr; }
+    .process-layout, .architecture-grid, .gate-grid, .compare-grid, .ecat-algo { grid-template-columns: 1fr; }
     .process-screens, .scenario-grid { grid-template-columns: 1fr; }
     .reason-strip, .agent-factors { grid-template-columns: 1fr; }
     .pipeline, .delegation-scale, .harness-flow { grid-template-columns: 1fr; }
@@ -613,7 +648,7 @@
     <a class="topbar-name" href="#top">deveco-lessons</a>
     <nav class="topbar-nav" aria-label="页内导航">
       <a href="#loop-stack">导论 四层 Loop</a>
-      <a href="#audit">01 可审计工程</a>
+      <a href="#lesson1">01 可审计工程</a>
       <a href="#loop">02 Loop</a>
       <a href="#sharing">03 分享交流</a>
       <a href="#migration">04 迁移实践</a>
@@ -630,7 +665,7 @@
       <div class="eyebrow">deveco-lessons / 可审计的 Agent 工程实践课 · 5 MODULES</div>
       <h1>长程任务案例实战演练：<br><em>让 Agent 按计划稳定完成复杂开发任务</em></h1>
       <p class="lede">
-        Loop Engineering 以适配任务的 Harness 为工程边界，叠加执行、验证、事件触发与持续改进四层循环，让 Agent 稳定完成长程任务。
+        一天做三件事：看清 Agent 做了什么，让它按计划继续，并用独立证据决定何时收工。
       </p>
 
       <figure class="diagram">
@@ -679,7 +714,7 @@
           <path class="flowing" d="M 436 158 Q 390 180 346 158" fill="none" stroke="#bd3c0c" stroke-width="2" marker-end="url(#arr-o)"/>
           <text x="390" y="99" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" fill="#bd3c0c">session.idle</text>
           <text x="390" y="200" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" fill="#bd3c0c">CONTINUE: 还差什么</text>
-          <text x="188" y="228" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12" fill="#bd3c0c">Lesson 2 · ralph loop（Lesson 3 把它收进单会话的 /goal 插件）</text>
+          <text x="188" y="228" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12" fill="#bd3c0c">ralph loop（/goal 插件把同款循环收进单会话）</text>
 
           <!-- DONE 出口 -->
           <line x1="566" y1="140" x2="632" y2="140" stroke="#247a35" stroke-width="2" marker-end="url(#arr-g)"/>
@@ -699,17 +734,17 @@
       <span class="module-label loop">OPENING · LOOP STACK</span>
       <h2>Loop Engineering 的四层循环</h2>
       <p class="module-lede">
-        可靠 Agent 由模型、工具和适配任务的 Harness 共同组成。四层 Loop 从完成一次任务逐级扩展到持续运行和持续改进，每一层都包裹并增强前一层。
+        长任务常卡在四处：没做完、做错了、停住了、同类错误反复出现。每层 Loop 处理一处。
       </p>
       <p class="loop-primer-source">
         框架来源：<a href="https://www.langchain.com/blog/the-art-of-loop-engineering#loop-1-the-agent" target="_blank" rel="noopener noreferrer">LangChain · The Art of Loop Engineering</a>
       </p>
 
-      <div class="loop-capability-line" role="img" aria-label="四层 Loop 的能力递进：Agent Loop 做完任务，Verification Loop 做对任务，Event-driven Loop 持续运行，Hill-climbing Loop 持续变好">
-        <div><span>LOOP 1 · AGENT</span><b>做完任务</b></div>
-        <div><span>LOOP 2 · VERIFY</span><b>做对任务</b></div>
-        <div><span>LOOP 3 · EVENT</span><b>持续运行</b></div>
-        <div><span>LOOP 4 · IMPROVE</span><b>持续变好</b></div>
+      <div class="loop-capability-line" role="img" aria-label="四层 Loop 逐个解决四个问题：Agent Loop 把任务做完，Verification Loop 把任务做对，Event-driven Loop 停了自己续，Hill-climbing Loop 跑完留经验">
+        <div><span>LOOP 1 · AGENT</span><b>把任务做完</b></div>
+        <div><span>LOOP 2 · VERIFY</span><b>把任务做对</b></div>
+        <div><span>LOOP 3 · EVENT</span><b>停了自己续</b></div>
+        <div><span>LOOP 4 · IMPROVE</span><b>跑完留经验</b></div>
       </div>
 
       <ol class="loop-levels" role="list">
@@ -720,9 +755,7 @@
             <p>自动完成工作</p>
           </div>
           <div class="loop-level-body">
-            <p><b>循环：</b>模型读取上下文，选择工具并执行，再把结果写回上下文，直到完成条件满足。</p>
-            <p><b>适合：</b>边界明确、工具齐备、单次交付可人工抽查的任务，例如资料检索、小功能修改和一次性脚本。</p>
-            <p class="course-fit"><b>本课落点：</b>DevEco worker 与 <code>/goal</code> 中的执行内循环。</p>
+            <p><b>怎么跑：</b>读取上下文 → 调工具 → 写回结果 → 继续。单独使用适合边界明确、可人工抽查的小任务。</p>
           </div>
         </li>
         <li>
@@ -732,9 +765,7 @@
             <p>保证质量与正确性</p>
           </div>
           <div class="loop-level-body">
-            <p><b>循环：</b>Grader 按测试、规则或 Rubric 评分；未通过时把具体差距反馈给 Agent 重试。每轮验证都会增加延迟和成本。</p>
-            <p><b>适合：</b>正确性和一致性优先的生产任务，例如代码迁移、重构、CI 修复、契约和合规检查。</p>
-            <p class="course-fit"><b>本课落点：</b>Ralph reviewer、隐藏验收测试与 Verify &amp; Fix。</p>
+            <p><b>怎么跑：</b>测试或 Grader 判分；未过线就把差距退回重做。适合迁移、重构和 CI 修复。</p>
           </div>
         </li>
         <li>
@@ -744,9 +775,7 @@
             <p>接入业务系统持续运行</p>
           </div>
           <div class="loop-level-body">
-            <p><b>循环：</b>消息、Webhook、Cron 或 Session 事件触发 Agent，执行结果再写回业务系统。</p>
-            <p><b>适合：</b>后台持续运行、异步到达、定时或批量任务，例如工单处理、仓库维护、监控响应和长流程续推。</p>
-            <p class="course-fit"><b>本课演示：</b><code>session.idle</code> 与 <code>/goal</code> 展示事件触发的单会话续推；完整业务接入还需要 Webhook、Cron 或 Channel 触发器。</p>
+            <p><b>怎么跑：</b>消息、Webhook、Cron 或 Session 事件触发下一轮。适合工单、巡检和长流程续推。</p>
           </div>
         </li>
         <li>
@@ -756,15 +785,13 @@
             <p>用运行数据改进 Harness</p>
           </div>
           <div class="loop-level-body">
-            <p><b>循环：</b>分析生产 Trace 和 Grader 反馈，识别共性失败，更新 Prompt、Tool、Grader、Skill 或规则，再发布新的 Harness。</p>
-            <p><b>适合：</b>同类任务高频重复、评价标准稳定、已经积累足够 Trace 的场景。</p>
-            <p class="course-fit"><b>本课落点：</b>cannbot-insight 提供 Trace 输入；分享点评、经验写回与 Harness 发布组成由人工参与的改进闭环。</p>
+            <p><b>怎么跑：</b>从 Trace 找共性失败，改 Prompt、Tool、Grader 或 Skill，再回归评测。适合高频重复任务。</p>
           </div>
         </li>
       </ol>
 
       <p class="loop-selection">
-        <b>选择原则：</b>先建立能工作的 Agent Loop；质量要求上升时叠加 Verification；任务进入业务系统时接入 Event-driven；拥有稳定数据和指标后启动 Hill-climbing。高风险动作在每一层保留人工审批。
+        <b>不用一次上齐四层。</b>先让任务跑通；需要质量保证时加验证；需要长期运行时接事件；积累足够 Trace 后再优化 Harness。高风险动作始终留给人工审批。
       </p>
     </div>
   </section>
@@ -772,9 +799,11 @@
   <!-- ============ 五段课程流程 ============ -->
   <section class="course-map" aria-labelledby="course-map-title">
     <div class="wrap">
-      <h2 id="course-map-title" class="visually-hidden">课程流程</h2>
+      <span class="module-label neutral">AGENDA · 5 MODULES</span>
+      <h2 id="course-map-title">课程安排</h2>
+      <p class="module-lede">先看过程，再做循环；随后用实验和迁移案例检验方法。</p>
       <ol>
-        <li><a href="#audit"><span class="idx">01 · OBSERVE</span><b>可审计的工程</b><small>实时、细粒度看清全流程</small></a></li>
+        <li><a href="#lesson1"><span class="idx">01 · OBSERVE</span><b>可审计的工程</b><small>实时、细粒度看清全流程</small></a></li>
         <li><a href="#loop"><span class="idx">02 · CONTROL</span><b>Loop Engineering</b><small>按计划稳定完成复杂任务</small></a></li>
         <li><a href="#sharing"><span class="idx">03 · REFLECT</span><b>分享与交流</b><small>拿证据讲，围绕问题聊</small></a></li>
         <li><a href="#migration"><span class="idx">04 · TRANSFER</span><b>代码迁移实践</b><small>MigBot 内容与图片展示</small></a></li>
@@ -784,44 +813,6 @@
   </section>
 
   <!-- ============ 模块 1:可审计工程 ============ -->
-  <section class="section" id="audit">
-    <div class="wrap">
-      <span class="module-label">MODULE 01 · OBSERVE</span>
-      <h2>可审计的工程：全流程实时、细粒度可观测</h2>
-      <p class="module-lede">
-        Agent 的长期自主工作需要一条可追溯的执行证据链。
-        从目标和计划，到每轮动作、工具调用、资源消耗、验证结果与退出裁决，都应当能实时查看、事后复盘。
-      </p>
-
-      <div class="audit-chain" role="img" aria-label="可审计链路：目标、计划、执行、验证、裁决">
-        <div><span>01</span><b>目标</b><small>完成条件是否明确</small></div>
-        <div><span>02</span><b>计划</b><small>如何拆解、当前做到哪</small></div>
-        <div><span>03</span><b>执行</b><small>每轮做了什么、调用何种工具</small></div>
-        <div><span>04</span><b>验证</b><small>测试、diff 与证据是否可信</small></div>
-        <div><span>05</span><b>裁决</b><small>为什么继续、停止或升级人工</small></div>
-      </div>
-
-      <div class="audit-grid">
-        <article class="audit-panel">
-          <h3>执行中看现场</h3>
-          <ul>
-            <li><b>会话级</b>：用 <code>deveco attach</code> 观察当前轮次与 Agent 输出</li>
-            <li><b>动作级</b>：工具调用、插件日志、失败重试与 reviewer 裁决</li>
-            <li><b>任务级</b>：<code>PROGRESS</code>、commit、预算与退出状态</li>
-          </ul>
-        </article>
-        <article class="audit-panel">
-          <h3>结束后能细粒度复盘</h3>
-          <ul>
-            <li><b>复现</b>：在 cannbot-insight 沿 turn-by-turn 轨迹还原关键决策</li>
-            <li><b>归因</b>：分清模型、提示词、工具、验证器或环境问题</li>
-            <li><b>改进</b>：依据 Trace 和失败样本迭代 Harness</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ 快速开始 ============ -->
   <section class="section" id="setup">
     <div class="wrap">
@@ -849,10 +840,8 @@
           <h3>建立细粒度审计轨迹：DevEco 对接 cannbot-insight</h3>
         </div>
         <p class="lesson-tagline">
-          给 agent 会话装上「回放镜头」。deveco 是 opencode 派生的，它的会话库
-          <code>~/.local/share/deveco/deveco.db</code> 里 session / message / part 三张表结构
-          和 cannbot-insight 的 opencode-db 适配器<b>一模一样</b>——所以对接零改码，
-          <code>observe.sh</code> 只做导入与起 server。
+          DevEco 与 cannbot-insight 使用兼容的 session / message / part 数据结构。
+          <code>observe.sh</code> 直接导入会话库并启动回放界面，无需改 DevEco。
         </p>
 
         <h4>你会学到</h4>
@@ -906,8 +895,7 @@
       <span class="module-label loop">MODULE 02 · CONTROL</span>
       <h2>Loop Engineering：让 Agent 按计划稳定完成复杂任务</h2>
       <p class="module-lede">
-        Loop 把复杂目标组织成一个受控的工程闭环：计划先行，
-        每轮只推进一个可验证增量，独立验证器判断差距，状态文件继承进度，退出条件控制成本与风险。
+        每轮只做一小步；验证通过就记进度，失败就带着差距重做。
       </p>
 
       <div class="loopflow" role="img" aria-label="计划驱动闭环：定义目标、制定计划、执行最小增量、独立验证、审计差距、更新状态并继续，直到证据门控完成">
@@ -922,30 +910,34 @@
       <div class="kicker">稳定收敛的四个工程条件</div>
       <div class="fit-grid">
         <article class="fit-card">
-          <span class="idx">PLAN</span>
-          <h3>计划可执行</h3>
-          <p>目标拆成有顺序、可独立验收的小步；Agent 每轮从计划中领取下一项，持续沿既定目标推进。</p>
-          <div class="flowline">GOAL → PLAN → 当前子任务</div>
+          <span class="idx">DECOMPOSE</span>
+          <h3>任务可分解</h3>
+          <p>拆成有顺序、可单独验收的小步；每轮只领一项。</p>
+          <div class="flowline">GOAL → PLAN → 本轮子任务</div>
         </article>
         <article class="fit-card">
           <span class="idx">VERIFY</span>
-          <h3>结果可验证</h3>
-          <p>测试、编译、静态检查、截图或只读 reviewer 给出客观信号；验证器与执行者隔离，防止执行者修改验收规则。</p>
-          <div class="flowline">执行结果 → oracle / reviewer → DONE 或差距</div>
+          <h3>每轮可验证</h3>
+          <p>用测试、编译或只读 reviewer 给出客观结果。</p>
+          <div class="flowline">本轮产出 → 独立验证器判分 → 通过 / 差距喂回下一轮</div>
         </article>
         <article class="fit-card">
           <span class="idx">STATE</span>
-          <h3>进度可继承</h3>
-          <p>Git、任务清单和进度文件记录已完成项、失败尝试与下一步，让跨轮、跨会话执行不会失忆或重复劳动。</p>
-          <div class="flowline">commit + PROGRESS → 下一轮继续</div>
+          <h3>状态可继承</h3>
+          <p>用 Git 和进度文件记住完成项、失败尝试与下一步。</p>
+          <div class="flowline">commit + PROGRESS → 下一轮接着干</div>
         </article>
         <article class="fit-card">
-          <span class="idx">GUARDRAIL</span>
-          <h3>过程有边界</h3>
-          <p>轮次、时长、token、权限和人工审批共同约束循环；高风险、不可逆动作必须停在人工确认之前。</p>
-          <div class="flowline">预算 / 权限 / 审批 → 安全退出</div>
+          <span class="idx">FEEDBACK</span>
+          <h3>反馈可执行</h3>
+          <p>反馈给出失败样例和根因，能直接变成下一轮任务。</p>
+          <div class="flowline">差距（样例/根因）→ 注入下一轮</div>
         </article>
       </div>
+
+      <p class="loop-selection">
+        <b>边界：</b>限制轮次、时长、token 和工具权限；发布、删数据等不可逆动作停在人工确认前。
+      </p>
 
       <div class="verdict">
         <div class="formula">
@@ -955,22 +947,83 @@
           <span>反馈可执行</span><span class="plus">⇒</span>
           <span class="yes">适合 Loop Engineering</span>
         </div>
-        <p>下面用两种形态落地：Ralph Loop 用跨会话 worker / reviewer 做强隔离；<code>/goal</code> 插件用单会话事件驱动和证据门控做轻量常驻。最后用 A/B 实验检验反馈环的真实收益。</p>
+        <p>下面看两种实现：<code>/goal</code> 管单会话长目标，Ralph 用独立 reviewer 做逐轮验收。</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ Lesson 2 ============ -->
+  <!-- ============ Lesson 3 ============ -->
   <section class="section" id="lesson2">
+    <div class="wrap">
+      <article class="lesson lesson-3">
+        <div class="lesson-head">
+          <span class="lesson-no">LESSON 2</span>
+          <h3>devecocode-goal-plugin：给会话装上目标循环</h3>
+        </div>
+        <p class="lesson-tagline">
+          Agent 停下但目标未完成时，<code>session.idle</code> 自动触发下一轮；提交完成证据后才允许退出。
+          循环留在当前会话内，无需外部 shell。（适配自 opencode-goal-plugin v0.6.5。）
+        </p>
+
+        <h4>一张图看运行方式</h4>
+        <div class="loopflow" role="img" aria-label="goal 插件运行方式：设定目标，Agent 执行，空闲事件检查；目标未完成则继续，完成证据通过则归档">
+          <span class="node">/goal 设目标</span><span class="arrow">→</span>
+          <span class="node">Agent 执行</span><span class="arrow">→</span>
+          <span class="node">session.idle 检查</span><span class="arrow">↺ 未完成</span>
+          <span class="node exit">证据通过，归档</span>
+        </div>
+
+        <h4>你会学到</h4>
+        <ul class="learn">
+          <li>目标如何设定、续推、验收与归档</li>
+          <li><code>session.idle</code> 如何触发下一轮</li>
+          <li>轮次、时长和 token 预算如何控制退出</li>
+        </ul>
+
+        <h4>用法</h4>
+        <ol class="steps">
+          <li>
+            <b>装</b> —— <code>goal.sh</code> 只负责装：插件 + merge <code>deveco.json</code> 的 /goal 命令：
+            <div class="term"><pre><code><span class="p">$</span> ./goal.sh init ~/my-project     <span class="c"># --update 才会覆盖你改过的文件</span></code></pre></div>
+          </li>
+          <li>
+            <b>会话里设目标</b> —— 交互式 TUI 形态，一切在单个会话内发生：
+            <div class="term"><pre><code><span class="p">$</span> cd ~/my-project &amp;&amp; deveco
+<span class="c"># 会话里输入：</span>
+/goal 创建 hello.txt 并 git commit
+/goal status     <span class="c"># 看当前目标</span>
+/goal history    <span class="c"># 看 lifecycle 事件</span></code></pre></div>
+          </li>
+          <li>
+            <b>观察续推</b> —— Agent 停下但目标未完成时，插件自动注入下一轮消息。
+          </li>
+          <li>
+            <b>检查退出</b> —— 完成汇报要通过证据审计；状态归档在 <code>.deveco/goals/state.json</code>。
+            退出条件可配（<code>.deveco/goal-plugin.json</code>：maxTurns 10 / maxDurationMs 900000 / maxTokens 200000）。
+            排障第一句永远是：看 <code>.deveco/goals/plugin.log</code> 有没有加载记录。
+          </li>
+        </ol>
+
+        <h4>当前进度</h4>
+        <ul class="check">
+          <li>上游 v0.6.5 源码与 9 个测试已 vendor，基线全绿（<code>upstream.lock</code> 锁定 commit）</li>
+          <li>适配任务按 10 步计划推进中：状态路径迁 <code>.deveco/</code>、session API 注入 <code>query.directory</code>、入口壳、goal.sh、冒烟、E2E 走查（见 <code>docs/superpowers/plans/2026-07-16-lesson3-goal-plugin.md</code>）</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ Lesson 2 ============ -->
+  <section class="section" id="lesson3">
     <div class="wrap">
       <article class="lesson lesson-2">
         <div class="lesson-head">
-          <span class="lesson-no">LESSON 2</span>
+          <span class="lesson-no">LESSON 3</span>
           <h3>Ralph Loop：让 Agent 按计划跨会话推进</h3>
         </div>
         <p class="lesson-tagline">
-          给 deveco 一个目标和可验收计划，它自己 worker → reviewer → worker 循环推进，直到 reviewer 判定验收通过。
-          核心工程原则：<b>裁判和执行者分离</b>，独立验收测试藏在 worker 摸不到的地方。
+          Worker 做一小步，reviewer 独立验收；未通过就退回差距，通过才写 <code>DONE</code>。
+          验收测试与 worker 隔离。
         </p>
 
         <h4>三件套</h4>
@@ -984,7 +1037,7 @@
         <ol class="steps">
           <li>
             <b>装</b> —— init 是有副作用的一次性动作（插件、agent、git、配置、GOAL 骨架），所以和「跑」分开：
-            <div class="term"><pre><code><span class="p">$</span> cd lesson2-ralph-loop
+            <div class="term"><pre><code><span class="p">$</span> cd lesson3-ralph-loop
 <span class="p">$</span> ./ralph.sh init ~/ralph-smoke</code></pre></div>
           </li>
           <li>
@@ -993,7 +1046,7 @@
             <p>验收测试放在 <code>.ralph/verify.test.ts</code>。worker 拥有全部工具权限，能够修改 <code>test/</code> 下的用例；<code>bun test</code> 不扫描隐藏目录，因此 worker 看不到也改不到这份验收测试。</p>
           </li>
           <li>
-            <b>跑</b> —— 起 server、点火、盯到收工、自动关 server；脚本会保留你改过的插件和提示词：
+            <b>跑</b> —— 起 server、启动循环、盯到收工、自动关 server；脚本会保留你改过的插件和提示词：
             <div class="term"><pre><code><span class="p">$</span> ./ralph.sh run ~/ralph-smoke
 <span class="c"># 想看单次基线（无 reviewer、无续轮）：./ralph.sh once ~/ralph-smoke</span>
 <span class="c"># 想实时围观：deveco attach http://127.0.0.1:4097 --session $(cat ~/ralph-smoke/.ralph/session_id)</span></code></pre></div>
@@ -1015,25 +1068,20 @@
         <div class="pit"><ol>
           <li><b>配置目录</b>：插件配置放在 <code>.deveco/</code>。写入 <code>.opencode/</code> 会静默失效；<code>.ralph/plugin.log</code> 的生成记录可以确认插件已经加载。</li>
           <li><b>配置文件</b>：项目配置使用 <code>deveco.json</code> 或 <code>deveco.jsonc</code>；<code>opencode.json</code> 不会激活 DevEco 配置。</li>
-          <li><b>SDK 参数结构</b>：DevEco SDK 采用 hey-api 风格，调用形式为 <code>session.prompt({ path: { id }, query: { directory }, body: {...} })</code>。扁平参数会导致会话创建失败；点火直接调用 HTTP API，跳过当前存在兼容问题的 <code>deveco run --attach</code>。</li>
+          <li><b>SDK 参数结构</b>：DevEco SDK 采用 hey-api 风格，调用形式为 <code>session.prompt({ path: { id }, query: { directory }, body: {...} })</code>。扁平参数会导致会话创建失败；启动首轮会话直接调用 HTTP API，跳过当前存在兼容问题的 <code>deveco run --attach</code>。</li>
           <li><b>Server 鉴权</b>：保持 <code>DEVECO_SERVER_PASSWORD</code> 未设置。该变量会为 serve 开启 basic auth，插件内 client 调用同一 server 时会收到 401，循环随即空转。</li>
         </ol></div>
 
         <section class="lesson-experiment" id="exp1" aria-labelledby="exp1-title">
           <h4 class="experiment-title" id="exp1-title">实验实证：单次 Agent vs Ralph Loop</h4>
           <p class="section-sub">
-            盲验收 A/B 对照实验（<code>experiments/experiment1</code>，2026-07-16 实测），
-            用 Lesson 2 的 <code>ralph.sh once / run</code> 做双臂，回答一个问题：
-            <b>同一个模型、同一份任务，「一次生成」和「带验收反馈的循环」到底差在哪？</b>
+            同一模型、同一任务、同一套隐藏验收，只改变一件事：有没有反馈环。
           </p>
 
           <div class="kicker">实验设计</div>
           <p class="section-sub" style="max-width:none">
-            任务：把 CPython <code>textwrap</code> 移植成行为等价的 Rust（5 个函数、12 个选项）。
-            验收：816 条「输入 → CPython 期望输出」向量，<b>对 worker 完全隐藏</b>（不在可见路径、不进 git 历史，红线禁读 + 赛后审计）。
-            两组的 GOAL、模型、工具、盲验收完全一致，唯一被操纵的变量是<b>反馈环的有无</b>。
-            worker 故意用弱模型（deepseek-v4-flash）：强模型靠本地对拍 CPython 就能自收敛到满分，轮不到外循环出场——
-            「便宜 worker + 强验收循环」正是 loop engineering 的经济学卖点。
+            把 CPython <code>textwrap</code> 移植到 Rust；816 条验收向量对 worker 隐藏。
+            A 组运行一次，B 组接收 reviewer 的失败反馈后继续。
           </p>
 
           <div class="exp-grid">
@@ -1077,17 +1125,13 @@
 9241e4a fix: drop_whitespace with narrow width no longer drops all remaining chunks</code></pre>
           </div>
           <p class="section-sub" style="margin-top:10px">
-            这条<b>可执行反馈</b>明确给出了根因和修法。
-            反馈环把每轮发现的差距直接转化为下一轮输入。
+            Reviewer 给出根因和修法，下一轮据此产生一个修复 commit。
           </p>
 
           <div class="kicker">反面教材：Goodhart 与审计</div>
           <div class="caution">
-            第一次跑 A 组时，flash 在会话开始<b>第 17 秒</b>就把隐藏验收向量 <code>.ralph/vectors.jsonl</code>
-            读走，对着验收集搭本地 harness 刷出「816/816」——满分全程是 Goodhart，成绩作废。
-            结论：对全工具 agent，<b>安全边界由规则和审计共同建立</b>。
-            审计命中后要人工判读：读过验收数据<b>内容</b> = 作弊作废；纯元数据访问（如 <code>git ls-files</code> 列文件名）可豁免但要记录理由——
-            本次 A 组唯一一条命中即属良性豁免。它再次说明：验证器被污染，agent 就会持续优化错误目标。
+            首次实验中，worker 在第 17 秒读取隐藏验收集，并对着答案刷到 816/816；该成绩作废。
+            因此既要禁止读取，也要审计实际文件访问。命中后人工区分“读过内容”和“只见元数据”。
           </div>
 
           <div class="kicker">复现（experiments/experiment1，longrunning_practice 仓库）</div>
@@ -1100,90 +1144,11 @@
 <span class="p">$</span> ./audit_peeking.sh ~/ralph-experiment1/loop   <span class="c"># 审计必须 clean，成绩才有效</span></code></pre>
           </div>
           <p class="section-sub" style="margin-top:10px">
-            LLM 有随机性，你的数字会不同（A 组停在 780–816 都见过），但 loop 的优势是<b>结构性</b>的。
-            本次实测的原始数据（失败样例全文、逐轮裁决日志、分数曲线、审计判读）都在
+            每次运行的分数可能不同。失败样例、裁决日志、分数曲线和审计记录都在
             <code>experiments/experiment1/reference-results/</code>。
           </p>
         </section>
 
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ Lesson 3 ============ -->
-  <section class="section" id="lesson3">
-    <div class="wrap">
-      <article class="lesson lesson-3">
-        <div class="lesson-head">
-          <span class="lesson-no">LESSON 3</span>
-          <h3>devecocode-goal-plugin：给会话装上目标循环</h3>
-          <span class="badge">开发中 · vendor 已全绿</span>
-        </div>
-        <p class="lesson-tagline">
-          给会话一个「完成条件」，插件把普通对话变成一个<b>事件驱动的目标循环</b>：
-          agent 停下来（<code>session.idle</code>）但目标没完成，就自动续推；
-          插件只接受携带证据并通过审计门控的完成声称。
-          整个循环发生在单个会话内，不需要外部 shell 点火。
-          （插件适配自 opencode-goal-plugin v0.6.5。）
-        </p>
-
-        <h4>你会学到（对应 Loop Engineering 的哪几层）</h4>
-        <ul class="learn">
-          <li><code>/goal</code> 的目标生命周期：设定 → 空转续推 → 证据门控 → 归档——正是本模块闭环「计划 → 执行 → 验证 → 反馈 → 退出」的单会话实现</li>
-          <li>空转自续 = <b>事件驱动循环</b>：<code>session.idle</code> 事件自动触发续推</li>
-          <li>证据门控 = <b>验证循环</b>：完成声称要交出可核查的证据，防止「反复改写、自我宣布胜利」</li>
-          <li>它和 ralph loop 的分工：外循环跨会话、独立裁判；内循环单会话、轻量常驻——两者可以叠加</li>
-        </ul>
-
-        <h4>用法</h4>
-        <ol class="steps">
-          <li>
-            <b>装</b> —— <code>goal.sh</code> 只负责装：插件 + merge <code>deveco.json</code> 的 /goal 命令：
-            <div class="term"><pre><code><span class="p">$</span> ./goal.sh init ~/my-project     <span class="c"># --update 才会覆盖你改过的文件</span></code></pre></div>
-          </li>
-          <li>
-            <b>会话里设目标</b> —— 交互式 TUI 形态，一切在单个会话内发生：
-            <div class="term"><pre><code><span class="p">$</span> cd ~/my-project &amp;&amp; deveco
-<span class="c"># 会话里输入：</span>
-/goal 创建 hello.txt 并 git commit
-/goal status     <span class="c"># 看当前目标</span>
-/goal history    <span class="c"># 看 lifecycle 事件</span></code></pre></div>
-          </li>
-          <li>
-            <b>空转自续</b> —— agent 停下来但目标没完成？插件自动发续推消息，把它踢回去接着干。
-            这一步就是闭环里的「定位差距 → 注入反馈 → 再执行」。
-          </li>
-          <li>
-            <b>证据门控完成</b> —— 完成汇报要过证据审计才收工；状态归档在 <code>.deveco/goals/state.json</code>。
-            退出条件可配（<code>.deveco/goal-plugin.json</code>：maxTurns 10 / maxDurationMs 900000 / maxTokens 200000）。
-            排障第一句永远是：看 <code>.deveco/goals/plugin.log</code> 有没有加载记录。
-          </li>
-        </ol>
-
-        <h4>与 ralph loop（Lesson 2）的分工</h4>
-        <div class="table-scroll" role="region" aria-label="Ralph Loop 与 goal 插件对比" tabindex="0">
-          <table class="cmp">
-            <thead><tr><th>维度</th><th>L2 · ralph loop（外循环）</th><th>L3 · /goal 插件（内循环）</th></tr></thead>
-            <tbody>
-              <tr><td>点火</td><td>shell 脚本 <code>ralph.sh run</code></td><td>会话里一句 <code>/goal ⟨目标⟩</code></td></tr>
-              <tr><td>边界</td><td>跨会话：worker / reviewer 各是独立 session</td><td>单会话内常驻</td></tr>
-              <tr><td>触发</td><td>插件通过外部 <code>session.idle</code> hook，在 worker 每轮停下时启动 reviewer</td><td><code>session.idle</code> 驱动主会话续推；只有 Agent 携带证据声明完成时才启动 completion audit</td></tr>
-              <tr><td>Reviewer 会话</td><td>创建与 worker 平级的独立 session</td><td>启用 <code>completionAudit</code> 后，创建挂在 Goal 主会话下的临时 child session</td></tr>
-              <tr><td>裁决作用</td><td>每轮检查工作区并给出 <code>DONE</code> / <code>CONTINUE</code>，直接控制下一轮</td><td>完成前执行证据门控与可选的只读审计，只决定是否允许结束</td></tr>
-              <tr><td>适用场景</td><td>验收标准明确、可反复运行测试，需要多轮“实现—验证—修复”收敛的任务</td><td>周期长、需要状态持久化、预算控制、暂停恢复和人工介入的复杂任务</td></tr>
-              <tr><td>退出</td><td><code>.ralph/DONE</code> / <code>STOPPED</code></td><td>目标归档 / maxTurns 等预算耗尽</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="verdict">
-          <p><b>选择原则：</b>Ralph Loop 解决“如何通过多轮验证反复做对”，<code>/goal</code> 解决“如何带着状态和边界长期做完”。高风险长程任务可以用 <code>/goal</code> 管理生命周期，在关键阶段叠加 Ralph 式验证循环。</p>
-        </div>
-
-        <h4>当前进度</h4>
-        <ul class="check">
-          <li>上游 v0.6.5 源码与 9 个测试已 vendor，基线全绿（<code>upstream.lock</code> 锁定 commit）</li>
-          <li>适配任务按 10 步计划推进中：状态路径迁 <code>.deveco/</code>、session API 注入 <code>query.directory</code>、入口壳、goal.sh、冒烟、E2E 走查（见 <code>docs/superpowers/plans/2026-07-16-lesson3-goal-plugin.md</code>）</li>
-        </ul>
       </article>
     </div>
   </section>
@@ -1193,64 +1158,57 @@
     <div class="wrap">
       <span class="module-label neutral">MODULE 03 · REFLECT</span>
       <h2>分享与交流</h2>
-      <p class="module-lede">
-        拿你跑出来的证据（分数、审计、轨迹）来讲，围绕这几个问题：
-      </p>
+      <div class="sharing-axes" aria-label="Ralph Loop 与 goal 插件的两个关键差异">
+        <article class="sharing-axis">
+          <span>先看谁来挑错</span>
+          <h3>每轮检查，还是最后检查</h3>
+          <p><b>Ralph</b>：reviewer 每轮都看，没过就继续改。</p>
+          <p><b>/goal</b>：Agent 先自己做，报完成时再查证据。</p>
+        </article>
+        <article class="sharing-axis">
+          <span>再看任务要做多久</span>
+          <h3>当次跑完，还是下次接着做</h3>
+          <p><b>Ralph</b>：这次运行通过验收，就结束。</p>
+          <p><b>/goal</b>：进度会保存，暂停或重启后还能继续。</p>
+        </article>
+      </div>
+      <p class="sharing-choice">每轮都要有人把关，用 Ralph；任务要跨多次会话，用 <code>/goal</code>。两种需求都有，就在关键节点加 reviewer。</p>
+
+      <div class="kicker">围绕这些问题聊</div>
 
       <aside class="discussion">
         <details>
           <summary>什么任务适合 Loop？<small>点击展开参考答案</small></summary>
-          <p>
-            同时满足四个条件的任务：目标能拆成可独立验收的小步（<b>可分解</b>）；每步有测试、编译、截图这类客观信号（<b>可验证</b>）；
-            进度靠 git 与进度文件跨轮继承（<b>可继承</b>）；验证器指出的差距能直接变成下一轮输入（<b>反馈可执行</b>）。
-            典型场景：代码迁移、重构、CI 修复、契约检查——正确性优先、测试可反复运行的生产任务。
-          </p>
+          <p>能拆分、能验证、能继承进度，且失败反馈能直接指导下一轮。典型如迁移、重构和 CI 修复。</p>
         </details>
         <details>
           <summary>什么任务不适合 Loop？</summary>
-          <p>
-            三类：验收标准无法客观化的（创意、审美、需求探索——验证器给不出可执行差距，循环只会空转烧 token）；
-            高风险、不可逆的动作（上线发布、删数据、对外发信——必须停在人工审批，而不是循环重试）；
-            单次就能做完、人工抽查即可的小任务（验证开销大于收益，Agent Loop 一把过就够）。
-          </p>
+          <p>主观探索、不可逆操作，以及验证成本高于任务本身的小任务。</p>
         </details>
         <details>
           <summary>Loop Engineering 和 Harness 是什么关系？</summary>
-          <p>
-            Harness 是循环的「壳」：Prompt、工具、Grader、状态文件、预算与审批规则这些工程件；Loop 是 Harness 组织模型反复执行的运行方式，
-            可靠性 = 模型 × Harness。循环跑不好先改 Harness 再考虑换模型——实验里同一个弱模型套上强验收 Harness 就从 795 爬到 816；
-            反馈是否可执行、验证器是否可信、状态是否继承，这三样改起来便宜且可控。模型只在 Harness 改到头仍拉不动时才换。
-          </p>
+          <p><b>Harness</b> 是 Prompt、工具、验证器、状态与边界；<b>Loop Engineering</b> 是把它们接成“执行 → 验证 → 反馈”的回路。</p>
         </details>
         <details>
           <summary>如何优化 Loop？</summary>
-          <p>
-            用第 4 层 hill-climbing 的方法：从 Trace 与 Grader 反馈里找共性失败（cannbot-insight 回放），沿证据链归因——
-            目标不清改 GOAL，缺领域知识补 Skill / Tool，反馈不可执行改 Grader 与 reviewer 提示词，越界烧钱调预算与审批。
-            一次只改一个变量，重跑对比分数曲线，有效的改动固化进 Harness 再发布。
-          </p>
+          <p>回放失败轨迹找共因，一次只改一个变量，再用同一任务复测分数曲线。</p>
         </details>
       </aside>
 
       <div class="kicker">课堂挑战 · 不给测试用例，把通过率提上去</div>
       <article class="share-panel" style="margin-top:12px">
-        <h3>挑战：用小鲁班模型跑 experiment1，在 worker 看不到任何测试用例的前提下提高隐藏验收通过率</h3>
-        <p>
-          把 worker / reviewer 换成小鲁班网关模型（<code>experiments/experiment1</code> 下
-          <code>cp local.env.example local.env</code> 填三行即接入），重跑 A/B 双臂。
-          816 条验收向量对 worker 始终不可见——你要在<b>不泄漏任何一条用例</b>的前提下，让分数尽可能爬升。
-        </p>
+        <h3>挑战：不泄漏隐藏用例，让小鲁班模型的验收分数继续爬升</h3>
+        <p>重跑 experiment1 的 A/B 双臂，只改 Harness，不让 worker 接触 816 条验收向量。</p>
         <ul>
-          <li><b>允许改</b>：GOAL 的任务表述、worker / reviewer 提示词、<code>maxIterations</code>、worker 的自检策略（例如对拍本机 CPython）</li>
-          <li><b>不允许</b>：把 <code>.ralph/vectors.jsonl</code> / <code>run_qa.py</code> 喂给 worker，或放宽红线与审计——<b>审计不 clean，成绩作废</b></li>
-          <li><b>交付</b>：两臂分数 + 审计结论 + 你改了什么、为什么有效——沿上面的证据链讲给点评者</li>
+          <li><b>可改</b>：目标、提示词、轮次与自检策略</li>
+          <li><b>红线</b>：worker 不得读取验收文件；审计不 clean，成绩作废</li>
+          <li><b>交付</b>：两臂分数、审计结论、改动与解释</li>
         </ul>
         <aside class="discussion" style="margin-top:16px">
           <h3>开放问题</h3>
           <ul>
-            <li>为什么<b>不给</b>测试用例？验证器的独立性到底在保护什么？</li>
-            <li>如果把 816 条向量直接交给 worker，分数会发生什么？那个分数还能说明什么？
-                （回看模块 02 的反面教材：第 17 秒偷读验收集刷出的「满分」）</li>
+            <li>验证器的独立性在保护什么？</li>
+            <li>直接交出 816 条向量后，“满分”还说明什么？</li>
           </ul>
         </aside>
       </article>
@@ -1263,33 +1221,13 @@
       <span class="module-label neutral">MODULE 04 · TRANSFER</span>
       <h2>代码迁移优秀实践：MigBot 鸿蒙化案例</h2>
       <p class="module-lede">
-        本节依次展示迁移痛点、案例证据、实施流程，以及 Knowledge、Flow、Harness 三层 AI Native 方法。
+        MigBot 已把 18 款 APP、160 万行安卓代码迁上鸿蒙，工具迁移环节零人工编码。这背后是完整的工程体系：迁移知识库、规则引擎、skill 化的流水线，以及一套按 Loop Engineering 搭起来的执行 harness。本节聚焦其中的 harness 部分——它回答的是"模型不可靠时，怎么让结果可靠"这个问题，核心是三种 loop：Verify &amp; Fix、event-driven 的多 Session Reviewer、熵减对抗的 Generator vs Discriminator。先看效果，再逐个拆开。
       </p>
 
       <div class="migration-showcase">
-        <article class="migration-block" aria-labelledby="migration-challenges-title">
-          <header class="migration-heading">
-            <span class="num">01</span>
-            <div>
-              <h3 id="migration-challenges-title">迁移难点覆盖代码量、领域知识与维护成本</h3>
-              <p>鸿蒙化迁移同时面临工作量、三方 SDK、ArkTS 领域知识和多代码库迭代四类问题；MigBot 针对这四处约束提供对应能力。</p>
-            </div>
-          </header>
-
-          <h4 class="showcase-subhead pain">鸿蒙化痛点</h4>
-          <p class="section-sub" style="max-width:none">
-            迁移工作量大 · 三方 SDK 适配不足 · LLM 缺少 ArkTS 知识 · 迭代开发 3 套代码
-          </p>
-
-          <h4 class="showcase-subhead benefit">MigBot 鸿蒙化工具亮点</h4>
-          <p class="section-sub" style="max-width:none">
-            0 人工编码迁移 · 三方 SDK 自动迁移适配 · 内置 ArkTS 知识 Skill · 增量迁移开发 1 套代码
-          </p>
-        </article>
-
         <article class="migration-block" aria-labelledby="migration-results-title">
           <header class="migration-heading">
-            <span class="num">02</span>
+            <span class="num">01</span>
             <div>
               <h3 id="migration-results-title">18 款应用与 160 万行代码，验证迁移链路可规模化</h3>
               <p>案例覆盖办公、视频图片、运动健康、登录鉴权、会员充值和长流程任务，并展示对应的效率指标与应用截图。</p>
@@ -1329,201 +1267,241 @@
             <p>“在短短 2 天成功完成了 2w 级 APP 的鸿蒙化迁移上架，6 天时间完成 10w 级 APP 上架，快速探索出 AI Native 开发模式，极大提升了开发效率。”</p>
             <cite>— 北京 xx 有限公司</cite>
           </blockquote>
+
+          <p class="migration-takeaway">完备度从 80% 爬到 100%，可用度从 50% 爬到 100%。曲线能爬上去，是因为每一轮都有循环把差距喂回去重做。这套循环长什么样，往下看。</p>
         </article>
 
         <article class="migration-block" aria-labelledby="migration-process-title">
           <header class="migration-heading">
-            <span class="num">03</span>
+            <span class="num">02</span>
             <div>
-              <h3 id="migration-process-title">迁移过程以 Spec 为起点，以验证反馈闭环收口</h3>
-              <p>安卓源码先逆向沉淀规格，再通过 Plan、Execute、Verify &amp; Fix 与自优化生成 ArkTS 工程；问题定位、质量保障和测试反馈贯穿其后。</p>
-            </div>
-          </header>
-
-          <div class="process-layout">
-            <div>
-              <h4 class="showcase-subhead">五个迁移里程碑</h4>
-              <ol class="process-list">
-                <li><b>阶段一：</b>安卓代码逆向为 Spec。</li>
-                <li><b>阶段二：</b>Spec 生成 ArkTS 代码，包含 Plan、Execute、Verify &amp; Fix、self-Optimize。</li>
-                <li><b>阶段三：</b>问题定位定界。</li>
-                <li><b>阶段四：</b>代码质量保障。</li>
-                <li><b>阶段五：</b>测试反馈闭环。</li>
-              </ol>
-              <h4 class="showcase-subhead">工具依赖与约束</h4>
-              <ol class="requirement-list">
-                <li><b>先进模型 / 框架</b></li>
-                <li><b>可编译的安卓 APP 源码</b></li>
-                <li><b>少量 ArkTS 开发者</b>负责质量看护审核</li>
-              </ol>
-            </div>
-          </div>
-
-          <h4 class="showcase-subhead">工具迁移过程（必选步骤）</h4>
-          <p class="section-sub" style="max-width:none">
-            1 · a2h-spec（扫描安卓源码生成 Spec）→ 2 · a2h-plan（按已审批 Spec 生成执行计划）→ 3 · a2h-execute（按计划执行迁移任务）
-          </p>
-        </article>
-
-        <article class="migration-block" aria-labelledby="migration-architecture-title">
-          <header class="migration-heading">
-            <span class="num">04</span>
-            <div>
-              <h3 id="migration-architecture-title">AI Native 迁移系统拆成知识、流程与质量三层</h3>
-              <p>Knowledge 解决模型缺少什么，Flow 决定任务如何推进，Harness 规定结果如何验证和修复。</p>
+              <h3 id="migration-process-title">MigBot 里用了三种 Loop</h3>
+              <p>80+ skills 负责迁移，三种 Loop 分别守住任务、会话和整仓质量。</p>
             </div>
           </header>
 
           <div class="architecture-grid">
             <section class="architecture-card">
-              <span class="label">01 · KNOWLEDGE</span>
-              <h4>Knowledge in Skills</h4>
-              <p><b>知识属于 Skill</b><br><b>本质问题：</b>模型缺乏领域知识时，Agent 如何获取？<br><b>回答：</b>知识类型决定供给方式——程序性知识进入 Skill，陈述性知识进入 RAG。</p>
+              <span class="label">LOOP 01 · 任务内</span>
+              <h4>Verify &amp; Fix</h4>
+              <p>编译、契约、测试逐项检查；失败带证据重做，超限转人工。</p>
             </section>
             <section class="architecture-card">
-              <span class="label">02 · FLOW</span>
-              <h4>Flow in Agents</h4>
-              <p><b>流程属于 Agent</b><br><b>本质问题：</b>任务由模型自主推进，还是由外部编排？<br><b>回答：</b>任务复杂度 × 模型能力决定放权程度——顶层 Workflow 显式编排，中层 Agent 自主。</p>
+              <span class="label">LOOP 02 · 会话间</span>
+              <h4>Event-driven 多 Session Reviewer</h4>
+              <p>Reviewer 挡住不合格产出；上下文接近上限时换会话续跑。</p>
             </section>
             <section class="architecture-card">
-              <span class="label">03 · HARNESS</span>
-              <h4>Harness by Verify &amp; Fix</h4>
-              <p><b>验证与修复看护质量</b><br><b>本质问题：</b>质量由谁、以什么方式保证？<br><b>回答：</b>人负责核心审阅，规范约束把控交付，大模型负责验证与修复。</p>
-            </section>
-          </div>
-        </article>
-
-        <article class="migration-block" aria-labelledby="migration-skills-title">
-          <header class="migration-heading">
-            <span class="num">05</span>
-            <div>
-              <h3 id="migration-skills-title">程序性知识进入 Skills，陈述性知识按需使用 RAG</h3>
-              <p>两条路线解决不同类型的问题：RAG 回答“是什么”，Skills 固化“怎么做”。</p>
-            </div>
-          </header>
-
-          <div class="compare-grid">
-            <section class="compare-card">
-              <h4>Knowledge in RAG</h4>
-              <dl>
-                <div><dt>定位</dt><dd>检索增强生成</dd></div>
-                <div><dt>知识形态</dt><dd>非结构化文档块（chunks、embeddings）</dd></div>
-                <div><dt>获取方式</dt><dd>语义相似度检索，结果不可预期</dd></div>
-                <div><dt>适合的知识</dt><dd>陈述性知识（Declarative）：API 参考、FAQ、已知问题</dd></div>
-              </dl>
-            </section>
-            <section class="compare-card skills">
-              <h4>Knowledge in Skills</h4>
-              <dl>
-                <div><dt>定位</dt><dd>知识编码为结构化能力单元</dd></div>
-                <div><dt>知识形态</dt><dd>SKILL.md + references/ + scripts/</dd></div>
-                <div><dt>获取方式</dt><dd>显式路由选择，Agent 明确知道加载了什么</dd></div>
-                <div><dt>适合的知识</dt><dd>程序性知识（Procedural）：迁移流程、转换规则、最佳实践</dd></div>
-              </dl>
+              <span class="label">LOOP 03 · 整仓</span>
+              <h4>熵减对抗 Generator vs Discriminator</h4>
+              <p>评估器算偏差 H，生成器逐条修复；只保留 H 下降的版本。</p>
             </section>
           </div>
 
-          <h4 class="showcase-subhead">为什么选择 Skills</h4>
-          <div class="reason-strip">
-            <div><b>01 · 知识类型</b>核心是“怎么做”，属于程序性知识。</div>
-            <div><b>02 · 确定性</b>同样输入必须产出同样输出。</div>
-            <div><b>03 · 可验证</b>CI 可以校验能力单元的完整性。</div>
-          </div>
-          <p class="migration-takeaway">Skills 与 RAG 不互斥，应按知识类型选型。</p>
-        </article>
-
-        <article class="migration-block" aria-labelledby="migration-agents-title">
-          <header class="migration-heading">
-            <span class="num">06</span>
-            <div>
-              <h3 id="migration-agents-title">顶层主 Agent 显式编排，中层 Task 内 Agent 自主</h3>
-              <p>流程的放权程度由任务复杂度与模型能力共同决定：可预定义的步骤交给 Workflow，动态实现决策留给 Agent。</p>
-            </div>
-          </header>
-
-          <h4 class="showcase-subhead">五步门控 Pipeline</h4>
-          <ol class="pipeline" aria-label="Spec、Plan、Execute、Verify、Retrospect 五步门控流程">
-            <li><b>Spec</b><small>定义规格</small></li>
-            <li><b>Plan</b><small>生成计划</small></li>
-            <li><b>Execute</b><small>执行任务</small></li>
-            <li><b>Verify</b><small>验证结果</small></li>
-            <li><b>Retrospect</b><small>复盘回流</small></li>
-          </ol>
-
-          <div class="compare-grid agent-responsibility">
-            <section class="compare-card">
-              <h4>顶层主 Agent · 显式 Workflow</h4>
-              <p>五步流程可预定义，人在关键 Gate 审批；模型不需要探索“下一步做什么”。</p>
-            </section>
-            <section class="compare-card skills">
-              <h4>中层 Task · Agent 自主</h4>
-              <p>Agent 自主选择 Skill、决定实现方案，并处理编译错误。</p>
-            </section>
-          </div>
-
-          <h4 class="showcase-subhead">两个决定因素</h4>
-          <div class="agent-factors">
-            <div><b>01 · 任务可分解性</b>步骤可预定义 → Workflow；步骤需要动态探索 → Agent。</div>
-            <div><b>02 · 模型能力边界</b>模型可靠 → 放权给 Agent；模型不可靠 → 外部控制与工程校验。</div>
-          </div>
-
-          <h4 class="showcase-subhead">编排策略随模型能力与任务复杂度变化</h4>
-          <ol class="delegation-scale" aria-label="从单 Agent 自主到强拆解、强验证和人工兜底的五级编排策略">
-            <li>单 Agent<br>自主执行</li>
-            <li>Agent + 轻量<br>guardrail</li>
-            <li class="current">Hybrid<br>模型规划 + 工程校验<br>当前选择</li>
-            <li>状态机 / DAG<br>主导</li>
-            <li>强拆解 + 强验证<br>+ 人工兜底</li>
-          </ol>
-          <p class="migration-takeaway">Orchestrator-Workers 是模型能力与任务复杂度达到平衡时的优选方案。</p>
+          <p class="migration-takeaway">三种循环各守一段，03、04、05 逐个拆开。</p>
         </article>
 
         <article class="migration-block" aria-labelledby="migration-harness-title">
           <header class="migration-heading">
-            <span class="num">07</span>
+            <span class="num">03</span>
             <div>
               <h3 id="migration-harness-title">Verify &amp; Fix 把迁移过程沉淀为门控契约</h3>
-              <p>每一步都要通过验证才能放行；失败携带错误证据回到修复与重检，持续失败再降级人工。</p>
+              <p><code>a2h-verify</code> 顺序执行 11 项检查；只出报告，修复循环由各 verifier skill 负责。</p>
             </div>
           </header>
 
-          <ol class="harness-flow" aria-label="Generate、Verify、Fix 三阶段质量闭环">
-            <li><b>1 · Generate</b><small>AI 生成代码</small></li>
-            <li><b>2 · Verify</b><small>检查规范 / 契约 / 测试</small></li>
-            <li><b>3 · Fix</b><small>未通过则修复，通过则放行</small></li>
-          </ol>
-          <p class="harness-note">未通过时自动返回 Verify 重检，形成有限次验证—修复循环。</p>
+          <figure class="diagram">
+            <svg viewBox="0 0 816 290" role="img" aria-label="Verify 与 Fix 门控循环：fix agent 生成与修复代码，a2h-verify 顺序执行 11 道 CHECK 且只出报告不持有循环，报告全 PASS 则回写 verified 进入 Retrospect；失败带错误证据回环 fix agent 最多 3 轮，耗尽降级人工">
+              <defs>
+                <marker id="vf-arr-o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#bd3c0c"/>
+                </marker>
+                <marker id="vf-arr-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#247a35"/>
+                </marker>
+                <marker id="vf-arr-k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#17293b"/>
+                </marker>
+              </defs>
 
-          <div class="gate-grid">
-            <section class="gate-card verify">
-              <h4>Verify</h4>
-              <ul>
-                <li>编译 / 语法 / 类型</li>
-                <li>鸿蒙化规范契约</li>
-                <li>DT 测试</li>
-                <li>视觉对比</li>
-              </ul>
+              <rect x="28" y="112" width="132" height="60" rx="10" fill="#fff" stroke="#17293b" stroke-width="2"/>
+              <text x="94" y="138" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="13" font-weight="700" fill="#17293b">fix agent</text>
+              <text x="94" y="156" text-anchor="middle" font-size="10.5" fill="#5a6b7d">生成与修复代码</text>
+              <line x1="160" y1="142" x2="216" y2="142" stroke="#17293b" stroke-width="1.5" marker-end="url(#vf-arr-k)"/>
+
+              <rect x="218" y="46" width="304" height="192" rx="12" fill="#fff" stroke="#9c6f00" stroke-width="2"/>
+              <text x="370" y="70" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="13" font-weight="700" fill="#765400">a2h-verify · 统一验证编排</text>
+              <text x="370" y="86" text-anchor="middle" font-size="10.5" fill="#5a6b7d">只出报告，不持有循环</text>
+
+              <rect x="234" y="96" width="272" height="38" rx="7" fill="none" stroke="#c9d4de"/>
+              <text x="244" y="112" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 1–6 · 基础验证</text>
+              <text x="244" y="126" font-size="10" fill="#5a6b7d">编译是地基 · 修复循环 ≤20 轮 ⟲</text>
+
+              <rect x="234" y="140" width="272" height="38" rx="7" fill="none" stroke="#c9d4de"/>
+              <text x="244" y="156" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 7–10 · 委托 verifier skill</text>
+              <text x="244" y="170" font-size="10" fill="#5a6b7d">路由对账 · 视觉对齐 visual · 单元/UI TDD · 自带 fix-loop ⟲</text>
+
+              <rect x="234" y="184" width="272" height="38" rx="7" fill="none" stroke="#c9d4de" stroke-dasharray="4 4"/>
+              <text x="244" y="200" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 11 · 风格合规</text>
+              <text x="244" y="214" font-size="10" fill="#5a6b7d">建议性 · 失败只记报告</text>
+
+              <line x1="522" y1="142" x2="566" y2="142" stroke="#17293b" stroke-width="1.5" marker-end="url(#vf-arr-k)"/>
+              <polygon points="568,142 612,114 656,142 612,170" fill="#fff" stroke="#9c6f00" stroke-width="2"/>
+              <text x="612" y="138" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-weight="700" fill="#765400">报告</text>
+              <text x="612" y="152" text-anchor="middle" font-size="10" fill="#5a6b7d">全 PASS ?</text>
+
+              <line x1="656" y1="142" x2="690" y2="142" stroke="#247a35" stroke-width="2" marker-end="url(#vf-arr-g)"/>
+              <text x="673" y="130" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" fill="#247a35">YES</text>
+              <rect x="692" y="118" width="106" height="48" rx="8" fill="none" stroke="#247a35" stroke-width="2"/>
+              <text x="745" y="138" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11.5" font-weight="700" fill="#247a35">verified</text>
+              <text x="745" y="154" text-anchor="middle" font-size="10" fill="#5a6b7d">→ Retrospect</text>
+
+              <path d="M 612 170 L 612 252 L 94 252 L 94 174" fill="none" stroke="#bd3c0c" stroke-width="2" marker-end="url(#vf-arr-o)"/>
+              <text x="628" y="196" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" fill="#bd3c0c">NO</text>
+              <text x="353" y="244" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" fill="#bd3c0c">FAIL · 带错误证据回环 fix agent · ≤3 轮</text>
+              <text x="353" y="270" text-anchor="middle" font-size="10.5" fill="#5a6b7d">回环耗尽 → 降级人工，修复记录进审计文件</text>
+            </svg>
+            <figcaption class="diagram-caption">验证器给报告；修复 agent 带证据重做。超过轮次上限转人工。</figcaption>
+          </figure>
+
+          <p class="migration-takeaway">Verify &amp; Fix 是 skill 驱动的 loop：验收标准与修复循环都封装在 skill 里——AI 写代码，skill 门控把关，人审阅关键产物。</p>
+        </article>
+
+        <article class="migration-block" aria-labelledby="migration-multisession-title">
+          <header class="migration-heading">
+            <span class="num">04</span>
+            <div>
+              <h3 id="migration-multisession-title">多 Session Loop：把几小时的长程迁移压回有效工作区间</h3>
+              <p>Reviewer 防跑偏；Session Pool 在上下文过长前换会话。</p>
+            </div>
+          </header>
+
+          <figure class="diagram">
+            <svg viewBox="0 0 816 260" role="img" aria-label="多 Session 技术的两种实现：实现一 Reviewer 回路解决跑偏——Worker 阶段产出交 Reviewer 评审，不达标带反馈 REVISE 重跑，达标进入下一阶段；实现二 Session Pool 解决上下文膨胀——长任务切成多个会话，每个只装当下所需上下文，接近上限时 Breather 自动 handoff 到新会话">
+              <defs>
+                <marker id="ms-arr-o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#bd3c0c"/>
+                </marker>
+                <marker id="ms-arr-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#247a35"/>
+                </marker>
+                <marker id="ms-arr-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#0b7285"/>
+                </marker>
+              </defs>
+
+              <text x="28" y="30" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12" font-weight="700" fill="#bd3c0c">实现一 · Reviewer 回路——解决跑偏：关键节点持续评审</text>
+
+              <rect x="120" y="46" width="150" height="58" rx="10" fill="#fff" stroke="#bd3c0c" stroke-width="2"/>
+              <text x="195" y="70" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="13" font-weight="700" fill="#bd3c0c">Worker</text>
+              <text x="195" y="88" text-anchor="middle" font-size="10.5" fill="#5a6b7d">逐阶段推进迁移产物</text>
+
+              <rect x="420" y="46" width="150" height="58" rx="10" fill="#fff" stroke="#bd3c0c" stroke-width="2"/>
+              <text x="495" y="70" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="13" font-weight="700" fill="#bd3c0c">Reviewer</text>
+              <text x="495" y="88" text-anchor="middle" font-size="10.5" fill="#5a6b7d">关键节点质量门禁</text>
+
+              <path d="M 270 60 Q 345 40 418 60" fill="none" stroke="#bd3c0c" stroke-width="2" marker-end="url(#ms-arr-o)"/>
+              <text x="345" y="42" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" fill="#bd3c0c">阶段产出</text>
+              <path d="M 420 90 Q 345 112 272 90" fill="none" stroke="#bd3c0c" stroke-width="2" marker-end="url(#ms-arr-o)"/>
+              <text x="345" y="120" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" fill="#bd3c0c">REVISE ⟲ 不达标带反馈重跑</text>
+
+              <line x1="570" y1="75" x2="640" y2="75" stroke="#247a35" stroke-width="2" marker-end="url(#ms-arr-g)"/>
+              <text x="605" y="64" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" fill="#247a35">达标</text>
+              <rect x="642" y="53" width="146" height="44" rx="8" fill="none" stroke="#247a35" stroke-width="2"/>
+              <text x="715" y="73" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" font-weight="700" fill="#247a35">进入下一阶段</text>
+              <text x="715" y="88" text-anchor="middle" font-size="10" fill="#5a6b7d">错误挡在当轮</text>
+
+              <line x1="28" y1="146" x2="788" y2="146" stroke="#c9d4de" stroke-dasharray="4 5"/>
+
+              <text x="28" y="172" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12" font-weight="700" fill="#0b7285">实现二 · Session Pool 多会话切分——解决上下文膨胀</text>
+
+              <rect x="120" y="188" width="150" height="58" rx="10" fill="#fff" stroke="#0b7285" stroke-width="2"/>
+              <text x="195" y="212" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0b7285">Session 1</text>
+              <text x="195" y="230" text-anchor="middle" font-size="10" fill="#5a6b7d">只装当下所需上下文</text>
+
+              <line x1="270" y1="217" x2="331" y2="217" stroke="#0b7285" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ms-arr-t)"/>
+              <text x="300" y="207" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10" fill="#0b7285">handoff</text>
+
+              <rect x="333" y="188" width="150" height="58" rx="10" fill="#fff" stroke="#0b7285" stroke-width="2"/>
+              <text x="408" y="212" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0b7285">Session 2</text>
+              <text x="408" y="230" text-anchor="middle" font-size="10" fill="#5a6b7d">只装当下所需上下文</text>
+
+              <line x1="483" y1="217" x2="544" y2="217" stroke="#0b7285" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ms-arr-t)"/>
+              <text x="513" y="207" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10" fill="#0b7285">handoff</text>
+
+              <rect x="546" y="188" width="150" height="58" rx="10" fill="#fff" stroke="#0b7285" stroke-width="2"/>
+              <text x="621" y="212" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="12.5" font-weight="700" fill="#0b7285">Session 3</text>
+              <text x="621" y="230" text-anchor="middle" font-size="10" fill="#5a6b7d">只装当下所需上下文</text>
+              <text x="716" y="222" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="14" fill="#0b7285">…</text>
+
+            </svg>
+          </figure>
+        </article>
+
+        <article class="migration-block" aria-labelledby="migration-ecat-title">
+          <header class="migration-heading">
+            <span class="num">05</span>
+            <div>
+              <h3 id="migration-ecat-title">ECAT 熵减对抗：质量从门控走向自动收敛</h3>
+              <p>Verify &amp; Fix 只判通过与否；ECAT 用总熵 H 表示剩余偏差，并逐轮降低。</p>
+            </div>
+          </header>
+
+          <h4 class="showcase-subhead">什么是「熵减对抗」</h4>
+          <div class="reason-strip">
+            <div><b>01 · 度量</b>编译、功能、UI 等偏差加权为总熵 H；H 越低越接近完成。</div>
+            <div><b>02 · 分工</b>评估器找问题，生成器按问题清单修复。</div>
+            <div><b>03 · 接受</b>H 下降才保留新版本；低于阈值且稳定时停止。</div>
+          </div>
+
+          <h4 class="showcase-subhead">全景</h4>
+          <figure class="ecat-figure">
+            <img src="assets/ecat-architecture.png" alt="ECAT 架构图：Generator 与 Discriminator 共享安卓源仓；Generator 生成并修复目标仓，Discriminator 计算总熵 H 与 Text Gradient g；H 小于等于阈值 τ 则输出迁移完成的鸿蒙仓，否则带着 g 回到 Generator 重新生成；自演化 Memory Tree 被两个 Agent 共享，只存熵下降的成功轨迹" loading="lazy">
+            <figcaption>ECAT 对抗回路全景：Generate → Evaluate（H, g）→ 门控（H ≤ τ ?）→ 带梯度重生成；Memory Tree 只收熵下降的轨迹。</figcaption>
+          </figure>
+
+          <h4 class="showcase-subhead">Generator ⇄ Discriminator 对抗回路</h4>
+          <div class="compare-grid">
+            <section class="compare-card">
+              <h4>评估器 Discriminator</h4>
+              <dl>
+                <div><dt>职责</dt><dd>给迁移质量打分、定位偏差</dd></div>
+                <div><dt>维度</dt><dd>15 维加权评分：编译、静态检查、页面审计、功能一致性、UI 对齐、幻觉检测、运行时存活…</dd></div>
+                <div><dt>输出</dt><dd>问题清单 + 总熵 H（离「迁移完成」的距离）</dd></div>
+              </dl>
             </section>
-            <section class="gate-card fix">
-              <h4>Fix</h4>
-              <ul>
-                <li>定位失败点 + 错误证据</li>
-                <li>模型有限次数重试</li>
-                <li>仍失败则降级人工</li>
-                <li>修复记录进入审计文件</li>
-              </ul>
-            </section>
-            <section class="gate-card human">
-              <h4>Human Review</h4>
-              <ul>
-                <li>未通过验证，不进入下一步</li>
-                <li>审阅功能完备度</li>
-                <li>发现功能缺失则返回修复</li>
-              </ul>
+            <section class="compare-card skills">
+              <h4>生成器 Generator</h4>
+              <dl>
+                <div><dt>职责</dt><dd>按问题清单逐条修复偏差</dd></div>
+                <div><dt>能力来源</dt><dd>调用 core 已有的修复能力，不另造一套迁移技能</dd></div>
+                <div><dt>停止条件</dt><dd>H 低于阈值且稳定 → 收敛停；或达到最大迭代数</dd></div>
+              </dl>
             </section>
           </div>
 
-          <p class="migration-takeaway">AI 写代码，Verify &amp; Fix 把关，人审阅关键产物。</p>
+          <h4 class="showcase-subhead">算法：循环写成 17 行伪代码</h4>
+          <div class="ecat-algo">
+            <figure>
+              <img src="assets/ecat-algorithm.png" alt="Algorithm 1：Entropy-based Code Adversarial Translation 伪代码。输入源仓、初始目标仓、初始记忆树、最大迭代数 T 与熵阈值 ε；每轮由 D 评估得到熵 H 和梯度 g，H 低于 ε 则退出；否则 G 依据 g 与记忆生成新仓，D 再评估；熵下降才接受新仓并蒸馏进记忆树，否则回退" loading="lazy">
+              <figcaption>Algorithm 1 · Entropy-based Code Adversarial Translation</figcaption>
+            </figure>
+            <div class="ecat-algo-notes">
+              <div><b>Evaluate</b>输出剩余偏差 H 和逐条修复指引 g。</div>
+              <div><b>Gate</b>H &lt; ε 才退出；完成由评估器决定。</div>
+              <div><b>Generate</b>按 g 修复仓库，并参考已验证的成功轨迹。</div>
+              <div><b>Accept</b>H 下降才接受新仓，否则回退。</div>
+            </div>
+          </div>
+
+          <h4 class="showcase-subhead">工程护栏</h4>
+          <div class="reason-strip">
+            <div><b>01 · 回归回退</b>相邻轮 H 回升超出容忍度，自动 git checkout 撤销。</div>
+            <div><b>02 · 震荡检测</b>连续多轮无实质进展，提前终止不空烧。</div>
+            <div><b>03 · 每轮验证</b>每轮结束验证编译；循环中保留人工介入通道。</div>
+          </div>
+
+          <p class="migration-takeaway">这 17 行只做一件事：让 H 单调降到 ε——D 评估出 (H, g)，G 按 g 修复，H 降了才接受新仓并把轨迹蒸馏进记忆树 M，没降就整轮作废回退。修复能力来自 core 的 skill，ECAT 的增量是这条收敛回路。</p>
         </article>
       </div>
 
@@ -1535,12 +1513,13 @@
     <div class="wrap">
       <span class="module-label close">MODULE 05 · CLOSE</span>
       <h2>总结与交流</h2>
-      <p class="module-lede">今天把 Agent 放进一个可观察、可控制、可验证、可复盘的工程系统。</p>
+      <p class="module-lede">最后只检查四件事：<b>看得见，按计划，做得完，有证据</b>。</p>
 
       <ol class="takeaways">
-        <li><div><b>先可观测，再自治</b><span>细粒度 Trace 用于判断 Agent 正在推进、空转、走偏，或污染验证器。</span></div></li>
-        <li><div><b>Loop 驱动复杂任务收敛</b><span>计划、验证器、持久状态和可执行反馈共同决定任务能否稳定完成。</span></div></li>
-        <li><div><b>“完成”是一条可审计结论</b><span>让代码、测试、diff、日志与独立裁决构成证据链，并为预算、权限和人工审批保留边界。</span></div></li>
+        <li><div><b>看得见</b><span>Trace 能区分推进、空转、跑偏和验收污染。</span></div></li>
+        <li><div><b>按计划</b><span>任务可分解，每轮可验证，状态可继承，反馈可执行。</span></div></li>
+        <li><div><b>做得完</b><span><code>/goal</code> 管长目标；Ralph 在关键节点逐轮验收。</span></div></li>
+        <li><div><b>有证据</b><span>代码、测试、diff、日志和独立裁决共同支持 DONE。</span></div></li>
       </ol>
 
       <aside class="discussion">
@@ -1564,12 +1543,12 @@
         <pre><code>setup.sh                一键环境脚本
 vendor/cannbot-insight  会话观测器（源码 vendor，依赖由 setup.sh 现场安装）
 lesson1-insight/        第一课：观测对接（observe.sh + 教学文档）
-lesson2-ralph-loop/     第二课：ralph loop（ralph.sh + 模板 + 案例 + 测试）
-lesson3-goal-plugin/    第三课：/goal 目标循环插件（vendor + 测试 + 实现计划，开发中）</code></pre>
+lesson2-goal-plugin/    第二课：/goal 目标循环插件（vendor + 测试 + 实现计划）
+lesson3-ralph-loop/     第三课：ralph loop（ralph.sh + 模板 + 案例 + 测试）</code></pre>
       </div>
       <p class="section-sub" style="margin-top:16px">
         进阶：<code>ralph.sh</code> 还带 <code>swebench prepare / export</code> 子命令，可把 SWE-bench Lite
-        实例转成不泄漏 oracle 的盲测目标，做「单次执行 vs ralph loop」的 A/B 对比。
+        实例转成不泄漏标准答案的盲测目标，做「单次执行 vs ralph loop」的 A/B 对比。
       </p>
     </div>
   </section>

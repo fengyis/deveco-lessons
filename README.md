@@ -5,11 +5,11 @@
 | | 主题 | 你得到什么 |
 |---|------|-----------|
 | [Lesson 1](lesson1-insight/README.md) | 用 DevEco 对接 cannbot-insight | 任意 DevEco 会话的 turn-by-turn 回放:token、上下文、工具调用 |
-| [Lesson 2](lesson2-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过;smoke 案例跑出多轮/多工具/subagent/skill 的丰富会话 |
-| [Lesson 3](lesson3-goal-plugin/README.md) | 把 opencode-goal-plugin 移植成 deveco 的 /goal 插件 | 单会话内 `/goal <目标>` 自续到证据门控完成,不用外部 shell 点火、不用独立 reviewer 会话 |
+| [Lesson 2](lesson2-goal-plugin/README.md) | 把 opencode-goal-plugin 移植成 deveco 的 /goal 插件 | 单会话内 `/goal <目标>` 自续到证据门控完成,不用外部 shell 点火、不用独立 reviewer 会话 |
+| [Lesson 3](lesson3-ralph-loop/README.md) | 对 DevEco 实现 ralph loop | worker → reviewer 自循环直到验收通过;smoke 案例跑出多轮/多工具/subagent/skill 的丰富会话 |
 
-三课递进:第一课装好「镜头」,第二课跑起 loop 并用镜头回看它,第三课换一种更轻量的「给目标」方式——
-单会话自续,裁决靠证据门控而不是独立 reviewer 会话。
+三课递进:第一课装好「镜头」,第二课用最轻量的方式给会话一个目标——单会话自续,裁决靠证据门控;
+第三课升级成跨会话的 ralph loop——worker 与 reviewer 分离,独立裁判验收,并用镜头回看整个循环。
 
 ## 快速开始
 
@@ -84,22 +84,22 @@ cd <本仓库>
 # 3) 浏览器开 http://localhost:21025,点进会话看 token/上下文/工具调用
 ```
 
-**Lesson 2**(详见 [lesson2-ralph-loop/README.md](lesson2-ralph-loop/README.md)):
+**Lesson 2**(详见 [lesson2-goal-plugin/README.md](lesson2-goal-plugin/README.md)):
 
 ```bash
-cd lesson2-ralph-loop
-./ralph.sh init   ~/ralph-smoke
-./ralph.sh sample smoke ~/ralph-smoke   # 观测演示案例:规划→写码→subagent→skill,约 2 分钟
-./ralph.sh run    ~/ralph-smoke         # worker→reviewer 循环到验收;收工自动跑 lesson1 的观测
-```
-
-**Lesson 3**(详见 [lesson3-goal-plugin/README.md](lesson3-goal-plugin/README.md)):
-
-```bash
-cd lesson3-goal-plugin
+cd lesson2-goal-plugin
 ./goal.sh init ~/my-project    # 装:插件 + /goal 命令(merge 进 deveco.json)
 cd ~/my-project && deveco      # 起交互会话
 # 会话里: /goal <目标>          # 设定目标,单会话自续到证据门控完成
+```
+
+**Lesson 3**(详见 [lesson3-ralph-loop/README.md](lesson3-ralph-loop/README.md)):
+
+```bash
+cd lesson3-ralph-loop
+./ralph.sh init   ~/ralph-smoke
+./ralph.sh sample smoke ~/ralph-smoke   # 观测演示案例:规划→写码→subagent→skill,约 2 分钟
+./ralph.sh run    ~/ralph-smoke         # worker→reviewer 循环到验收;收工自动跑 lesson1 的观测
 ```
 
 ## 仓库结构
@@ -108,6 +108,6 @@ cd ~/my-project && deveco      # 起交互会话
 setup.sh                一键环境脚本
 vendor/cannbot-insight  会话观测器(源码 vendor,依赖由 setup.sh 现场安装)
 lesson1-insight/        第一课:观测对接(observe.sh + 教学文档)
-lesson2-ralph-loop/     第二课:ralph loop(ralph.sh + 模板 + 案例 + 测试)
-lesson3-goal-plugin/    第三课:opencode-goal-plugin 移植成 deveco 的 /goal 插件(goal.sh + vendor + 测试)
+lesson2-goal-plugin/    第二课:opencode-goal-plugin 移植成 deveco 的 /goal 插件(goal.sh + vendor + 测试)
+lesson3-ralph-loop/     第三课:ralph loop(ralph.sh + 模板 + 案例 + 测试)
 ```

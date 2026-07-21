@@ -1,4 +1,4 @@
-# Lesson 2:对 DevEco 实现 Ralph Loop
+# Lesson 3:对 DevEco 实现 Ralph Loop
 
 给 deveco 一个目标,它自己 worker → reviewer → worker 循环推进,直到 reviewer 判定验收通过。
 
@@ -23,7 +23,7 @@ shell 里**不能有** `DEVECO_SERVER_PASSWORD`(脚本会 unset,手动起 server
 
 ## 用法
 
-以下命令都在本目录(`lesson2-ralph-loop/`)下执行:
+以下命令都在本目录(`lesson3-ralph-loop/`)下执行:
 
 ```bash
 ./ralph.sh init ~/my-project        # 装:插件、agent、git、配置、GOAL 骨架(会改你的仓库)
