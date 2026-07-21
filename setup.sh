@@ -42,24 +42,33 @@ fi
 ok "node $(node -v)"
 
 # ---- 3. bun(lesson3 的测试与独立验收测试用)-----------------------------
+# 首选 npm install -g:走 npm registry(可配镜像),公司网络挡 bun.sh 也能装;
+# 且第 2 步之后 node/npm 必定就位,平台无关。失败再退回官方安装脚本。
 if ! command -v bun >/dev/null 2>&1; then
-  say "→ 安装 bun ..."
-  if [ "$IS_WINDOWS" = "1" ]; then
-    # Windows 官方安装走 PowerShell 脚本;bun 装到 ~/.bun/bin
-    powershell.exe -NoProfile -Command "irm bun.sh/install.ps1 | iex" \
-      || die "bun 安装失败;手动装:https://bun.sh"
-  else
-    curl -fsSL https://bun.sh/install | bash
+  say "→ 安装 bun(npm install -g bun)..."
+  if ! npm install -g bun; then
+    say "⚠️  npm 安装失败,退回官方脚本 ..."
+    if [ "$IS_WINDOWS" = "1" ]; then
+      # Windows 官方安装走 PowerShell 脚本;bun 装到 ~/.bun/bin
+      powershell.exe -NoProfile -Command "irm bun.sh/install.ps1 | iex" \
+        || die "bun 安装失败;手动装:https://bun.sh"
+    else
+      curl -fsSL https://bun.sh/install | bash \
+        || die "bun 安装失败;手动装:https://bun.sh"
+    fi
+    export PATH="$HOME/.bun/bin:$PATH"
   fi
-  export PATH="$HOME/.bun/bin:$PATH"
 fi
 ok "bun $(bun --version)"
 
 # ---- 4. cannbot-insight 依赖(npm ci 按 lockfile 精确复原)----------------
-# 仓库自带 better-sqlite3 的预编译包(vendor/prebuilds/,目前是 win32-x64 + node20)。
-# prebuild-install 装的时候会先查这个目录,命中就不去 GitHub 下载——
-# 公司网络挡 GitHub 也能装。文件名必须和官方发布的资产名完全一致。
+# 仓库自带 better-sqlite3 的预编译包(vendor/prebuilds/,目前是 win32-x64 的
+# node 20/22/23 三个 ABI)。prebuild-install 装的时候会先查这个目录,命中就不
+# 联网——公司网络挡 GitHub 也能装。文件名必须和官方发布的资产名完全一致。
 export npm_config_better_sqlite3_local_prebuilds="$HERE/vendor/prebuilds"
+# 本地没命中时(比如 mac 学员),下载也不去 GitHub releases(常被挡),
+# 改走 npmmirror 的镜像(文件与官方 release 相同)。
+export npm_config_better_sqlite3_binary_host_mirror="${BETTER_SQLITE3_MIRROR:-https://registry.npmmirror.com/-/binary/better-sqlite3}"
 # prisma 的引擎二进制从 binaries.prisma.sh 下载(npm ci 时由 @prisma/engines 的
 # postinstall 触发),公司网络常被挡;默认改走 npmmirror 的镜像(二进制与官方一致)。
 # 能直连官方或有内网镜像时,用 PRISMA_ENGINES_MIRROR 覆盖。
@@ -69,7 +78,7 @@ if [ -d node_modules ] && node -e "require('better-sqlite3')" >/dev/null 2>&1; t
   ok "cannbot-insight 依赖已就绪(跳过 npm ci)"
 else
   say "→ npm ci(首次要几分钟)..."
-  npm ci || die "npm ci 失败。若卡在 better-sqlite3 原生编译:当前 node $(node -v) 没有官方预编译包(node 18/20/22/23 才有)——换 node 20/22 重跑,或用有编译工具链的机器自编包放进 vendor/prebuilds/(见 README)"
+  npm ci || die "npm ci 失败。若卡在 better-sqlite3:看上方 prebuild-install 那行的 target=x.y.z——那才是 npm 实际用的 node,可能和 node -v 不是同一个(多套 node 共存时常见)。node 18/20/22/23 有官方预编译包(本地 vendor/prebuilds/ 和 npmmirror 都能兜);其他版本换 node 20/22 重跑,或自编包放进 vendor/prebuilds/(见 README)"
 fi
 
 # ---- 4.5 Windows:预置 prisma 引擎(离线可用)-----------------------------
