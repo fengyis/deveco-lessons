@@ -82,6 +82,10 @@ cmd_observe() {
   local target="${1:-}"
   [ -n "$target" ] || usage
   [ -d "$target" ] || die "$target 不存在"
+  # 物理路径修 macOS /tmp 软链误报;但 Windows 的 junction/OneDrive 重定向下,
+  # deveco 落库的是逻辑路径——两种形式都留作候选
+  local target_log
+  target_log="$(cd "$target" && pwd)"
   target="$(cd "$target" && pwd -P)"
 
   # ${VAR} 的花括号不能省:macOS bash 3.2 会把紧跟 $VAR 的中文字符当成变量名的一部分
@@ -95,31 +99,50 @@ cmd_observe() {
   _cannbot_node
 
   # Windows(Git Bash)上 deveco.db 里存的是原生路径(C:\... 或 C:/...),
-  # 用 /c/... 查永远查不着;把三种形式都当候选,命中哪个算哪个
-  local d1="$target" d2="" d3=""
+  # 用 /c/... 查永远查不着;物理/逻辑 × POSIX/反斜杠/正斜杠 全部当候选,命中哪个算哪个。
+  # Windows 的 cwd 保留用户敲的大小写(cmd 里 cd c:\users 落库就是小写),
+  # 所以 Windows 下匹配一律大小写不敏感
+  local d1="$target" d2="" d3="" d4="" d5="" d6="" win=""
+  [ "$target_log" != "$target" ] && d4="$target_log"
   if command -v cygpath >/dev/null 2>&1; then
+    win=1
     d2="$(cygpath -w "$target" 2>/dev/null || true)"
     d3="$(cygpath -m "$target" 2>/dev/null || true)"
+    if [ -n "$d4" ]; then
+      d5="$(cygpath -w "$target_log" 2>/dev/null || true)"
+      d6="$(cygpath -m "$target_log" 2>/dev/null || true)"
+    fi
   fi
 
-  local ids
+  local ids qfail=""
   if command -v sqlite3 >/dev/null 2>&1; then
     # 单引号转义(目录名可能带引号),防它把下面的 SQL 打断。
     # 替换串不能写成 \'\':bash 3.2 会把反斜杠原样保留进结果,悄悄改掉路径
     local esc1=${d1//"'"/"''"} esc2=${d2//"'"/"''"} esc3=${d3//"'"/"''"}
-    ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory IN ('$esc1','$esc2','$esc3') AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null || true)
+    local esc4=${d4//"'"/"''"} esc5=${d5//"'"/"''"} esc6=${d6//"'"/"''"}
+    local collate=""
+    [ -n "$win" ] && collate=" COLLATE NOCASE"
+    ids=$(sqlite3 "$DEVECO_DB" "SELECT id FROM session WHERE directory$collate IN ('$esc1','$esc2','$esc3','$esc4','$esc5','$esc6') AND (parent_id IS NULL OR parent_id='') ORDER BY time_created;" 2>/dev/null) || qfail=1
   elif [ -d "$CANNBOT_INSIGHT_DIR/node_modules/better-sqlite3" ]; then
-    # 没有 sqlite3 CLI(Git Bash 默认没有)就借 vendor 里现成的 better-sqlite3,参数化查询免转义
+    # 没有 sqlite3 CLI(Git Bash 默认没有)就借 vendor 里现成的 better-sqlite3,参数化查询免转义。
+    # 注意不能把错误吞成「没有会话」:加载失败要如实报出来
     ids=$(cd "$CANNBOT_INSIGHT_DIR" && node -e "
       const db = require('better-sqlite3')(process.argv[1], { readonly: true });
-      db.prepare(\"SELECT id FROM session WHERE directory IN (?,?,?) AND (parent_id IS NULL OR parent_id='') ORDER BY time_created\")
-        .all(process.argv[2], process.argv[3] || '', process.argv[4] || '').forEach(r => console.log(r.id));
-    " "$DEVECO_DB" "$d1" "$d2" "$d3" 2>/dev/null || true)
+      const dirs = process.argv.slice(3).filter(Boolean);
+      const collate = process.argv[2] === '1' ? ' COLLATE NOCASE' : '';
+      const q = 'SELECT id FROM session WHERE directory' + collate + ' IN (' + dirs.map(function(){return '?';}).join(',') + \") AND (parent_id IS NULL OR parent_id='') ORDER BY time_created\";
+      db.prepare(q).all(dirs).forEach(function(r){ console.log(r.id); });
+    " "$DEVECO_DB" "${win:-0}" "$d1" "$d2" "$d3" "$d4" "$d5" "$d6" 2>/tmp/observe-query.err) || qfail=1
   else
     say "ℹ️  没有 sqlite3,vendor 依赖也没装(先跑仓库根的 ./setup.sh),跳过观测。"
     return 0
   fi
-  [ -n "$ids" ] || { say "ℹ️  deveco.db 里没有 $target 的会话(这个项目还没用 deveco 跑过?),跳过观测。"; return 0; }
+  if [ -n "$qfail" ]; then
+    say "⚠️  会话查询执行失败(注意:这不是「没有会话」)。多半是 better-sqlite3 与当前 node 的 ABI 不配。"
+    say "    自检: cd \"$CANNBOT_INSIGHT_DIR\" && node -e \"require('better-sqlite3')\" ;详情见 /tmp/observe-query.err"
+    return 0
+  fi
+  [ -n "$ids" ] || { say "ℹ️  deveco.db 里没有 $target 的会话(各路径形式均未命中;这个项目还没用 deveco 跑过?),跳过观测。"; return 0; }
 
   _cannbot_ensure_server || { say "⚠️  cannbot server 起不来,跳过观测(见 /tmp/cannbot-insight.log)"; return 0; }
 
