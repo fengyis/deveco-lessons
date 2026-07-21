@@ -568,7 +568,16 @@
 
   /* ---------- 结构/页脚 ---------- */
   .repo { padding: 56px 0 72px; }
-  .repo h2 { font-family: var(--serif); font-weight: 900; font-size: 28px; margin-bottom: 18px; }
+  .repo h2 { margin: 30px 0 0; color: var(--muted); font-family: var(--serif); font-weight: 700; font-size: 20px; }
+  .closing-statement {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    max-width: 880px; margin: 24px auto 0;
+    color: var(--ink); text-align: left;
+  }
+  .closing-statement span { padding: 4px 18px; border-left: 1px solid var(--line); font-size: 15px; line-height: 1.55; }
+  .closing-statement span:first-child { border-left: 0; }
+  .closing-statement b { display: block; margin-bottom: 5px; color: var(--signal-text); font: 700 12px/1.4 var(--mono); letter-spacing: .04em; }
+  .closing-conclusion { max-width: 760px; margin: 34px auto 0; font-family: var(--serif); font-size: clamp(24px, 4vw, 36px); font-weight: 900; line-height: 1.45; text-wrap: balance; }
   footer {
     border-top: 1px solid var(--line); padding: 24px 0 48px;
     font-family: var(--mono); font-size: 12.5px; color: var(--muted);
@@ -578,6 +587,8 @@
     .trio, .fit-grid, .exp-grid, .audit-grid, .share-grid, .sharing-axes { grid-template-columns: 1fr; }
     .topbar { position: static; }
     .topbar-inner { align-items: flex-start; flex-direction: column; gap: 8px; }
+    .closing-statement { grid-template-columns: 1fr; gap: 14px; }
+    .closing-statement span, .closing-statement span:first-child { padding: 0 0 0 14px; border-left: 2px solid var(--line); }
     .topbar-nav { margin-left: 0; gap: 8px 14px; }
     [id] { scroll-margin-top: 24px; }
     .course-map ol { grid-template-columns: 1fr; border-top: 0; border-left: 1px solid var(--line); margin-left: 5px; }
@@ -665,7 +676,7 @@
       <div class="eyebrow">deveco-lessons / 可审计的 Agent 工程实践课 · 5 MODULES</div>
       <h1>长程任务案例实战演练：<br><em>让 Agent 按计划稳定完成复杂开发任务</em></h1>
       <p class="lede">
-        一天做三件事：看清 Agent 做了什么，让它按计划继续，并用独立证据决定何时收工。
+        AI 长程任务，是指无法通过一次推理或一次执行可靠完成，AI 必须在一段相互依赖的行动链中，持续维护目标、状态和约束，并根据中间反馈反复进行规划、执行、验证和纠偏，最终交付可验收结果的任务。
       </p>
 
       <figure class="diagram">
@@ -728,6 +739,22 @@
     </div>
   </section>
 
+  <!-- ============ 五段课程流程 ============ -->
+  <section class="course-map" aria-labelledby="course-map-title">
+    <div class="wrap">
+      <span class="module-label neutral">AGENDA · 5 MODULES</span>
+      <h2 id="course-map-title">课程安排</h2>
+      <p class="module-lede">先看过程，再做循环；随后用实验和迁移案例检验方法。</p>
+      <ol>
+        <li><a href="#lesson1"><span class="idx">01 · OBSERVE</span><b>可审计的工程</b><small>实时、细粒度看清全流程</small></a></li>
+        <li><a href="#loop"><span class="idx">02 · CONTROL</span><b>Loop Engineering</b><small>按计划稳定完成复杂任务</small></a></li>
+        <li><a href="#sharing"><span class="idx">03 · REFLECT</span><b>分享与交流</b><small>拿证据讲，围绕问题聊</small></a></li>
+        <li><a href="#migration"><span class="idx">04 · TRANSFER</span><b>代码迁移实践</b><small>MigBot 内容与图片展示</small></a></li>
+        <li><a href="#closing"><span class="idx">05 · CLOSE</span><b>总结与交流</b><small>沉淀原则、讨论下一步</small></a></li>
+      </ol>
+    </div>
+  </section>
+
   <!-- ============ 开场：四层 Loop ============ -->
   <section class="section loop-primer" id="loop-stack">
     <div class="wrap">
@@ -755,7 +782,7 @@
             <p>自动完成工作</p>
           </div>
           <div class="loop-level-body">
-            <p><b>怎么跑：</b>读取上下文 → 调工具 → 写回结果 → 继续。单独使用适合边界明确、可人工抽查的小任务。</p>
+            <p>读取上下文 → 调工具 → 写回结果 → 继续。单独使用适合边界明确、可人工抽查的小任务。</p>
           </div>
         </li>
         <li>
@@ -765,7 +792,7 @@
             <p>保证质量与正确性</p>
           </div>
           <div class="loop-level-body">
-            <p><b>怎么跑：</b>测试或 Grader 判分；未过线就把差距退回重做。适合迁移、重构和 CI 修复。</p>
+            <p>测试或 Grader 判分；未过线就把差距退回重做。适合迁移、重构和 CI 修复。</p>
           </div>
         </li>
         <li>
@@ -775,7 +802,7 @@
             <p>接入业务系统持续运行</p>
           </div>
           <div class="loop-level-body">
-            <p><b>怎么跑：</b>消息、Webhook、Cron 或 Session 事件触发下一轮。适合工单、巡检和长流程续推。</p>
+            <p>消息、Webhook、Cron 或 Session 事件触发下一轮。适合工单、巡检和长流程续推。</p>
           </div>
         </li>
         <li>
@@ -785,32 +812,14 @@
             <p>用运行数据改进 Harness</p>
           </div>
           <div class="loop-level-body">
-            <p><b>怎么跑：</b>从 Trace 找共性失败，改 Prompt、Tool、Grader 或 Skill，再回归评测。适合高频重复任务。</p>
+            <p>从 Trace 找共性失败，改 Prompt、Tool、Grader 或 Skill，再回归评测。适合高频重复任务。</p>
           </div>
         </li>
       </ol>
 
-      <p class="loop-selection">
-        <b>不用一次上齐四层。</b>先让任务跑通；需要质量保证时加验证；需要长期运行时接事件；积累足够 Trace 后再优化 Harness。高风险动作始终留给人工审批。
-      </p>
     </div>
   </section>
 
-  <!-- ============ 五段课程流程 ============ -->
-  <section class="course-map" aria-labelledby="course-map-title">
-    <div class="wrap">
-      <span class="module-label neutral">AGENDA · 5 MODULES</span>
-      <h2 id="course-map-title">课程安排</h2>
-      <p class="module-lede">先看过程，再做循环；随后用实验和迁移案例检验方法。</p>
-      <ol>
-        <li><a href="#lesson1"><span class="idx">01 · OBSERVE</span><b>可审计的工程</b><small>实时、细粒度看清全流程</small></a></li>
-        <li><a href="#loop"><span class="idx">02 · CONTROL</span><b>Loop Engineering</b><small>按计划稳定完成复杂任务</small></a></li>
-        <li><a href="#sharing"><span class="idx">03 · REFLECT</span><b>分享与交流</b><small>拿证据讲，围绕问题聊</small></a></li>
-        <li><a href="#migration"><span class="idx">04 · TRANSFER</span><b>代码迁移实践</b><small>MigBot 内容与图片展示</small></a></li>
-        <li><a href="#closing"><span class="idx">05 · CLOSE</span><b>总结与交流</b><small>沉淀原则、讨论下一步</small></a></li>
-      </ol>
-    </div>
-  </section>
 
   <!-- ============ 模块 1:可审计工程 ============ -->
   <!-- ============ 快速开始 ============ -->
@@ -879,12 +888,6 @@
           <li>对同一项目重跑 observe.sh，会话数不翻倍（幂等）</li>
         </ul>
 
-        <h4>坑</h4>
-        <div class="pit"><ol>
-          <li><b>node 版本</b>：better-sqlite3 只在 node 20 编得过。脚本会自动切 nvm 的 node 20，手动进 vendor 装依赖要先 <code>nvm use 20</code>。</li>
-          <li><b>observe 是旁路</b>：cannbot 没装好、server 起不来、deveco.db 不存在时，脚本会提示原因并以退出码 0 结束，调用方可以继续运行。</li>
-          <li><b>server 日志</b>在 <code>/tmp/cannbot-insight.log</code>，起不来先看它。</li>
-        </ol></div>
       </article>
     </div>
   </section>
@@ -1004,11 +1007,6 @@
           </li>
         </ol>
 
-        <h4>当前进度</h4>
-        <ul class="check">
-          <li>上游 v0.6.5 源码与 9 个测试已 vendor，基线全绿（<code>upstream.lock</code> 锁定 commit）</li>
-          <li>适配任务按 10 步计划推进中：状态路径迁 <code>.deveco/</code>、session API 注入 <code>query.directory</code>、入口壳、goal.sh、冒烟、E2E 走查（见 <code>docs/superpowers/plans/2026-07-16-lesson3-goal-plugin.md</code>）</li>
-        </ul>
       </article>
     </div>
   </section>
@@ -1041,7 +1039,7 @@
 <span class="p">$</span> ./ralph.sh init ~/ralph-smoke</code></pre></div>
           </li>
           <li>
-            <b>灌目标</b> —— 用自带案例；自己出题则编辑 <code>.ralph/GOAL.md</code>，验收标准必须「能被 git/测试客观核实」：
+            <b>配置目标</b> —— 用自带案例；自己出题则编辑 <code>.ralph/GOAL.md</code>，验收标准必须「能被 git/测试客观核实」：
             <div class="term"><pre><code><span class="p">$</span> ./ralph.sh sample smoke ~/ralph-smoke   <span class="c"># 案例带的独立验收测试一并装进 .ralph/</span></code></pre></div>
             <p>验收测试放在 <code>.ralph/verify.test.ts</code>。worker 拥有全部工具权限，能够修改 <code>test/</code> 下的用例；<code>bun test</code> 不扫描隐藏目录，因此 worker 看不到也改不到这份验收测试。</p>
           </li>
@@ -1158,40 +1156,62 @@
     <div class="wrap">
       <span class="module-label neutral">MODULE 03 · REFLECT</span>
       <h2>分享与交流</h2>
-      <div class="sharing-axes" aria-label="Ralph Loop 与 goal 插件的两个关键差异">
-        <article class="sharing-axis">
-          <span>先看谁来挑错</span>
-          <h3>每轮检查，还是最后检查</h3>
-          <p><b>Ralph</b>：reviewer 每轮都看，没过就继续改。</p>
-          <p><b>/goal</b>：Agent 先自己做，报完成时再查证据。</p>
-        </article>
-        <article class="sharing-axis">
-          <span>再看任务要做多久</span>
-          <h3>当次跑完，还是下次接着做</h3>
-          <p><b>Ralph</b>：这次运行通过验收，就结束。</p>
-          <p><b>/goal</b>：进度会保存，暂停或重启后还能继续。</p>
-        </article>
+      <div class="table-scroll" role="region" aria-label="Ralph Loop 与 goal 插件在原理、方式、场景上的对比" tabindex="0">
+        <table class="cmp">
+          <thead><tr><th>维度</th><th>Ralph Loop（跨会话外循环）</th><th>/goal 插件（单会话内循环）</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>实现原理</b></td>
+              <td>裁判和执行者分离：外部脚本每轮拉起新会话，worker 执行、独立 reviewer 裁决，验收标准藏在 worker 摸不到的地方，通过才写 DONE。</td>
+              <td>事件驱动 + 证据门控：插件常驻会话，<code>session.idle</code> 触发续推；Agent 声明完成时用测试、diff、日志等证据校验，不设独立裁判。</td>
+            </tr>
+            <tr>
+              <td><b>运行方式</b></td>
+              <td><code>./ralph.sh run</code> 一次运行跑到验收通过即止；每轮全新上下文，进度靠 <code>.ralph/</code> 状态文件和 git 传递。</td>
+              <td><code>/goal ⟨目标⟩</code> 设定后自续；状态跨重启保存，可暂停、恢复，并受预算约束。</td>
+            </tr>
+            <tr>
+              <td><b>适用场景</b></td>
+              <td>质量优先：每步必须做对、可独立验收的攻坚任务，如 SWE-bench 修复、关键重构。</td>
+              <td>生命周期优先：长期挂着的目标、跨多次会话的任务、后台常驻推进。</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <p class="sharing-choice">每轮都要有人把关，用 Ralph；任务要跨多次会话，用 <code>/goal</code>。两种需求都有，就在关键节点加 reviewer。</p>
+      <p class="sharing-choice">每轮都要有人把关，用 Ralph；任务要跨多次会话，用 <code>/goal</code>。两者不是二选一，可以 hybrid：<code>/goal</code> 做外壳管生命周期——目标常驻、跨会话续推；到里程碑等关键节点，再叠加 Ralph 式独立 reviewer 做验收。平时轻量自续，关键处强校验——高风险长程任务推荐这种叠加形态。</p>
 
       <div class="kicker">围绕这些问题聊</div>
 
       <aside class="discussion">
         <details>
           <summary>什么任务适合 Loop？<small>点击展开参考答案</small></summary>
-          <p>能拆分、能验证、能继承进度，且失败反馈能直接指导下一轮。典型如迁移、重构和 CI 修复。</p>
+          <p>
+            任务能拆成小步，每一步都有明确的检查方法，失败后也知道下一轮该改什么。
+            例如代码迁移：先迁一个模块，跑编译和测试；失败就把报错交回去修，通过后再迁下一个模块。
+            重构、CI 修复、批量补测试也属于这一类。
+          </p>
         </details>
         <details>
           <summary>什么任务不适合 Loop？</summary>
-          <p>主观探索、不可逆操作，以及验证成本高于任务本身的小任务。</p>
+          <p>
+            一类是结果很难客观判断的任务，例如创意探索、视觉风格讨论；另一类是出错后不能自动重来的操作，例如发布生产、删数据、发送邮件。
+            很小的任务也没必要套 Loop——改一处文案只要几分钟，搭一套验证循环反而更慢。
+          </p>
         </details>
         <details>
           <summary>Loop Engineering 和 Harness 是什么关系？</summary>
-          <p><b>Harness</b> 是 Prompt、工具、验证器、状态与边界；<b>Loop Engineering</b> 是把它们接成“执行 → 验证 → 反馈”的回路。</p>
+          <p>
+            <b>Harness</b> 是 Agent 周围的工程条件，包括 Prompt、工具、验证器、状态文件、预算和权限。
+            <b>Loop Engineering</b> 是把这些条件接成“执行 → 验证 → 反馈 → 再执行”的运行方式。
+            比如测试脚本属于 Harness；测试失败后自动把报错退回给 Agent，才形成 Loop。
+          </p>
         </details>
         <details>
           <summary>如何优化 Loop？</summary>
-          <p>回放失败轨迹找共因，一次只改一个变量，再用同一任务复测分数曲线。</p>
+          <p>
+            先回放失败轨迹，判断问题出在目标、工具、验证器还是反馈；然后一次只改一个变量，用同一任务复测。
+            例如 reviewer 总说“还不够好”，就要求它输出失败样例和根因，再比较修改前后的通过率、轮次与 token 消耗。
+          </p>
         </details>
       </aside>
 
@@ -1221,7 +1241,7 @@
       <span class="module-label neutral">MODULE 04 · TRANSFER</span>
       <h2>代码迁移优秀实践：MigBot 鸿蒙化案例</h2>
       <p class="module-lede">
-        MigBot 已把 18 款 APP、160 万行安卓代码迁上鸿蒙，工具迁移环节零人工编码。这背后是完整的工程体系：迁移知识库、规则引擎、skill 化的流水线，以及一套按 Loop Engineering 搭起来的执行 harness。本节聚焦其中的 harness 部分——它回答的是"模型不可靠时，怎么让结果可靠"这个问题，核心是三种 loop：Verify &amp; Fix、event-driven 的多 Session Reviewer、熵减对抗的 Generator vs Discriminator。先看效果，再逐个拆开。
+        MigBot 已把 18 款 APP、160 万行安卓代码迁上鸿蒙，工具迁移环节零人工编码。这背后是完整的工程体系：迁移知识库、规则引擎、skill 化的流水线，以及一套按 Loop Engineering 搭起来的执行 harness。本节聚焦其中的 harness 部分——它回答的是<b>"当长程任务中大模型躺平、指令不遵循时，如何保证长程任务的稳定执行"</b>这个问题，核心是三种 loop：Verify &amp; Fix、event-driven 的多 Session Reviewer、熵减对抗的 Generator vs Discriminator。先看效果，再逐个拆开。
       </p>
 
       <div class="migration-showcase">
@@ -1337,13 +1357,14 @@
               <text x="244" y="112" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 1–6 · 基础验证</text>
               <text x="244" y="126" font-size="10" fill="#5a6b7d">编译是地基 · 修复循环 ≤20 轮 ⟲</text>
 
-              <rect x="234" y="140" width="272" height="38" rx="7" fill="none" stroke="#c9d4de"/>
+              <rect x="234" y="140" width="272" height="50" rx="7" fill="none" stroke="#c9d4de"/>
               <text x="244" y="156" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 7–10 · 委托 verifier skill</text>
-              <text x="244" y="170" font-size="10" fill="#5a6b7d">路由对账 · 视觉对齐 visual · 单元/UI TDD · 自带 fix-loop ⟲</text>
+              <text x="244" y="170" font-size="10" fill="#5a6b7d">路由对账 · 单元 / UI TDD · 自带 fix-loop ⟲</text>
+              <text x="244" y="184" font-size="10" fill="#5a6b7d">视觉对齐 visual：真机截图对照安卓原应用（oracle）</text>
 
-              <rect x="234" y="184" width="272" height="38" rx="7" fill="none" stroke="#c9d4de" stroke-dasharray="4 4"/>
-              <text x="244" y="200" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 11 · 风格合规</text>
-              <text x="244" y="214" font-size="10" fill="#5a6b7d">建议性 · 失败只记报告</text>
+              <rect x="234" y="196" width="272" height="38" rx="7" fill="none" stroke="#c9d4de" stroke-dasharray="4 4"/>
+              <text x="244" y="212" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" font-weight="700" fill="#765400">CHECK 11 · 风格合规</text>
+              <text x="244" y="226" font-size="10" fill="#5a6b7d">建议性 · 失败只记报告</text>
 
               <line x1="522" y1="142" x2="566" y2="142" stroke="#17293b" stroke-width="1.5" marker-end="url(#vf-arr-k)"/>
               <polygon points="568,142 612,114 656,142 612,170" fill="#fff" stroke="#9c6f00" stroke-width="2"/>
@@ -1356,10 +1377,10 @@
               <text x="745" y="138" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11.5" font-weight="700" fill="#247a35">verified</text>
               <text x="745" y="154" text-anchor="middle" font-size="10" fill="#5a6b7d">→ Retrospect</text>
 
-              <path d="M 612 170 L 612 252 L 94 252 L 94 174" fill="none" stroke="#bd3c0c" stroke-width="2" marker-end="url(#vf-arr-o)"/>
+              <path d="M 612 170 L 612 256 L 94 256 L 94 174" fill="none" stroke="#bd3c0c" stroke-width="2" marker-end="url(#vf-arr-o)"/>
               <text x="628" y="196" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="10.5" fill="#bd3c0c">NO</text>
-              <text x="353" y="244" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" fill="#bd3c0c">FAIL · 带错误证据回环 fix agent · ≤3 轮</text>
-              <text x="353" y="270" text-anchor="middle" font-size="10.5" fill="#5a6b7d">回环耗尽 → 降级人工，修复记录进审计文件</text>
+              <text x="353" y="250" text-anchor="middle" font-family="ui-monospace, SF Mono, Menlo, monospace" font-size="11" fill="#bd3c0c">FAIL · 带错误证据回环 fix agent · ≤3 轮</text>
+              <text x="353" y="274" text-anchor="middle" font-size="10.5" fill="#5a6b7d">回环耗尽 → 降级人工，修复记录进审计文件</text>
             </svg>
             <figcaption class="diagram-caption">验证器给报告；修复 agent 带证据重做。超过轮次上限转人工。</figcaption>
           </figure>
@@ -1442,16 +1463,16 @@
           <header class="migration-heading">
             <span class="num">05</span>
             <div>
-              <h3 id="migration-ecat-title">ECAT 熵减对抗：质量从门控走向自动收敛</h3>
-              <p>Verify &amp; Fix 只判通过与否；ECAT 用总熵 H 表示剩余偏差，并逐轮降低。</p>
+              <h3 id="migration-ecat-title">ECAT 熵减对抗：以熵为裁判的收敛 Loop</h3>
+              <p>前两种 loop 的裁判只说「过 / 不过」；第三种 loop 把裁判换成连续的总熵 H——每轮对抗让 H 降一点，循环一直跑到达标。质量不再是一道门，而是一条收敛曲线。</p>
             </div>
           </header>
 
           <h4 class="showcase-subhead">什么是「熵减对抗」</h4>
           <div class="reason-strip">
-            <div><b>01 · 度量</b>编译、功能、UI 等偏差加权为总熵 H；H 越低越接近完成。</div>
-            <div><b>02 · 分工</b>评估器找问题，生成器按问题清单修复。</div>
-            <div><b>03 · 接受</b>H 下降才保留新版本；低于阈值且稳定时停止。</div>
+            <div><b>01 · 熵（Code Entropy）</b>指仓库的「无序度」：编译错误、依赖断裂、功能缺失等缺陷按多个维度归一化打分、加权汇总成总熵 H。H 高＝不一致、错误未解决；H 低＝结构完整、语义忠实、能跑起来。它把「迁移质量」变成一个可优化的显式目标。</div>
+            <div><b>02 · 文本梯度（Text Gradient）</b>数值优化里梯度指出「往哪走下降最快」；这里的梯度是结构化文本——评估器把缺陷翻译成 work_list：哪个文件、什么问题、建议用哪个 skill 修。它告诉生成器往哪改 H 降得最快，所以叫梯度。</div>
+            <div><b>03 · 对抗（Adversarial）</b>借 GAN 的生成器–判别器架构，把「写代码」和「评质量」拆给两个独立 Agent——自己评自己会高估质量、过早收敛。判别器算 H、给梯度，生成器照着改；只有 H 下降的更新才被接受（熵减），循环直到 H 低于阈值。</div>
           </div>
 
           <h4 class="showcase-subhead">全景</h4>
@@ -1516,10 +1537,10 @@
       <p class="module-lede">最后只检查四件事：<b>看得见，按计划，做得完，有证据</b>。</p>
 
       <ol class="takeaways">
-        <li><div><b>看得见</b><span>Trace 能区分推进、空转、跑偏和验收污染。</span></div></li>
-        <li><div><b>按计划</b><span>任务可分解，每轮可验证，状态可继承，反馈可执行。</span></div></li>
-        <li><div><b>做得完</b><span><code>/goal</code> 管长目标；Ralph 在关键节点逐轮验收。</span></div></li>
-        <li><div><b>有证据</b><span>代码、测试、diff、日志和独立裁决共同支持 DONE。</span></div></li>
+        <li><div><b>看得见：先可观测，再谈自治</b><span>放手让 Agent 跑之前，要随时答得出「它现在在干什么」——从 Trace 里分得清是在推进、在空转，还是在跑偏。看不见的循环，只是一个烧 token 的黑盒。</span></div></li>
+        <li><div><b>按计划：长任务交给循环，而不是一次生成</b><span>循环能收敛靠四个条件：任务拆得开、每轮验得了、进度接得上、反馈用得上——缺任何一个，循环就退化成重复劳动。</span></div></li>
+        <li><div><b>做得完：让「继续」不依赖人盯着</b><span>日常推进交给 <code>/goal</code> 这类常驻目标循环自己续跑；关键节点再叠加 Ralph 式独立验收。轻重搭配，任务才既活得久、又走得对。</span></div></li>
+        <li><div><b>有证据：「完成」是可审计的结论，不是一句宣告</b><span>Agent 说做完了不算数——代码、测试、diff、日志，加上独立裁决，拼成证据链才配写下「完成」。</span></div></li>
       </ol>
 
       <aside class="discussion">
@@ -1533,23 +1554,19 @@
     </div>
   </section>
 
-  <!-- ============ 仓库结构 ============ -->
-  <section class="repo" id="repo">
-    <div class="wrap">
-      <div class="appendix-label">APPENDIX · HANDS-ON REFERENCE</div>
-      <h2>仓库结构</h2>
-      <div class="term">
-        <div class="term-bar">tree -L 1</div>
-        <pre><code>setup.sh                一键环境脚本
-vendor/cannbot-insight  会话观测器（源码 vendor，依赖由 setup.sh 现场安装）
-lesson1-insight/        第一课：观测对接（observe.sh + 教学文档）
-lesson2-goal-plugin/    第二课：/goal 目标循环插件（vendor + 测试 + 实现计划）
-lesson3-ralph-loop/     第三课：ralph loop（ralph.sh + 模板 + 案例 + 测试）</code></pre>
-      </div>
-      <p class="section-sub" style="margin-top:16px">
-        进阶：<code>ralph.sh</code> 还带 <code>swebench prepare / export</code> 子命令，可把 SWE-bench Lite
-        实例转成不泄漏标准答案的盲测目标，做「单次执行 vs ralph loop」的 A/B 对比。
+  <!-- ============ 结束语 ============ -->
+  <section class="repo" id="thanks">
+    <div class="wrap" style="text-align:center">
+      <div class="appendix-label">CLOSING</div>
+      <p class="closing-statement">
+        <span><b>SPEC</b>把目标说清</span>
+        <span><b>SKILL</b>把方法沉淀</span>
+        <span><b>HARNESS</b>让执行可控</span>
+        <span><b>TEST &amp; VERIFY</b>让结果可信</span>
+        <span><b>LOOP</b>让整套能力持续运转</span>
       </p>
+      <p class="closing-conclusion">这些能力共同构成 AI Native 工程体系。</p>
+      <h2>谢谢大家</h2>
     </div>
   </section>
 
