@@ -29,8 +29,8 @@ token 消耗——去卡完成条件,不看模型嘴上怎么说。
 - `deveco auth login` 已配好模型。
 - node ≥18(跑本课的 `node --test`)。
 - shell 里**不能有** `DEVECO_SERVER_PASSWORD`(同 [Lesson 3 坑 #4](../lesson3-ralph-loop/README.md#适配-deveco-时踩到的四个坑):一设,插件内 `client` 调自己 server 会吃 401)。
-- **Windows 用户**走 Git Bash,对齐根 [README 快速开始里的 Windows(Git Bash) 前置说明](../README.md#快速开始):
-  node ≥20(`better-sqlite3` 只对 20/22 有 Windows 预编译包),自己装好,`setup.sh` 不代装。
+- **Windows 用户**走 Git Bash,node 自己装好(推荐 20/22 LTS,`setup.sh` 不代装);
+  装依赖有问题见 [安装疑难排查](../docs/troubleshooting.md)。
 
 ## 用法
 

@@ -78,7 +78,7 @@ if [ -d node_modules ] && node -e "require('better-sqlite3')" >/dev/null 2>&1; t
   ok "cannbot-insight 依赖已就绪(跳过 npm ci)"
 else
   say "→ npm ci(首次要几分钟)..."
-  npm ci || die "npm ci 失败。若卡在 better-sqlite3:看上方 prebuild-install 那行的 target=x.y.z——那才是 npm 实际用的 node,可能和 node -v 不是同一个(多套 node 共存时常见)。node 18/20/22/23 有官方预编译包(本地 vendor/prebuilds/ 和 npmmirror 都能兜);其他版本换 node 20/22 重跑,或自编包放进 vendor/prebuilds/(见 README)"
+  npm ci || die "npm ci 失败。若卡在 better-sqlite3:看上方 prebuild-install 那行的 target=x.y.z——那才是 npm 实际用的 node,可能和 node -v 不是同一个(多套 node 共存时常见)。node 18/20/22/23 有官方预编译包(本地 vendor/prebuilds/ 和 npmmirror 都能兜);其他版本换 node 20/22 重跑,或自编包放进 vendor/prebuilds/(见 docs/troubleshooting.md)"
 fi
 
 # ---- 4.5 Windows:预置 prisma 引擎(离线可用)-----------------------------
@@ -130,7 +130,7 @@ say "环境自检:"
 ok "deveco:$(deveco --version 2>/dev/null | head -1)"
 node -e "require('better-sqlite3')" >/dev/null 2>&1 \
   && ok "better-sqlite3 可加载(node $(node -v))" \
-  || die "better-sqlite3 加载失败——当前 node $(node -v) 和依赖编译时的 ABI 不匹配;换 node 20/22 重跑 ./setup.sh(或自编包,见 README)"
+  || die "better-sqlite3 加载失败——当前 node $(node -v) 和依赖编译时的 ABI 不匹配;换 node 20/22 重跑 ./setup.sh(或自编包,见 docs/troubleshooting.md)"
 ok "bun:$(bun --version)"
 [ -f "$VENDOR/prisma/dev.db" ] && ok "cannbot 数据库就绪" || die "prisma/dev.db 没生成"
 [ -f "$VENDOR/.next/BUILD_ID" ] && ok "cannbot 生产构建就绪" || die ".next/BUILD_ID 没生成"

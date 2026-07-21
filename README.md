@@ -13,60 +13,18 @@
 
 ## 快速开始
 
+前置(自装两样):
+
+- deveco:`npm install -g @deveco/deveco-code`
+- Node.js(推荐 20/22 LTS):https://nodejs.org
+
 ```bash
 git clone <本仓库> && cd deveco-lessons
-./setup.sh            # 一键环境:node/bun/cannbot 依赖与数据库,幂等可重跑
+./setup.sh            # 一键环境:bun、依赖与数据库,幂等可重跑
 deveco auth login     # 唯一需要你自己完成的一步:配模型凭证
 ```
 
-前置:已安装 deveco(`npm install -g @deveco/deveco-code`)。
-其余依赖(含 cannbot-insight 本体,vendor 在 `vendor/` 下)全部由
-`setup.sh` 就地装好,不需要手工配置。
-
-**Windows 用户(Git Bash)**:三个脚本都适配了 Git Bash,额外前置只有一条——
-自己装好 **Node.js**(https://nodejs.org ;setup.sh 在 Windows 上不代装 node,也不卡版本)。
-装依赖时,原生扩展 better-sqlite3 按顺序走三条路:官方预编译包(node 18/20/22/23 有)
-→ 仓库离线包(`vendor/prebuilds/`,覆盖 node 20)→ 本机源码编译(有 VS Build Tools +
-Python 就能过)。三条全不通才失败——推荐 20/22 LTS(免编译最省事),
-有编译工具链的机器用什么版本都行。
-
-**必须用 node 24+?** 有编译工具链(VS Build Tools + Python)的机器可以自编预编译包
-供全班离线复用——在装好依赖的 `vendor/cannbot-insight/node_modules/better-sqlite3`
-里(此时 npm 已现场编译成功),把产物按官方资产名打包并放进 `vendor/prebuilds/`:
-
-```bash
-cd vendor/cannbot-insight/node_modules/better-sqlite3
-ABI=$(node -e "console.log(process.versions.modules)")          # node 24 是 137
-PLAT=$(node -e "console.log(process.platform + '-' + process.arch)")
-tar -czf ../../../prebuilds/better-sqlite3-v11.10.0-node-v${ABI}-${PLAT}.tar.gz \
-    build/Release/better_sqlite3.node
-```
-
-其他没有工具链的机器装依赖时会直接命中这个包,不再触发本机编译。
-
-常见报错:
-- `EINTEGRITY`(npm ci 校验和不匹配):先 `npm cache clean --force` 重试;仍失败则
-  `npm config get registry` 看源——lockfile 钉的是官方源,公司内部源重新打包过的
-  tarball 校验和对不上。能直连就 `npm ci --registry=https://registry.npmjs.org`;
-  只能走内部源就删掉 `node_modules` 和 `package-lock.json` 后 `npm install` 重新生成。
-- better-sqlite3 编译报错:node 版本不是 20.x,见上一条。已装 node 24 想共存的话用
-  [nvm-windows](https://github.com/coreybutler/nvm-windows):`nvm install 20.19.5 && nvm use 20.19.5`。
-- better-sqlite3 预编译包「拉不到」:它默认从 GitHub releases 下载,公司网络挡 GitHub 会失败。
-  **本仓已自带 Windows(x64 + node 20)的预编译包**(`vendor/prebuilds/`),setup.sh 会让
-  npm 优先用它,不需要联网到 GitHub。如果你换了别的 node 大版本或架构,再按镜像方案兜底:
-  ```ini
-  registry=https://registry.npmmirror.com
-  better_sqlite3_binary_host_mirror=https://npmmirror.com/mirrors/better-sqlite3/
-  ```
-- prisma 报错(`binaries.prisma.sh` 连不上 / checksum 失败):Prisma 引擎二进制走独立 CDN。
-  **本仓已自带 Windows 的两个引擎**(`vendor/prebuilds/prisma/windows/`,校验和与官方一致),
-  setup.sh 会把它们种进 Prisma 的本地缓存,generate/migrate 直接命中、不联网;同时默认设了
-  npmmirror 镜像(`PRISMA_ENGINES_MIRROR`,可覆盖)作为兜底。
-  如果之前装到一半失败,先 `rm -rf vendor/cannbot-insight/node_modules` 再重跑 `./setup.sh`。
-bun 由 setup.sh 走 PowerShell 自动安装;sqlite3 不需要装(观测脚本会用 vendor
-里的 better-sqlite3 兜底)。或者直接用 WSL2,和 macOS/Linux 完全同一套流程。
-
-装完从 [Lesson 1](lesson1-insight/README.md) 开始。
+Windows 在 Git Bash 里跑同样的命令。装不上看 [docs/troubleshooting.md](docs/troubleshooting.md)。
 
 ## 三课各自怎么跑(最小路径)
 
@@ -106,6 +64,7 @@ cd lesson3-ralph-loop
 
 ```
 setup.sh                一键环境脚本
+docs/troubleshooting.md 安装疑难排查(better-sqlite3/prisma/网络)
 vendor/cannbot-insight  会话观测器(源码 vendor,依赖由 setup.sh 现场安装)
 lesson1-insight/        第一课:观测对接(observe.sh + 教学文档)
 lesson2-goal-plugin/    第二课:opencode-goal-plugin 移植成 deveco 的 /goal 插件(goal.sh + vendor + 测试)
